@@ -1,21 +1,20 @@
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem; 
+using UnityEngine.InputSystem;
 
-public class WordSpawner : MonoBehaviour
+public class WordGenerator : MonoBehaviour
 {
     [Header("Spawn Zone (Anchor Points)")]
-    [Tooltip("Drag the LeftBound empty GameObject here.")]
     public Transform leftSpawnBound;
-    [Tooltip("Drag the RightBound empty GameObject here.")]
     public Transform rightSpawnBound;
 
     [Header("Prefabs")]
     public GameObject[] spawnablePrefabs; 
 
     [Header("Difficulty: Timing & Speed")]
-    public float initialSpawnDelay = 4f; // Increased to slow down initial spawning
+    public float initialSpawnDelay = 4f;
     public float minimumSpawnDelay = 1.5f; 
-    public float delayDecreaseRate = 0.02f; // Slowed down the difficulty ramp
+    public float delayDecreaseRate = 0.02f;
 
     public float initialFallSpeed = 2f;
     public float maxFallSpeed = 7f;
@@ -31,15 +30,13 @@ public class WordSpawner : MonoBehaviour
     private float spawnTimer;
     private float gameTimer;
 
+    // --- NEW: Tracking the words/waves ---
+    private List<List<FallingLetter>> activeWaves = new List<List<FallingLetter>>();
+
     void Start()
     {
         currentSpawnDelay = initialSpawnDelay;
         currentFallSpeed = initialFallSpeed;
-
-        if (leftSpawnBound == null || rightSpawnBound == null)
-        {
-            Debug.LogError("WordSpawner is missing its Left or Right spawn bounds!");
-        }
     }
 
     void Update()
@@ -57,6 +54,66 @@ public class WordSpawner : MonoBehaviour
             SpawnWave();
             spawnTimer = 0f;
         }
+
+        // --- NEW: Check active waves every frame ---
+        CheckActiveWaves();
+    }
+
+    private void CheckActiveWaves()
+    {
+        // We loop backwards because we might remove waves from the list while checking them
+        for (int i = activeWaves.Count - 1; i >= 0; i--)
+        {
+            List<FallingLetter> wave = activeWaves[i];
+
+            // 1. Check if the player missed this wave (any letter hit the bottom and was destroyed)
+            // If any letter is null, they failed this wave. We stop tracking it.
+            bool missedLetter = false;
+            foreach (FallingLetter letter in wave)
+            {
+                if (letter == null) missedLetter = true;
+            }
+
+            if (missedLetter)
+            {
+                activeWaves.RemoveAt(i);
+                continue; // Skip to the next wave
+            }
+
+            // 2. Check if all letters in this specific wave are in the zone AND pressed
+            bool waveComplete = true;
+            foreach (FallingLetter letter in wave)
+            {
+                if (!letter.inZone || !letter.isPressed)
+                {
+                    waveComplete = false;
+                    break;
+                }
+            }
+
+            // 3. If they successfully held the whole word in the zone!
+            if (waveComplete)
+            {
+                // Give points
+                if (ScoreManager.Instance != null)
+                {
+                    ScoreManager.Instance.AddScore(wave.Count * 2);
+                }
+
+                // Apply powerups and destroy the objects
+                foreach (FallingLetter letter in wave)
+                {
+                    if (letter.TryGetComponent<Powerup>(out Powerup powerup))
+                    {
+                        powerup.ApplyEffect();
+                    }
+                    Destroy(letter.gameObject);
+                }
+
+                // Remove the completed wave from our tracking list
+                activeWaves.RemoveAt(i);
+            }
+        }
     }
 
     private void SpawnWave()
@@ -64,32 +121,43 @@ public class WordSpawner : MonoBehaviour
         float progress = Mathf.Clamp01(gameTimer / timeToReachMaxLetters);
         int lettersToSpawn = Mathf.RoundToInt(Mathf.Lerp(minLettersPerWave, maxLettersLimit, progress));
 
-        // Use the exact X positions of your anchor points
         float leftEdge = leftSpawnBound.position.x;
         float rightEdge = rightSpawnBound.position.x;
-        float availableWidth = rightEdge - leftEdge;
-        float spacing = availableWidth / (lettersToSpawn + 1);
-        
-        // Use the exact Y position of your Left anchor point
+        float spacing = (rightEdge - leftEdge) / (lettersToSpawn + 1);
         float spawnY = leftSpawnBound.position.y; 
+
+        List<FallingLetter> newWave = new List<FallingLetter>();
+
+        // --- NEW: Create a pool of available keys (A to Z) ---
+        List<Key> availableKeys = new List<Key>();
+        for (int k = (int)Key.A; k <= (int)Key.Z; k++)
+        {
+            availableKeys.Add((Key)k);
+        }
+        // -----------------------------------------------------
 
         for (int i = 0; i < lettersToSpawn; i++)
         {
-            GameObject prefabToSpawn = spawnablePrefabs[Random.Range(0, spawnablePrefabs.Length)];
-
-            float spawnX = leftEdge + (spacing * (i + 1));
-            Vector3 spawnPosition = new Vector3(spawnX, spawnY, 0f);
-
-            GameObject spawnedObj = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
+            GameObject prefab = spawnablePrefabs[Random.Range(0, spawnablePrefabs.Length)];
+            Vector3 position = new Vector3(leftEdge + (spacing * (i + 1)), spawnY, 0f);
+            GameObject spawnedObj = Instantiate(prefab, position, Quaternion.identity);
 
             FallingLetter letterScript = spawnedObj.GetComponent<FallingLetter>();
             if (letterScript != null)
             {
                 letterScript.SetFallSpeed(currentFallSpeed);
                 
-                Key randomKey = (Key)Random.Range((int)Key.A, (int)Key.Z + 1);
-                letterScript.SetupRandomLetter(randomKey);
+                // --- NEW: Pick a random key from the pool and remove it ---
+                int randomIndex = Random.Range(0, availableKeys.Count);
+                Key assignedKey = availableKeys[randomIndex];
+                availableKeys.RemoveAt(randomIndex); // Prevents duplicates in this wave
+                // ----------------------------------------------------------
+
+                letterScript.SetupRandomLetter(assignedKey);
+                newWave.Add(letterScript);
             }
         }
+
+        activeWaves.Add(newWave);
     }
 }

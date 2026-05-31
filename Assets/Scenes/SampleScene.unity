@@ -372,10 +372,10 @@ MonoBehaviour:
   initialSpawnDelay: 7
   minimumSpawnDelay: 0.5
   delayDecreaseRate: 0.03
-  initialFallSpeed: 0.3
+  initialFallSpeed: 0.5
   maxFallSpeed: 4
   speedIncreaseRate: 0.03
-  minLettersPerWave: 0
+  minLettersPerWave: 1
   maxLettersLimit: 5
   timeToReachMaxLetters: 180
 --- !u!4 &415607409

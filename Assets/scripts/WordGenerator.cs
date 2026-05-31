@@ -37,6 +37,7 @@ public class WordGenerator : MonoBehaviour
     {
         currentSpawnDelay = initialSpawnDelay;
         currentFallSpeed = initialFallSpeed;
+        SpawnWave();
     }
 
     void Update()

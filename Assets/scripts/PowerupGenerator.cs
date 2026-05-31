@@ -10,13 +10,22 @@ public class PowerupGenerator : MonoBehaviour
 
     [Header("Powerup Settings")]
     public GameObject[] powerupPrefabs; 
-    public float spawnInterval = 15f; // Spawns a powerup every 15 seconds
+    public float spawnInterval = 15f; 
     public float fallSpeed = 3f;
 
     private float spawnTimer;
-
-    // Track the active powerups currently falling on screen
     private List<FallingLetter> activePowerups = new List<FallingLetter>();
+
+    // --- NEW: A list of harder keys and their visual symbols ---
+    private readonly (Key key, string symbol)[] hardKeys = new (Key, string)[]
+    {
+        (Key.Digit1, "1"), (Key.Digit2, "2"), (Key.Digit3, "3"), 
+        (Key.Digit4, "4"), (Key.Digit5, "5"), (Key.Digit6, "6"), 
+        (Key.Digit7, "7"), (Key.Digit8, "8"), (Key.Digit9, "9"), (Key.Digit0, "0"),
+        (Key.Minus, "-"), (Key.Equals, "="), (Key.LeftBracket, "["), 
+        (Key.RightBracket, "]"), (Key.Semicolon, ";"), (Key.Quote, "'"), 
+        (Key.Comma, ","), (Key.Period, "."), (Key.Slash, "/")
+    };
 
     void Update()
     {
@@ -24,14 +33,12 @@ public class PowerupGenerator : MonoBehaviour
 
         spawnTimer += Time.deltaTime;
 
-        // 1. Spawn a powerup when the timer hits
         if (spawnTimer >= spawnInterval)
         {
             SpawnPowerup();
             spawnTimer = 0f;
         }
 
-        // 2. Check if the player collected any powerups
         CheckActivePowerups();
     }
 
@@ -39,7 +46,6 @@ public class PowerupGenerator : MonoBehaviour
     {
         if (powerupPrefabs.Length == 0) return;
 
-        // Pick a random X position somewhere between the left and right bounds
         float randomX = Random.Range(leftSpawnBound.position.x, rightSpawnBound.position.x);
         Vector3 spawnPosition = new Vector3(randomX, leftSpawnBound.position.y, 0f);
 
@@ -51,9 +57,11 @@ public class PowerupGenerator : MonoBehaviour
         {
             letterScript.SetFallSpeed(fallSpeed);
             
-            // Assign a random letter to the powerup
-            Key randomKey = (Key)Random.Range((int)Key.A, (int)Key.Z + 1);
-            letterScript.SetupRandomLetter(randomKey);
+            // --- NEW: Pick a random symbol/number from our hardKeys array ---
+            var randomHardKey = hardKeys[Random.Range(0, hardKeys.Length)];
+            
+            // Pass BOTH the key logic AND the visual symbol to display
+            letterScript.SetupRandomLetter(randomHardKey.key, randomHardKey.symbol);
 
             activePowerups.Add(letterScript);
         }
@@ -61,28 +69,24 @@ public class PowerupGenerator : MonoBehaviour
 
     private void CheckActivePowerups()
     {
-        // Loop backwards safely to check and remove items
         for (int i = activePowerups.Count - 1; i >= 0; i--)
         {
             FallingLetter powerupLetter = activePowerups[i];
 
-            // If it fell to the bottom and was destroyed, remove it from tracking
             if (powerupLetter == null)
             {
                 activePowerups.RemoveAt(i);
                 continue;
             }
 
-            // If it is in the zone AND its individual key is pressed!
+            // Powerups are collected individually, so we just check if this one is pressed
             if (powerupLetter.inZone && powerupLetter.isPressed)
             {
-                // Trigger the abstract powerup effect
                 if (powerupLetter.TryGetComponent<Powerup>(out Powerup powerupComponent))
                 {
                     powerupComponent.ApplyEffect();
                 }
 
-                // Destroy the object and remove it from the list
                 Destroy(powerupLetter.gameObject);
                 activePowerups.RemoveAt(i);
             }

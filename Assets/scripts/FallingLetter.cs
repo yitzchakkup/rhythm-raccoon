@@ -38,10 +38,16 @@ public class FallingLetter : MonoBehaviour
 
     public void SetFallSpeed(float newSpeed) { fallSpeed = newSpeed; }
 
-    public void SetupRandomLetter(Key newKey)
+    // Replace your old SetupRandomLetter method with this one:
+    public void SetupRandomLetter(Key newKey, string displayText = null)
     {
         letterKey = newKey;
-        if (letterText != null) letterText.text = newKey.ToString();
+        if (letterText != null) 
+        {
+            // If a custom display text (like a symbol) is provided, use it. 
+            // Otherwise, just default to the key's name.
+            letterText.text = string.IsNullOrEmpty(displayText) ? newKey.ToString() : displayText;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)

@@ -93,13 +93,20 @@ public class WordGenerator : MonoBehaviour
             }
 
             // 3. If they successfully held the whole word in the zone!
+            // 3. If they successfully held the whole word in the zone!
             if (waveComplete)
             {
-                // Give points
+                // --- UPDATED: Calculate dynamic score based on zones ---
                 if (ScoreManager.Instance != null)
                 {
-                    ScoreManager.Instance.AddScore(wave.Count * 2);
+                    int totalWaveScore = 0;
+                    foreach (FallingLetter letter in wave)
+                    {
+                        totalWaveScore += letter.GetScoreValue();
+                    }
+                    ScoreManager.Instance.AddScore(totalWaveScore);
                 }
+                // -------------------------------------------------------
 
                 // Apply powerups and destroy the objects
                 foreach (FallingLetter letter in wave)
@@ -111,7 +118,6 @@ public class WordGenerator : MonoBehaviour
                     Destroy(letter.gameObject);
                 }
 
-                // Remove the completed wave from our tracking list
                 activeWaves.RemoveAt(i);
             }
         }

@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
-using TMPro; // --- NEW: Required to talk to TextMeshPro UI ---
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance { get; private set; }
 
-    [Header("UI Elements")]
-    [SerializeField] private TMP_Text scoreText; // Drag your UI text here
+    [Header("Stamina")]
+    [SerializeField] private float staminaRewardAmount = 5f;
 
     public int Score { get; private set; } = 0;
 
+    private TMP_Text scoreText;
     private int currentMultiplier = 1;
     private float multiplierTimer = 0f;
 
@@ -24,10 +26,43 @@ public class ScoreManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        // Force the UI to say "Score: 0" the moment the game starts
-        UpdateScoreUI(); 
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (SceneUIRefs.Instance != null)
+        {
+            // --- DEBUGGING: Check if the specific reference is valid ---
+            if (SceneUIRefs.Instance.scoreText != null)
+            {
+                scoreText = SceneUIRefs.Instance.scoreText;
+                Debug.Log("ScoreManager successfully found its UI reference.");
+            }
+            else
+            {
+                Debug.LogError("CRITICAL: SceneUIRefs exists, but its 'scoreText' field is not assigned in the Inspector!");
+            }
+        }
+        else
+        {
+            Debug.LogError("CRITICAL: ScoreManager could not find SceneUIRefs instance!");
+        }
+
+        InitializeScore();
+    }
+
+    private void InitializeScore()
+    {
+        Score = 0;
+        UpdateScoreUI();
     }
 
     void Update()
@@ -40,7 +75,6 @@ public class ScoreManager : MonoBehaviour
             {
                 currentMultiplier = 1;
                 multiplierTimer = 0f;
-                Debug.Log("Score multiplier has ended! Back to 1x.");
             }
         }
     }
@@ -50,25 +84,30 @@ public class ScoreManager : MonoBehaviour
         int calculatedPoints = pointsToAdd * currentMultiplier;
         Score += calculatedPoints;
         
-        // --- NEW: Update the visual text on the screen ---
         UpdateScoreUI();
         
-        Debug.Log($"Word cleared! +{calculatedPoints} points (Multiplier: {currentMultiplier}x). Total Score: {Score}");
+        if (StaminaManager.Instance != null)
+        {
+            StaminaManager.Instance.AddStamina(staminaRewardAmount);
+        }
     }
 
     public void ActivateMultiplier(int multiplier, float duration)
     {
         currentMultiplier = multiplier;
         multiplierTimer = duration; 
-        Debug.Log($"Multiplier Activated! {currentMultiplier}x score for {duration} seconds!");
     }
 
-    // --- NEW: Helper method to format and update the text ---
     private void UpdateScoreUI()
     {
         if (scoreText != null)
         {
             scoreText.text = $"Score: {Score}";
+        }
+        else
+        {
+            // This log will now only appear if the reference was truly never assigned.
+            Debug.LogWarning("ScoreManager cannot update UI because its scoreText reference is missing.");
         }
     }
 }

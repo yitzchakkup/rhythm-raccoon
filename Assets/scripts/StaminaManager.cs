@@ -47,7 +47,7 @@ public class StaminaManager : MonoBehaviour
     {
         if (SceneUIRefs.Instance != null)
         {
-            staminaBarFill = SceneUIRefs.Instance.staminaBarFill;
+            staminaBarFill = SceneUIRefs.staminaBarFill;
             Debug.Log("StaminaManager found its UI reference.");
         }
         else
@@ -110,6 +110,10 @@ public class StaminaManager : MonoBehaviour
         if (staminaBarFill != null)
         {
             staminaBarFill.fillAmount = currentStamina / maxStamina;
+        }
+        else
+        {
+            Debug.LogError("StaminaManager cannot update UI because 'staminaBarFill' reference is missing!");
         }
     }
 }

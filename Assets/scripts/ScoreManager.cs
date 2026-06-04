@@ -41,9 +41,9 @@ public class ScoreManager : MonoBehaviour
         if (SceneUIRefs.Instance != null)
         {
             // --- DEBUGGING: Check if the specific reference is valid ---
-            if (SceneUIRefs.Instance.scoreText != null)
+            if (SceneUIRefs.scoreText != null)
             {
-                scoreText = SceneUIRefs.Instance.scoreText;
+                scoreText = SceneUIRefs.scoreText;
                 Debug.Log("ScoreManager successfully found its UI reference.");
             }
             else

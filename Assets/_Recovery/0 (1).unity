@@ -414,7 +414,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 217171321}
-  - component: {fileID: 217171322}
   m_Layer: 0
   m_Name: UI
   m_TagString: Untagged
@@ -439,21 +438,6 @@ Transform:
   - {fileID: 148561901}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &217171322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 217171320}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d71287e32d63db48ba908748b7fc79f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SceneUIRefs
-  inspectorStaminaBarFill: {fileID: 1796284258}
-  inspectorScoreText: {fileID: 430611848}
-  inspectorGameOverUI: {fileID: 141944887}
 --- !u!1 &323270472
 GameObject:
   m_ObjectHideFlags: 0
@@ -1286,6 +1270,7 @@ GameObject:
   - component: {fileID: 654381537}
   - component: {fileID: 654381539}
   - component: {fileID: 654381540}
+  - component: {fileID: 654381541}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1349,6 +1334,18 @@ MonoBehaviour:
   startingStamina: 75
   staminaDrainAmount: 1
   staminaDrainTickRate: 0.33
+--- !u!114 &654381541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 654381536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d71287e32d63db48ba908748b7fc79f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneUIRefs
 --- !u!1001 &807537836
 PrefabInstance:
   m_ObjectHideFlags: 0

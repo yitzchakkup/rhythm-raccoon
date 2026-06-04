@@ -25,9 +25,9 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         
         // Find the UI from the static reference and activate it.
-        if (SceneUIRefs.Instance != null && SceneUIRefs.Instance.gameOverUI != null)
+        if (SceneUIRefs.Instance != null && SceneUIRefs.gameOverUI != null)
         {
-            SceneUIRefs.Instance.gameOverUI.SetActive(true);
+            SceneUIRefs.gameOverUI.SetActive(true);
         }
     }
 

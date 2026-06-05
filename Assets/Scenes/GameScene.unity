@@ -624,7 +624,7 @@ MonoBehaviour:
   leftSpawnBound: {fileID: 171159988}
   rightSpawnBound: {fileID: 837224668}
   spawnablePrefabs:
-  - {fileID: 6853399518264055449, guid: 915e8b4bb6905cc45bd2f86e454a0d9e, type: 3}
+  - {fileID: 6853399518264055449, guid: 91cb75297eb3c4bd485b450a83a5efe0, type: 3}
   initialSpawnDelay: 7
   minimumSpawnDelay: 0.5
   delayDecreaseRate: 0.03
@@ -2682,8 +2682,8 @@ MonoBehaviour:
   leftSpawnBound: {fileID: 1539228542}
   rightSpawnBound: {fileID: 1184398234}
   powerupPrefabs:
-  - {fileID: 4159722400878317128, guid: eadcbfd4f530b44b7b987b4e0537d698, type: 3}
-  - {fileID: 4159722400878317128, guid: 39c744903caa44799bbc814b00c71d40, type: 3}
+  - {fileID: 4159722400878317128, guid: 7de97a75c113746618f04c23b9621761, type: 3}
+  - {fileID: 4159722400878317128, guid: 95d4a7177fc5f45dea3e955f05ad6af4, type: 3}
   spawnInterval: 15
   fallSpeed: 3
 --- !u!4 &1921254107

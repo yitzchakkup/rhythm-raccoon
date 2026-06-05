@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+// --- NEW: Required for Photon functionality ---
+using Photon.Pun;
 
 public class PowerupGenerator : MonoBehaviour
 {
@@ -16,7 +18,6 @@ public class PowerupGenerator : MonoBehaviour
     private float spawnTimer;
     private List<FallingLetter> activePowerups = new List<FallingLetter>();
 
-    // --- NEW: A list of harder keys and their visual symbols ---
     private readonly (Key key, string symbol)[] hardKeys = new (Key, string)[]
     {
         (Key.Digit1, "1"), (Key.Digit2, "2"), (Key.Digit3, "3"), 
@@ -31,6 +32,10 @@ public class PowerupGenerator : MonoBehaviour
     {
         if (leftSpawnBound == null || rightSpawnBound == null) return;
 
+        // --- CRITICAL NEW CHECK ---
+        // Only the Host handles powerup timers and generation
+        if (!PhotonNetwork.IsMasterClient) return;
+
         spawnTimer += Time.deltaTime;
 
         if (spawnTimer >= spawnInterval)
@@ -44,23 +49,22 @@ public class PowerupGenerator : MonoBehaviour
 
     private void SpawnPowerup()
     {
-        if (powerupPrefabs.Length == 0) return;
-
-        float randomX = Random.Range(leftSpawnBound.position.x, rightSpawnBound.position.x);
+        float leftEdge = leftSpawnBound.position.x;
+        float rightEdge = rightSpawnBound.position.x;
+        float randomX = Random.Range(leftEdge, rightEdge);
         Vector3 spawnPosition = new Vector3(randomX, leftSpawnBound.position.y, 0f);
 
         GameObject prefab = powerupPrefabs[Random.Range(0, powerupPrefabs.Length)];
-        GameObject spawnedObj = Instantiate(prefab, spawnPosition, Quaternion.identity);
+        
+        // --- UPDATED FOR NETWORKING ---
+        GameObject spawnedObj = PhotonNetwork.Instantiate(prefab.name, spawnPosition, Quaternion.identity);
 
         FallingLetter letterScript = spawnedObj.GetComponent<FallingLetter>();
         if (letterScript != null)
         {
             letterScript.SetFallSpeed(fallSpeed);
             
-            // --- NEW: Pick a random symbol/number from our hardKeys array ---
             var randomHardKey = hardKeys[Random.Range(0, hardKeys.Length)];
-            
-            // Pass BOTH the key logic AND the visual symbol to display
             letterScript.SetupRandomLetter(randomHardKey.key, randomHardKey.symbol);
 
             activePowerups.Add(letterScript);
@@ -79,7 +83,6 @@ public class PowerupGenerator : MonoBehaviour
                 continue;
             }
 
-            // Powerups are collected individually, so we just check if this one is pressed
             if (powerupLetter.inZone && powerupLetter.isPressed)
             {
                 if (powerupLetter.TryGetComponent<Powerup>(out Powerup powerupComponent))
@@ -87,7 +90,9 @@ public class PowerupGenerator : MonoBehaviour
                     powerupComponent.ApplyEffect();
                 }
 
-                Destroy(powerupLetter.gameObject);
+                // --- UPDATED FOR NETWORKING ---
+                // Instead of local Destroy, tell the network to wipe out this object
+                PhotonNetwork.Destroy(powerupLetter.gameObject);
                 activePowerups.RemoveAt(i);
             }
         }

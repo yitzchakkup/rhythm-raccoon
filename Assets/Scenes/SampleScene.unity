@@ -1283,9 +1283,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 654381538}
-  - component: {fileID: 654381537}
   - component: {fileID: 654381539}
-  - component: {fileID: 654381540}
+  - component: {fileID: 654381541}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1293,19 +1292,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &654381537
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 654381536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1909e05f1ffa3f04b8b0eeea103efa07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ScoreManager
-  staminaRewardAmount: 5
 --- !u!4 &654381538
 Transform:
   m_ObjectHideFlags: 0
@@ -1333,7 +1319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a9ca73aebae2594bb5da153098be3f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
---- !u!114 &654381540
+--- !u!114 &654381541
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1342,13 +1328,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 654381536}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 446cc98959d700c44b3a07233a61f7e4, type: 3}
+  m_Script: {fileID: 11500000, guid: c98ddeeb4ea4b704088c2a4dd0c9e4b7, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::StaminaManager
+  m_EditorClassIdentifier: Assembly-CSharp::ScoreAndStaminaManager
+  staminaRewardAmount: 5
   maxStamina: 100
   startingStamina: 75
   staminaDrainAmount: 1
-  staminaDrainTickRate: 0.33
+  staminaDrainTickRate: 0.5
 --- !u!1001 &807537836
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2682,8 +2669,8 @@ MonoBehaviour:
   leftSpawnBound: {fileID: 1539228542}
   rightSpawnBound: {fileID: 1184398234}
   powerupPrefabs:
-  - {fileID: 4159722400878317128, guid: eadcbfd4f530b44b7b987b4e0537d698, type: 3}
   - {fileID: 4159722400878317128, guid: 39c744903caa44799bbc814b00c71d40, type: 3}
+  - {fileID: 4159722400878317128, guid: 11a4a3bf264eab9469f8ac007e44821b, type: 3}
   spawnInterval: 15
   fallSpeed: 3
 --- !u!4 &1921254107

@@ -520,7 +520,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.9339623, g: 0.24230155, b: 0.24230155, a: 1}
+  m_Color: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1821,7 +1821,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.18503025, g: 0.6226415, b: 0.18633527, a: 1}
+  m_Color: {r: 0, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2950,9 +2950,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PowerupGenerator
   leftSpawnBound: {fileID: 1539228542}
   rightSpawnBound: {fileID: 1184398234}
-  powerupPrefabs:
-  - {fileID: 4159722400878317128, guid: 7de97a75c113746618f04c23b9621761, type: 3}
+  standardBuffs:
   - {fileID: 4159722400878317128, guid: 95d4a7177fc5f45dea3e955f05ad6af4, type: 3}
+  - {fileID: 4159722400878317128, guid: 11a4a3bf264eab9469f8ac007e44821b, type: 3}
+  opponentAttacks:
+  - {fileID: 4159722400878317128, guid: c2e95b77129ab4e5496fb165a686c67d, type: 3}
+  - {fileID: 4159722400878317128, guid: 7de97a75c113746618f04c23b9621761, type: 3}
   spawnInterval: 15
   fallSpeed: 3
 --- !u!4 &1921254107

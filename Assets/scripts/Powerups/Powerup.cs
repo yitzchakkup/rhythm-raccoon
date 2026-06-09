@@ -1,12 +1,19 @@
 using UnityEngine;
 
+// --- NEW: Define the categories of powerups ---
+public enum PowerupTarget 
+{ 
+    Self,       // Buffs (Double Score, Stamina, etc.)
+    Opponent    // Attacks (Halve Score, Drain Stamina, etc.)
+}
+
 public abstract class Powerup : MonoBehaviour
 {
     [Header("Powerup Settings")]
-    [Tooltip("A brief description for debugging purposes.")]
     public string powerupName = "Unknown Powerup";
+    
+    // --- NEW: Expose the target type to the Inspector ---
+    public PowerupTarget target = PowerupTarget.Self; 
 
-    // This is the abstract method that every specific powerup MUST implement.
-    // It will be called by the ScoreManager when the player successfully types the letter.
     public abstract void ApplyEffect();
 }

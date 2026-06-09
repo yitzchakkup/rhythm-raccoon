@@ -10,7 +10,7 @@ public class ScoreAndStaminaManager : MonoBehaviour
 
     [Header("Score Settings")]
     public int Score { get; private set; } = 0;
-    private int scoreMultiplier = 1;
+    private float scoreMultiplier = 1f;
     private float scoreMultiplierTimer = 0f;
 
     [Header("Stamina Settings")]
@@ -85,7 +85,7 @@ public class ScoreAndStaminaManager : MonoBehaviour
 
     public void AddScoreAndStamina(int pointsToAdd)
     {
-        int calculatedPoints = pointsToAdd * scoreMultiplier;
+        int calculatedPoints = Mathf.RoundToInt(pointsToAdd * scoreMultiplier);
         Score += calculatedPoints;
         UpdateScoreUI();
         
@@ -113,7 +113,7 @@ public class ScoreAndStaminaManager : MonoBehaviour
         }
     }
 
-    public void ActivateScoreMultiplier(int multiplier, float duration)
+    public void ActivateScoreMultiplier(float multiplier, float duration)
     {
         scoreMultiplier = multiplier;
         scoreMultiplierTimer = duration; 

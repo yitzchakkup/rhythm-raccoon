@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Photon.Pun; // --- NEW: Needed to check our network status ---
 
 public class PowerupGenerator : MonoBehaviour
 {
@@ -8,15 +9,18 @@ public class PowerupGenerator : MonoBehaviour
     public Transform leftSpawnBound;
     public Transform rightSpawnBound;
 
-    [Header("Powerup Settings")]
-    public GameObject[] powerupPrefabs; 
+    // --- UPDATED: Two distinct pools of powerups ---
+    [Header("Powerup Pools")]
+    public GameObject[] standardBuffs;     // Put DoubleScore, DoubleStamina here
+    public GameObject[] opponentAttacks;   // Put HalveScore, HalveStamina here
+
+    [Header("Generator Settings")]
     public float spawnInterval = 15f; 
     public float fallSpeed = 3f;
 
     private float spawnTimer;
     private List<FallingLetter> activePowerups = new List<FallingLetter>();
 
-    // --- NEW: A list of harder keys and their visual symbols ---
     private readonly (Key key, string symbol)[] hardKeys = new (Key, string)[]
     {
         (Key.Digit1, "1"), (Key.Digit2, "2"), (Key.Digit3, "3"), 
@@ -44,12 +48,23 @@ public class PowerupGenerator : MonoBehaviour
 
     private void SpawnPowerup()
     {
-        if (powerupPrefabs.Length == 0) return;
+        // 1. Always start with the standard buffs
+        List<GameObject> validPrefabs = new List<GameObject>(standardBuffs);
+
+        // 2. If we are online AND connected to another player, add the attacks to the pool!
+        if (!PhotonNetwork.OfflineMode && PhotonNetwork.IsConnected && PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount > 1)
+        {
+            validPrefabs.AddRange(opponentAttacks);
+        }
+
+        // Safety check just in case the inspector lists are empty
+        if (validPrefabs.Count == 0) return;
 
         float randomX = Random.Range(leftSpawnBound.position.x, rightSpawnBound.position.x);
         Vector3 spawnPosition = new Vector3(randomX, leftSpawnBound.position.y, 0f);
 
-        GameObject prefab = powerupPrefabs[Random.Range(0, powerupPrefabs.Length)];
+        // 3. Pick randomly from the combined valid list
+        GameObject prefab = validPrefabs[Random.Range(0, validPrefabs.Count)];
         GameObject spawnedObj = Instantiate(prefab, spawnPosition, Quaternion.identity);
 
         FallingLetter letterScript = spawnedObj.GetComponent<FallingLetter>();
@@ -57,10 +72,7 @@ public class PowerupGenerator : MonoBehaviour
         {
             letterScript.SetFallSpeed(fallSpeed);
             
-            // --- NEW: Pick a random symbol/number from our hardKeys array ---
             var randomHardKey = hardKeys[Random.Range(0, hardKeys.Length)];
-            
-            // Pass BOTH the key logic AND the visual symbol to display
             letterScript.SetupRandomLetter(randomHardKey.key, randomHardKey.symbol);
 
             activePowerups.Add(letterScript);
@@ -79,7 +91,6 @@ public class PowerupGenerator : MonoBehaviour
                 continue;
             }
 
-            // Powerups are collected individually, so we just check if this one is pressed
             if (powerupLetter.inZone && powerupLetter.isPressed)
             {
                 if (powerupLetter.TryGetComponent<Powerup>(out Powerup powerupComponent))

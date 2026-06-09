@@ -64,17 +64,18 @@ public class MultiplayerMatchManager : MonoBehaviourPun
     {
         Debug.Log($"Hit by attack: {attackName}");
         
-        // 1. Visually show that WE got hit on our screen
-        if (AvatarController.Instance != null)
-        {
-            AvatarController.Instance.PlayLocalDamageEffect();
-        }
+        if (AvatarController.Instance != null) AvatarController.Instance.PlayLocalDamageEffect();
 
-        // 2. Actually apply the punishment
         switch (attackName)
         {
-            case "SpeedUp":
-                // Trigger logic here...
+            case "HalveScore":
+                if (ScoreAndStaminaManager.Instance != null)
+                    ScoreAndStaminaManager.Instance.ActivateScoreMultiplier(0.5f, 10f);
+                break;
+            // --- NEW: Catching the Stamina Attack ---
+            case "HalveStamina":
+                if (ScoreAndStaminaManager.Instance != null)
+                    ScoreAndStaminaManager.Instance.ActivateStaminaMultiplier(0.5f, 10f);
                 break;
         }
     }

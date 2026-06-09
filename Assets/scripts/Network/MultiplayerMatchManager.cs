@@ -16,6 +16,23 @@ public class MultiplayerMatchManager : MonoBehaviourPun
         if (Instance != null && Instance != this) Destroy(this.gameObject);
         else Instance = this;
     }
+    
+    private void Start()
+    {
+        // --- NEW: Hide opponent UI if playing Single Player ---
+        if (PhotonNetwork.OfflineMode || PhotonNetwork.CurrentRoom == null || PhotonNetwork.CurrentRoom.PlayerCount <= 1)
+        {
+            if (opponentScoreText != null) opponentScoreText.gameObject.SetActive(false);
+            
+            // If your stamina bar is inside a background UI object, you might want to 
+            // disable its parent. But disabling the fill image directly works perfectly too!
+            if (opponentStaminaBarFill != null) 
+            {
+                // Disables the image itself (and its parent if you placed the Image component on the root of the bar)
+                opponentStaminaBarFill.transform.parent.gameObject.SetActive(false); 
+            }
+        }
+    }
 
     // --- SCORE SYNC ---
     public void SyncMyScore(int myTotalScore)

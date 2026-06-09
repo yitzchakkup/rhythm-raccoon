@@ -5214,5 +5214,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddd8862129f1435584b9e45c8b84198a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HalveOpponentStamina
-  powerupName: Unknown Powerup
+  powerupName: HalveStamina
   target: 1

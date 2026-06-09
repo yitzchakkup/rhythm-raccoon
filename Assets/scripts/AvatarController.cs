@@ -21,22 +21,31 @@ public class AvatarController : MonoBehaviour
 
     private void Start()
     {
-        // 1. Determine who we are on the network
-        // (If playing Single Player Offline Mode, IsMasterClient is automatically true)
-        if (PhotonNetwork.IsMasterClient)
+        // --- NEW: Hide opponent if playing Single Player ---
+        if (PhotonNetwork.OfflineMode || PhotonNetwork.CurrentRoom == null || PhotonNetwork.CurrentRoom.PlayerCount <= 1)
         {
-            myBaseColor = Color.green;         // Host is Green
-            opponentBaseColor = Color.yellow;  // Guest is Yellow
+            if (opponent != null) opponent.gameObject.SetActive(false);
+            myBaseColor = Color.green; // Default our player to Green in single-player
         }
         else
         {
-            myBaseColor = Color.yellow;        // Guest is Yellow
-            opponentBaseColor = Color.green;   // Host is Green
+            // If Multiplayer, do our standard color assignment
+            if (PhotonNetwork.IsMasterClient)
+            {
+                myBaseColor = Color.green;         
+                opponentBaseColor = Color.yellow;  
+            }
+            else
+            {
+                myBaseColor = Color.yellow;        
+                opponentBaseColor = Color.green;   
+            }
+
+            if (opponent != null) opponent.color = opponentBaseColor;
         }
 
-        // 2. Apply the colors immediately 
+        // Always apply our local color
         if (localPlayer != null) localPlayer.color = myBaseColor;
-        if (opponent != null) opponent.color = opponentBaseColor;
     }
 
     public void PlayLocalDamageEffect()

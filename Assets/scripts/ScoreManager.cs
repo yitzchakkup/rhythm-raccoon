@@ -86,10 +86,10 @@ public class ScoreManager : MonoBehaviour
         
         UpdateScoreUI();
         
-        if (StaminaManager.Instance != null)
-        {
-            StaminaManager.Instance.AddStamina(staminaRewardAmount);
-        }
+        // if (StaminaManager.Instance != null)
+        // {
+        //     StaminaManager.Instance.AddStamina(staminaRewardAmount);
+        // }
         if (MultiplayerMatchManager.Instance != null)
         {
             MultiplayerMatchManager.Instance.SyncMyScore(this.Score);

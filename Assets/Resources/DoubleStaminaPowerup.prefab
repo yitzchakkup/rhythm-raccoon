@@ -663,7 +663,7 @@ ParticleSystem:
         m_RotationOrder: 4
   ShapeModule:
     serializedVersion: 6
-    enabled: 1
+    enabled: 0
     type: 10
     angle: 25
     length: 5
@@ -976,7 +976,7 @@ ParticleSystem:
     m_BurstCount: 0
     m_Bursts: []
   SizeModule:
-    enabled: 0
+    enabled: 1
     curve:
       serializedVersion: 2
       minMaxState: 1
@@ -4952,7 +4952,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4278321666
-  m_fontColor: {r: 0.009433985, g: 0.008766486, b: 0.008766486, a: 1}
+  m_fontColor: {r: 0.007843138, g: 0.007843138, b: 0.007843138, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -5030,9 +5030,9 @@ GameObject:
   - component: {fileID: 1237085707490276170}
   - component: {fileID: 2956474542381959999}
   - component: {fileID: 8060468296852919911}
-  - component: {fileID: 8816151327027725937}
+  - component: {fileID: 1677271681535670815}
   m_Layer: 0
-  m_Name: DoubleScorePowerup
+  m_Name: DoubleStaminaPowerup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5202,7 +5202,7 @@ MonoBehaviour:
   letterKey: 15
   letterText: {fileID: 4322878621582819765}
   fallSpeed: 1
---- !u!114 &8816151327027725937
+--- !u!114 &1677271681535670815
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5211,9 +5211,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4159722400878317128}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fe64a74acd2b4a358c904add214ec47, type: 3}
+  m_Script: {fileID: 11500000, guid: 501de0fe8a027304d8b7ce6a9f13b4b6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DoubleScorePowerup
-  powerupName: Double Score Powerup
-  scoreMultiplier: 2
+  m_EditorClassIdentifier: Assembly-CSharp::DoubleStaminaGain
+  powerupName: Double Stamina
+  staminaMultiplier: 2.5
   durationInSeconds: 10

@@ -1,9 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class DoubleScorePowerup : Powerup
+public class DoubleStaminaGain : Powerup
 {
-    [Header("Double Score Settings")]
-    public int scoreMultiplier = 2;
+    [Header("Double Stamina Settings")]
+    public float staminaMultiplier = 2f;
     public float durationInSeconds = 10f;
 
     public override void ApplyEffect()
@@ -11,7 +11,7 @@ public class DoubleScorePowerup : Powerup
         // --- UPDATED: Calling the new unified manager ---
         if (ScoreAndStaminaManager.Instance != null)
         {
-            ScoreAndStaminaManager.Instance.ActivateScoreMultiplier(scoreMultiplier, durationInSeconds);
+            ScoreAndStaminaManager.Instance.ActivateStaminaMultiplier(staminaMultiplier, durationInSeconds);
             Debug.Log($"Applied {powerupName}!");
         }
     }

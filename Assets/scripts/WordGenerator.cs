@@ -97,14 +97,14 @@ public class WordGenerator : MonoBehaviour
             if (waveComplete)
             {
                 // --- UPDATED: Calculate dynamic score based on zones ---
-                if (ScoreManager.Instance != null)
+                if (ScoreAndStaminaManager.Instance != null)
                 {
                     int totalWaveScore = 0;
                     foreach (FallingLetter letter in wave)
                     {
                         totalWaveScore += letter.GetScoreValue();
                     }
-                    ScoreManager.Instance.AddScore(totalWaveScore);
+                    ScoreAndStaminaManager.Instance.AddScoreAndStamina(totalWaveScore);
                 }
                 // -------------------------------------------------------
 

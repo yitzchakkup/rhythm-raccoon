@@ -1,6 +1,7 @@
 using UnityEngine;
 using Photon.Pun;
 using TMPro;
+using UnityEngine.UI; // Needed for the Image fill
 
 public class MultiplayerMatchManager : MonoBehaviourPun
 {
@@ -8,23 +9,18 @@ public class MultiplayerMatchManager : MonoBehaviourPun
 
     [Header("Opponent UI")]
     public TMP_Text opponentScoreText;
-    public TMP_Text opponentStaminaText;
+    public Image opponentStaminaBarFill; // Swapped to an Image to match your new system
 
     private void Awake()
     {
-        if (Instance != null && Instance != this) Destroy(this);
+        if (Instance != null && Instance != this) Destroy(this.gameObject);
         else Instance = this;
     }
 
-    // ==========================================
-    // 1. SYNCING SCORE & STAMINA
-    // ==========================================
-
+    // --- SCORE SYNC ---
     public void SyncMyScore(int myTotalScore)
     {
         if (PhotonNetwork.OfflineMode || !PhotonNetwork.IsConnected) return;
-        
-        // Shout my score exclusively to the other player
         photonView.RPC("ReceiveOpponentScore_RPC", RpcTarget.Others, myTotalScore);
     }
 
@@ -33,55 +29,40 @@ public class MultiplayerMatchManager : MonoBehaviourPun
     {
         if (opponentScoreText != null) 
         {
-            opponentScoreText.text = $"Opponent Score: {opponentScore}";
+            opponentScoreText.text = $"Opponent: {opponentScore}";
         }
     }
 
-    public void SyncMyStamina(float myCurrentStamina)
-    {
-        if (PhotonNetwork.OfflineMode || !PhotonNetwork.IsConnected) return;
-        photonView.RPC("ReceiveOpponentStamina_RPC", RpcTarget.Others, myCurrentStamina);
-    }
-
-    [PunRPC]
-    private void ReceiveOpponentStamina_RPC(float opponentStamina)
-    {
-        if (opponentStaminaText != null) 
-        {
-            // You can replace this with a UI slider update later!
-            opponentStaminaText.text = $"Opponent Stamina: {opponentStamina}";
-        }
-    }
-
-    // ==========================================
-    // 2. SENDING & RECEIVING ATTACKS
-    // ==========================================
-
-    public void SendAttackToOpponent(string attackName)
+    // --- STAMINA SYNC ---
+    public void SyncMyStamina(float currentStamina, float maxStamina)
     {
         if (PhotonNetwork.OfflineMode || !PhotonNetwork.IsConnected) return;
         
-        Debug.Log($"Sending attack '{attackName}' to opponent!");
+        // We calculate the fraction (0.0 to 1.0) before sending it over the network
+        float fillFraction = currentStamina / maxStamina;
+        photonView.RPC("ReceiveOpponentStamina_RPC", RpcTarget.Others, fillFraction);
+    }
+
+    [PunRPC]
+    private void ReceiveOpponentStamina_RPC(float opponentFillFraction)
+    {
+        if (opponentStaminaBarFill != null) 
+        {
+            opponentStaminaBarFill.fillAmount = opponentFillFraction;
+        }
+    }
+
+    // --- ATTACK SYNC ---
+    public void SendAttackToOpponent(string attackName)
+    {
+        if (PhotonNetwork.OfflineMode || !PhotonNetwork.IsConnected) return;
         photonView.RPC("ReceiveAttack_RPC", RpcTarget.Others, attackName);
     }
 
     [PunRPC]
     private void ReceiveAttack_RPC(string attackName)
     {
-        Debug.Log($"I was hit by an attack from the opponent: {attackName}");
-
-        // Here is where you trigger the local punishment based on the string name
-        switch (attackName)
-        {
-            case "SpeedUp":
-                // e.g., WordGenerator.Instance.ApplyTemporarySpeedBoost();
-                break;
-            case "HideLetters":
-                // e.g., trigger a UI panel that covers the screen
-                break;
-            case "StealStamina":
-                // e.g., PlayerManager.Instance.LoseStamina(10);
-                break;
-        }
+        Debug.Log($"Hit by attack: {attackName}");
+        // We will build out the punishments later!
     }
 }

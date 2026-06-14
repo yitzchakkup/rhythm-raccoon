@@ -905,6 +905,10 @@ MonoBehaviour:
   minLettersPerWave: 1
   maxLettersLimit: 5
   timeToReachMaxLetters: 180
+  standardVerticalStagger: 1.5
+  chordProbability: 0.2
+  connectionCordPrefab: {fileID: 0}
+  clusterProbability: 0.3
 --- !u!4 &415607409
 Transform:
   m_ObjectHideFlags: 0

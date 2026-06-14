@@ -2,6 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum WavePattern 
+{ 
+    Standard, // Staggered heights, caught individually (but can randomly cluster!)
+    Chord     // All drop at the exact same height simultaneously
+}
+
 public class WordGenerator : MonoBehaviour
 {
     [Header("Spawn Zone (Anchor Points)")]
@@ -25,12 +31,21 @@ public class WordGenerator : MonoBehaviour
     public int maxLettersLimit = 5;
     public float timeToReachMaxLetters = 60f;
 
+    [Header("Wave Patterns")]
+    public float standardVerticalStagger = 1.5f;   
+    [Range(0f, 1f)] public float chordProbability = 0.5f; 
+    
+    [Header("Visuals")]
+    public GameObject connectionCordPrefab; // Drag your new prefab here!
+    
+    // --- NEW: The chance that a standard letter groups up with the previous one ---
+    [Range(0f, 1f)] public float clusterProbability = 0.3f; 
+
     private float currentSpawnDelay;
     private float currentFallSpeed;
     private float spawnTimer;
     private float gameTimer;
 
-    // --- NEW: Tracking the words/waves ---
     private List<List<FallingLetter>> activeWaves = new List<List<FallingLetter>>();
 
     void Start()
@@ -56,19 +71,15 @@ public class WordGenerator : MonoBehaviour
             spawnTimer = 0f;
         }
 
-        // --- NEW: Check active waves every frame ---
         CheckActiveWaves();
     }
 
     private void CheckActiveWaves()
     {
-        // We loop backwards because we might remove waves from the list while checking them
         for (int i = activeWaves.Count - 1; i >= 0; i--)
         {
             List<FallingLetter> wave = activeWaves[i];
 
-            // 1. Check if the player missed this wave (any letter hit the bottom and was destroyed)
-            // If any letter is null, they failed this wave. We stop tracking it.
             bool missedLetter = false;
             foreach (FallingLetter letter in wave)
             {
@@ -78,10 +89,9 @@ public class WordGenerator : MonoBehaviour
             if (missedLetter)
             {
                 activeWaves.RemoveAt(i);
-                continue; // Skip to the next wave
+                continue; 
             }
 
-            // 2. Check if all letters in this specific wave are in the zone AND pressed
             bool waveComplete = true;
             foreach (FallingLetter letter in wave)
             {
@@ -92,11 +102,8 @@ public class WordGenerator : MonoBehaviour
                 }
             }
 
-            // 3. If they successfully held the whole word in the zone!
-            // 3. If they successfully held the whole word in the zone!
             if (waveComplete)
             {
-                // --- UPDATED: Calculate dynamic score based on zones ---
                 if (ScoreAndStaminaManager.Instance != null)
                 {
                     int totalWaveScore = 0;
@@ -106,9 +113,7 @@ public class WordGenerator : MonoBehaviour
                     }
                     ScoreAndStaminaManager.Instance.AddScoreAndStamina(totalWaveScore);
                 }
-                // -------------------------------------------------------
 
-                // Apply powerups and destroy the objects
                 foreach (FallingLetter letter in wave)
                 {
                     if (letter.TryGetComponent<Powerup>(out Powerup powerup))
@@ -133,20 +138,56 @@ public class WordGenerator : MonoBehaviour
         float spacing = (rightEdge - leftEdge) / (lettersToSpawn + 1);
         float spawnY = leftSpawnBound.position.y; 
 
-        List<FallingLetter> newWave = new List<FallingLetter>();
-
-        // --- NEW: Create a pool of available keys (A to Z) ---
         List<Key> availableKeys = new List<Key>();
         for (int k = (int)Key.A; k <= (int)Key.Z; k++)
         {
             availableKeys.Add((Key)k);
         }
-        // -----------------------------------------------------
+
+        WavePattern currentPattern = Random.value < chordProbability ? WavePattern.Chord : WavePattern.Standard;
+
+        List<float> xPositions = new List<float>();
+        for (int i = 0; i < lettersToSpawn; i++)
+        {
+            xPositions.Add(leftEdge + (spacing * (i + 1)));
+        }
+
+        for (int i = 0; i < xPositions.Count; i++)
+        {
+            float temp = xPositions[i];
+            int randomIndex = Random.Range(i, xPositions.Count);
+            xPositions[i] = xPositions[randomIndex];
+            xPositions[randomIndex] = temp;
+        }
+
+        // --- UPDATED: Unified Grouping Logic ---
+        List<FallingLetter> currentWorkingGroup = new List<FallingLetter>();
+        float currentY = spawnY;
 
         for (int i = 0; i < lettersToSpawn; i++)
         {
             GameObject prefab = spawnablePrefabs[Random.Range(0, spawnablePrefabs.Length)];
-            Vector3 position = new Vector3(leftEdge + (spacing * (i + 1)), spawnY, 0f);
+            
+            // If it's a Standard pattern AND it's not the very first letter, we check for a cluster
+            if (currentPattern == WavePattern.Standard && i > 0)
+            {
+                if (Random.value < clusterProbability)
+                {
+                    // CLUSTER TRIGGERED! 
+                    // We DO NOT increase currentY, so it falls alongside the previous letter.
+                }
+                else
+                {
+                    // NO CLUSTER. Move it higher up the screen.
+                    currentY += standardVerticalStagger;
+
+                    FinalizeWaveGroup(currentWorkingGroup); // TO THIS
+                    currentWorkingGroup = new List<FallingLetter>();
+                }
+            }
+            // (If it's a Chord, currentY just stays at spawnY for the entire loop!)
+
+            Vector3 position = new Vector3(xPositions[i], currentY, 0f);
             GameObject spawnedObj = Instantiate(prefab, position, Quaternion.identity);
 
             FallingLetter letterScript = spawnedObj.GetComponent<FallingLetter>();
@@ -154,17 +195,40 @@ public class WordGenerator : MonoBehaviour
             {
                 letterScript.SetFallSpeed(currentFallSpeed);
                 
-                // --- NEW: Pick a random key from the pool and remove it ---
-                int randomIndex = Random.Range(0, availableKeys.Count);
-                Key assignedKey = availableKeys[randomIndex];
-                availableKeys.RemoveAt(randomIndex); // Prevents duplicates in this wave
-                // ----------------------------------------------------------
+                int randomKeyIndex = Random.Range(0, availableKeys.Count);
+                Key assignedKey = availableKeys[randomKeyIndex];
+                availableKeys.RemoveAt(randomKeyIndex); 
 
                 letterScript.SetupRandomLetter(assignedKey);
-                newWave.Add(letterScript);
+
+                // Add the letter to whatever the current working group is
+                currentWorkingGroup.Add(letterScript);
             }
         }
 
-        activeWaves.Add(newWave);
+        // After the loop finishes, save whatever group was being worked on at the end
+        if (currentWorkingGroup.Count > 0)
+        {
+            FinalizeWaveGroup(currentWorkingGroup); // TO THIS
+        }
+    }
+    
+    // --- NEW: Helper method to handle finalizing a group and adding the cord ---
+    private void FinalizeWaveGroup(List<FallingLetter> group)
+    {
+        if (group.Count == 0) return;
+        
+        activeWaves.Add(group);
+
+        // If the group has more than one letter, spawn the visual cord!
+        if (group.Count > 1 && connectionCordPrefab != null)
+        {
+            GameObject cordObj = Instantiate(connectionCordPrefab, Vector3.zero, Quaternion.identity);
+            LetterConnectionCord cordScript = cordObj.GetComponent<LetterConnectionCord>();
+            if (cordScript != null)
+            {
+                cordScript.Setup(group);
+            }
+        }
     }
 }

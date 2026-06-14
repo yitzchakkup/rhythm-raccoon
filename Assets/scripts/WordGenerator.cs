@@ -1,7 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 public class WordGenerator : MonoBehaviour
 {
@@ -14,7 +14,7 @@ public class WordGenerator : MonoBehaviour
     public GameObject connectionCordPrefab; 
 
     [Header("Difficulty: Limits")]
-    public float timeToReachMaxDifficulty = 180f; // E.g., 3 minutes to reach max
+    public float timeToReachMaxDifficulty = 180f; 
     
     public float initialSpawnDelay = 4f;
     public float minimumSpawnDelay = 1.5f; 
@@ -26,25 +26,18 @@ public class WordGenerator : MonoBehaviour
     public int maxLettersLimit = 5;
 
     [Header("Difficulty: Clustering")]
-    [Tooltip("Distance between non-clustered letters.")]
     public float standardVerticalStagger = 1.5f;   
-    [Tooltip("Starting chance for a letter to cluster (0 = 0%, 1 = 100%)")]
     [Range(0f, 1f)] public float minClusterProbability = 0.0f; 
-    [Tooltip("Maximum chance for a letter to cluster when the game gets hard")]
     [Range(0f, 1f)] public float maxClusterProbability = 0.6f; 
 
     [Header("Difficulty: Trajectory Curves (0.0 to 1.0)")]
-    [Tooltip("Draw how fast the speed increases over time")]
     public AnimationCurve speedCurve = AnimationCurve.Linear(0, 0, 1, 1);
-    
-    [Tooltip("Draw how fast the delay between spawns shrinks")]
     public AnimationCurve spawnDelayCurve = AnimationCurve.Linear(0, 0, 1, 1);
-    
-    [Tooltip("Draw how quickly the game starts clustering letters")]
     public AnimationCurve clusterCurve = AnimationCurve.Linear(0, 0, 1, 1);
-    
+
+    // --- NEW: The Master Speed Multiplier for Powerups ---
     [Header("Powerup States")]
-    public float powerupSpeedMultiplier = 1f; // 1 = Normal, 2 = Double Speed, 0.5 = Slow Mo
+    public float powerupSpeedMultiplier = 1f; 
 
     private float currentSpawnDelay;
     private float currentFallSpeed;
@@ -67,17 +60,18 @@ public class WordGenerator : MonoBehaviour
         gameTimer += Time.deltaTime;
         spawnTimer += Time.deltaTime;
 
-        // 1. Calculate our overall timeline progress (0.0 to 1.0)
         float progress = Mathf.Clamp01(gameTimer / timeToReachMaxDifficulty);
 
-        // 2. Look at the graphs to see exactly where our multipliers should be!
         float delayMultiplier = spawnDelayCurve.Evaluate(progress);
         float speedMultiplier = speedCurve.Evaluate(progress);
 
-        // 3. Apply the multipliers to our min/max limits
         currentSpawnDelay = Mathf.Lerp(initialSpawnDelay, minimumSpawnDelay, delayMultiplier);
-        currentFallSpeed = Mathf.Lerp(initialFallSpeed, maxFallSpeed, speedMultiplier);
         
+        // --- THE FIX: Calculate base speed, then warp it with the powerup ---
+        float baseSpeed = Mathf.Lerp(initialFallSpeed, maxFallSpeed, speedMultiplier);
+        currentFallSpeed = baseSpeed * powerupSpeedMultiplier;
+
+        // --- THE FIX: Actively push the new speed to every living letter ---
         foreach (List<FallingLetter> wave in activeWaves)
         {
             foreach (FallingLetter letter in wave)
@@ -88,7 +82,7 @@ public class WordGenerator : MonoBehaviour
                 }
             }
         }
-        
+
         if (spawnTimer >= currentSpawnDelay)
         {
             SpawnWave();
@@ -96,6 +90,19 @@ public class WordGenerator : MonoBehaviour
         }
 
         CheckActiveWaves();
+    }
+
+    // --- NEW: The Powerup Coroutine ---
+    public void TriggerSpeedAttack(float multiplier, float duration)
+    {
+        StartCoroutine(SpeedWarpRoutine(multiplier, duration));
+    }
+
+    private IEnumerator SpeedWarpRoutine(float multiplier, float duration)
+    {
+        powerupSpeedMultiplier = multiplier; 
+        yield return new WaitForSeconds(duration);
+        powerupSpeedMultiplier = 1f; 
     }
 
     private void CheckActiveWaves()
@@ -110,7 +117,6 @@ public class WordGenerator : MonoBehaviour
                 if (letter == null) missedLetter = true;
             }
 
-            // If a letter was missed and destroyed by hitting the bottom line, remove the whole group
             if (missedLetter)
             {
                 activeWaves.RemoveAt(i);
@@ -195,7 +201,6 @@ public class WordGenerator : MonoBehaviour
             xPositions.Add(leftEdge + (spacing * (i + 1)));
         }
 
-        // Shuffle the X positions so they don't spawn in a predictable diagonal
         for (int i = 0; i < xPositions.Count; i++)
         {
             float temp = xPositions[i];
@@ -215,11 +220,10 @@ public class WordGenerator : MonoBehaviour
             {
                 if (Random.value < currentClusterChance)
                 {
-                    // CLUSTER: Do not increase Y, stay grouped with the previous letter
+                    // Cluster
                 }
                 else
                 {
-                    // NO CLUSTER: Move higher up, finalize the previous group
                     currentY += standardVerticalStagger;
                     FinalizeWaveGroup(currentWorkingGroup);
                     currentWorkingGroup = new List<FallingLetter>();
@@ -232,6 +236,7 @@ public class WordGenerator : MonoBehaviour
             FallingLetter letterScript = spawnedObj.GetComponent<FallingLetter>();
             if (letterScript != null)
             {
+                // Assign the warped speed right at birth
                 letterScript.SetFallSpeed(currentFallSpeed);
                 
                 int randomKeyIndex = Random.Range(0, availableKeys.Count);
@@ -247,23 +252,5 @@ public class WordGenerator : MonoBehaviour
         {
             FinalizeWaveGroup(currentWorkingGroup);
         }
-    }
-    
-    // Call this when the Bull Trap or Tremolo attack hits!
-    public void TriggerSpeedAttack(float multiplier, float duration)
-    {
-        StartCoroutine(SpeedWarpRoutine(multiplier, duration));
-    }
-
-    private IEnumerator SpeedWarpRoutine(float multiplier, float duration)
-    {
-        // 1. Hit them with the speed change!
-        powerupSpeedMultiplier = multiplier; 
-
-        // 2. Wait for the attack duration to end
-        yield return new WaitForSeconds(duration);
-
-        // 3. Snap the tempo back to normal
-        powerupSpeedMultiplier = 1f; 
     }
 }

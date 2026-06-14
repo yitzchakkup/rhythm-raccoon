@@ -897,18 +897,88 @@ MonoBehaviour:
   spawnablePrefabs:
   - {fileID: 6853399518264055449, guid: 91cb75297eb3c4bd485b450a83a5efe0, type: 3}
   connectionCordPrefab: {fileID: 6039902528486513972, guid: 23ee081c4c93b492382885ef7f84d84f, type: 3}
-  initialSpawnDelay: 7
-  minimumSpawnDelay: 0.5
-  delayDecreaseRate: 0.03
+  timeToReachMaxDifficulty: 180
+  initialSpawnDelay: 5
+  minimumSpawnDelay: 1
   initialFallSpeed: 0.85
   maxFallSpeed: 4
-  speedIncreaseRate: 0.015
   minLettersPerWave: 1
   maxLettersLimit: 4
-  timeToReachMaxLetters: 180
   standardVerticalStagger: 1.5
   minClusterProbability: 0
   maxClusterProbability: 0.6
+  speedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spawnDelayCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  clusterCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!4 &415607409
 Transform:
   m_ObjectHideFlags: 0

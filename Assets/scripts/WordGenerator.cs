@@ -12,28 +12,35 @@ public class WordGenerator : MonoBehaviour
     public GameObject[] spawnablePrefabs; 
     public GameObject connectionCordPrefab; 
 
-    [Header("Difficulty: Timing & Speed")]
+    [Header("Difficulty: Limits")]
+    public float timeToReachMaxDifficulty = 180f; // E.g., 3 minutes to reach max
+    
     public float initialSpawnDelay = 4f;
     public float minimumSpawnDelay = 1.5f; 
-    public float delayDecreaseRate = 0.02f;
 
     public float initialFallSpeed = 2f;
     public float maxFallSpeed = 7f;
-    public float speedIncreaseRate = 0.05f;
 
-    [Header("Difficulty: Amount & Clustering")]
     public int minLettersPerWave = 1;
     public int maxLettersLimit = 5;
-    public float timeToReachMaxLetters = 60f;
-    
+
+    [Header("Difficulty: Clustering")]
     [Tooltip("Distance between non-clustered letters.")]
     public float standardVerticalStagger = 1.5f;   
-
-    // --- NEW: Dynamic Clustering Variables ---
     [Tooltip("Starting chance for a letter to cluster (0 = 0%, 1 = 100%)")]
     [Range(0f, 1f)] public float minClusterProbability = 0.0f; 
     [Tooltip("Maximum chance for a letter to cluster when the game gets hard")]
     [Range(0f, 1f)] public float maxClusterProbability = 0.6f; 
+
+    [Header("Difficulty: Trajectory Curves (0.0 to 1.0)")]
+    [Tooltip("Draw how fast the speed increases over time")]
+    public AnimationCurve speedCurve = AnimationCurve.Linear(0, 0, 1, 1);
+    
+    [Tooltip("Draw how fast the delay between spawns shrinks")]
+    public AnimationCurve spawnDelayCurve = AnimationCurve.Linear(0, 0, 1, 1);
+    
+    [Tooltip("Draw how quickly the game starts clustering letters")]
+    public AnimationCurve clusterCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     private float currentSpawnDelay;
     private float currentFallSpeed;
@@ -56,8 +63,16 @@ public class WordGenerator : MonoBehaviour
         gameTimer += Time.deltaTime;
         spawnTimer += Time.deltaTime;
 
-        currentSpawnDelay = Mathf.Max(minimumSpawnDelay, initialSpawnDelay - (gameTimer * delayDecreaseRate));
-        currentFallSpeed = Mathf.Min(maxFallSpeed, initialFallSpeed + (gameTimer * speedIncreaseRate));
+        // 1. Calculate our overall timeline progress (0.0 to 1.0)
+        float progress = Mathf.Clamp01(gameTimer / timeToReachMaxDifficulty);
+
+        // 2. Look at the graphs to see exactly where our multipliers should be!
+        float delayMultiplier = spawnDelayCurve.Evaluate(progress);
+        float speedMultiplier = speedCurve.Evaluate(progress);
+
+        // 3. Apply the multipliers to our min/max limits
+        currentSpawnDelay = Mathf.Lerp(initialSpawnDelay, minimumSpawnDelay, delayMultiplier);
+        currentFallSpeed = Mathf.Lerp(initialFallSpeed, maxFallSpeed, speedMultiplier);
 
         if (spawnTimer >= currentSpawnDelay)
         {
@@ -80,6 +95,7 @@ public class WordGenerator : MonoBehaviour
                 if (letter == null) missedLetter = true;
             }
 
+            // If a letter was missed and destroyed by hitting the bottom line, remove the whole group
             if (missedLetter)
             {
                 activeWaves.RemoveAt(i);
@@ -141,13 +157,11 @@ public class WordGenerator : MonoBehaviour
 
     private void SpawnWave()
     {
-        // 1. Calculate how hard the game currently is (0.0 to 1.0)
-        float progress = Mathf.Clamp01(gameTimer / timeToReachMaxLetters);
-        
+        float progress = Mathf.Clamp01(gameTimer / timeToReachMaxDifficulty);
         int lettersToSpawn = Mathf.RoundToInt(Mathf.Lerp(minLettersPerWave, maxLettersLimit, progress));
         
-        // 2. --- NEW: Calculate the dynamic cluster chance for this specific wave ---
-        float currentClusterChance = Mathf.Lerp(minClusterProbability, maxClusterProbability, progress);
+        float clusterMultiplier = clusterCurve.Evaluate(progress);
+        float currentClusterChance = Mathf.Lerp(minClusterProbability, maxClusterProbability, clusterMultiplier);
 
         float leftEdge = leftSpawnBound.position.x;
         float rightEdge = rightSpawnBound.position.x;
@@ -166,6 +180,7 @@ public class WordGenerator : MonoBehaviour
             xPositions.Add(leftEdge + (spacing * (i + 1)));
         }
 
+        // Shuffle the X positions so they don't spawn in a predictable diagonal
         for (int i = 0; i < xPositions.Count; i++)
         {
             float temp = xPositions[i];
@@ -181,7 +196,6 @@ public class WordGenerator : MonoBehaviour
         {
             GameObject prefab = spawnablePrefabs[Random.Range(0, spawnablePrefabs.Length)];
             
-            // --- UPDATED: Simpler logic based purely on dynamic probability ---
             if (i > 0) 
             {
                 if (Random.value < currentClusterChance)

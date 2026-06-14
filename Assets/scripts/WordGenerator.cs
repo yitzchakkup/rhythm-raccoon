@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -41,6 +42,9 @@ public class WordGenerator : MonoBehaviour
     
     [Tooltip("Draw how quickly the game starts clustering letters")]
     public AnimationCurve clusterCurve = AnimationCurve.Linear(0, 0, 1, 1);
+    
+    [Header("Powerup States")]
+    public float powerupSpeedMultiplier = 1f; // 1 = Normal, 2 = Double Speed, 0.5 = Slow Mo
 
     private float currentSpawnDelay;
     private float currentFallSpeed;
@@ -73,7 +77,18 @@ public class WordGenerator : MonoBehaviour
         // 3. Apply the multipliers to our min/max limits
         currentSpawnDelay = Mathf.Lerp(initialSpawnDelay, minimumSpawnDelay, delayMultiplier);
         currentFallSpeed = Mathf.Lerp(initialFallSpeed, maxFallSpeed, speedMultiplier);
-
+        
+        foreach (List<FallingLetter> wave in activeWaves)
+        {
+            foreach (FallingLetter letter in wave)
+            {
+                if (letter != null)
+                {
+                    letter.SetFallSpeed(currentFallSpeed);
+                }
+            }
+        }
+        
         if (spawnTimer >= currentSpawnDelay)
         {
             SpawnWave();
@@ -232,5 +247,23 @@ public class WordGenerator : MonoBehaviour
         {
             FinalizeWaveGroup(currentWorkingGroup);
         }
+    }
+    
+    // Call this when the Bull Trap or Tremolo attack hits!
+    public void TriggerSpeedAttack(float multiplier, float duration)
+    {
+        StartCoroutine(SpeedWarpRoutine(multiplier, duration));
+    }
+
+    private IEnumerator SpeedWarpRoutine(float multiplier, float duration)
+    {
+        // 1. Hit them with the speed change!
+        powerupSpeedMultiplier = multiplier; 
+
+        // 2. Wait for the attack duration to end
+        yield return new WaitForSeconds(duration);
+
+        // 3. Snap the tempo back to normal
+        powerupSpeedMultiplier = 1f; 
     }
 }

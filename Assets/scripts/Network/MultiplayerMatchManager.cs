@@ -102,6 +102,14 @@ public class MultiplayerMatchManager : MonoBehaviourPun
                 if (ScoreAndStaminaManager.Instance != null)
                     ScoreAndStaminaManager.Instance.ActivateScoreMultiplier(0.5f, 10f);
                 break;
+            case "TempoShift":
+                WordGenerator generator = FindObjectOfType<WordGenerator>();
+                if (generator != null)
+                {
+                    // The opponent hit us! Hardcode the punishment values here:
+                    generator.TriggerSpeedAttack(2.5f, 4f); 
+                }
+                break;
             case "HalveStamina":
                 // This attack is now effectively disabled as stamina is not used in multiplayer.
                 break;

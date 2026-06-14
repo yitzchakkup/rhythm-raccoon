@@ -9,7 +9,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class NetworkManager : MonoBehaviourPunCallbacks 
 {
     [Header("Start Menu UI")]
-    public GameObject startPanel; // --- NEW: Holds Single Player & Multiplayer buttons ---
+    public GameObject startPanel; 
 
     [Header("Lobby UI Elements")]
     public GameObject lobbyPanel; 
@@ -24,34 +24,129 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public TMP_Text countdownText;
     public TMP_Text readyCountText; 
 
+    [Header("Juice Settings")]
+    public float transitionDuration = 0.15f; 
+    private Coroutine currentTransition;
+
+    [Header("Scene Transition")]
+    public CanvasGroup fadeBlock; 
+    public float sceneFadeSpeed = 0.5f;
+
     private bool isReady = false;
 
     void Start()
     {
-        // 1. Show only the Start Menu when the game boots up
         startPanel.SetActive(true);
         lobbyPanel.SetActive(false);
         waitingRoomPanel.SetActive(false);
         
+        EnsureCanvasGroup(startPanel);
+        EnsureCanvasGroup(lobbyPanel);
+        EnsureCanvasGroup(waitingRoomPanel);
+        
+        if (fadeBlock != null)
+        {
+            fadeBlock.alpha = 0f;
+            fadeBlock.blocksRaycasts = false;
+        }
+
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
-    // --- NEW: START MENU BUTTON METHODS ---
+    private void EnsureCanvasGroup(GameObject panel)
+    {
+        if (panel.TryGetComponent<CanvasGroup>(out CanvasGroup cg)) cg.alpha = 1f;
+        panel.transform.localScale = Vector3.one;
+    }
+
+    // --- PANEL TRANSITION LOGIC ---
+
+    private void SwitchPanel(GameObject fromPanel, GameObject toPanel)
+    {
+        if (currentTransition != null) StopCoroutine(currentTransition);
+        currentTransition = StartCoroutine(TransitionRoutine(fromPanel, toPanel));
+    }
+
+    private IEnumerator TransitionRoutine(GameObject fromPanel, GameObject toPanel)
+    {
+        float timer = 0f;
+
+        if (fromPanel != null && fromPanel.activeSelf)
+        {
+            CanvasGroup fromGroup = fromPanel.GetComponent<CanvasGroup>();
+            Vector3 startScale = fromPanel.transform.localScale;
+            Vector3 endScale = Vector3.one * 0.9f; 
+
+            while (timer < transitionDuration)
+            {
+                float t = timer / transitionDuration;
+                float ease = Mathf.Sin(t * Mathf.PI * 0.5f); 
+
+                if (fromGroup != null) fromGroup.alpha = 1f - ease;
+                fromPanel.transform.localScale = Vector3.Lerp(startScale, endScale, ease);
+                
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            fromPanel.SetActive(false);
+        }
+
+        timer = 0f;
+
+        if (toPanel != null)
+        {
+            toPanel.SetActive(true);
+            CanvasGroup toGroup = toPanel.GetComponent<CanvasGroup>();
+            Vector3 startScale = Vector3.one * 0.9f; 
+            Vector3 endScale = Vector3.one;          
+
+            while (timer < transitionDuration)
+            {
+                float t = timer / transitionDuration;
+                float ease = Mathf.Sin(t * Mathf.PI * 0.5f);
+
+                if (toGroup != null) toGroup.alpha = ease;
+                toPanel.transform.localScale = Vector3.Lerp(startScale, endScale, ease);
+
+                timer += Time.deltaTime;
+                yield return null;
+            }
+
+            if (toGroup != null) toGroup.alpha = 1f;
+            toPanel.transform.localScale = Vector3.one;
+        }
+    }
+
+    // --- UI BUTTON METHODS ---
 
     public void OnSinglePlayerClicked()
     {
-        // Disconnect from the internet just in case, turn on the fake local server, and create a fake room
-        if (PhotonNetwork.IsConnected) PhotonNetwork.Disconnect();
-        
+        // UPDATED: Start a coroutine to handle the safe disconnect!
+        StartCoroutine(SinglePlayerStartRoutine());
+    }
+
+    private IEnumerator SinglePlayerStartRoutine()
+    {
+        // 1. If we are connected, gracefully disconnect first
+        if (PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.Disconnect();
+            
+            // Wait right here until Photon confirms the internet is fully disconnected
+            while (PhotonNetwork.IsConnected)
+            {
+                yield return null;
+            }
+        }
+
+        // 2. Now it is 100% safe to turn on offline mode and create the local room
         PhotonNetwork.OfflineMode = true;
         PhotonNetwork.CreateRoom("OfflineRoom"); 
     }
 
     public void OnMultiplayerClicked()
     {
-        // Hide the Start Menu, show the Lobby, and connect to the internet
-        startPanel.SetActive(false);
-        lobbyPanel.SetActive(true);
+        SwitchPanel(startPanel, lobbyPanel);
         
         createButton.interactable = false;
         joinButton.interactable = false;
@@ -60,7 +155,15 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
     }
 
-    // --- EXISTING LOBBY LOGIC ---
+    public void OnBackToMainMenuClicked()
+    {
+        if (PhotonNetwork.IsConnected) PhotonNetwork.Disconnect();
+
+        GameObject activePanel = lobbyPanel.activeSelf ? lobbyPanel : waitingRoomPanel.activeSelf ? waitingRoomPanel : null;
+        SwitchPanel(activePanel, startPanel);
+    }
+
+    // --- LOBBY LOGIC ---
 
     public override void OnConnectedToMaster()
     {
@@ -88,25 +191,42 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRoom("TypingArena");
     }
 
-    // --- UPDATED ROOM LOGIC ---
+    // --- ROOM LOGIC ---
 
     public override void OnJoinedRoom()
     {
-        // --- NEW: If we are in Single Player, skip the waiting room and load instantly! ---
         if (PhotonNetwork.OfflineMode)
         {
-            PhotonNetwork.LoadLevel("GameScene");
+            // UPDATED: Do not load instantly! Trigger the fade to black first.
+            StartCoroutine(SinglePlayerFadeRoutine());
             return;
         }
 
-        // Otherwise, do the normal Multiplayer Waiting Room stuff
-        lobbyPanel.SetActive(false);
-        waitingRoomPanel.SetActive(true);
+        SwitchPanel(lobbyPanel, waitingRoomPanel);
         
         countdownText.text = "";
         SetPlayerReadyState(false);
         UpdateWaitingRoomText();
         UpdateReadyCountUI(); 
+    }
+
+    // --- NEW: Single Player Fade Routine ---
+    private IEnumerator SinglePlayerFadeRoutine()
+    {
+        if (fadeBlock != null)
+        {
+            fadeBlock.blocksRaycasts = true; 
+            float timer = 0f;
+            while (timer < sceneFadeSpeed)
+            {
+                fadeBlock.alpha = Mathf.Lerp(0f, 1f, timer / sceneFadeSpeed);
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            fadeBlock.alpha = 1f;
+        }
+
+        PhotonNetwork.LoadLevel("GameScene");
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -200,6 +320,19 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         countdownText.text = "GO!";
         yield return new WaitForSeconds(0.5f);
+
+        if (fadeBlock != null)
+        {
+            fadeBlock.blocksRaycasts = true; 
+            float timer = 0f;
+            while (timer < sceneFadeSpeed)
+            {
+                fadeBlock.alpha = Mathf.Lerp(0f, 1f, timer / sceneFadeSpeed);
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            fadeBlock.alpha = 1f;
+        }
 
         if (PhotonNetwork.IsMasterClient)
         {

@@ -3,6 +3,7 @@ using Photon.Pun;
 using TMPro;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(PhotonView))] 
 public class MultiplayerMatchManager : MonoBehaviourPun
 {
     public static MultiplayerMatchManager Instance { get; private set; }
@@ -24,11 +25,8 @@ public class MultiplayerMatchManager : MonoBehaviourPun
     {
         if (IsMultiplayerGame())
         {
-            // --- MULTIPLAYER ---
-            // Hide the opponent's stamina bar
             if (opponentStaminaBarFill != null) opponentStaminaBarFill.transform.parent.gameObject.SetActive(false);
         
-            // Hide your local stamina bar using our safe UI bridge!
             if (SceneUIRefs.staminaBarFill != null) 
             {
                 SceneUIRefs.staminaBarFill.transform.parent.gameObject.SetActive(false);
@@ -36,8 +34,6 @@ public class MultiplayerMatchManager : MonoBehaviourPun
         }
         else
         {
-            // --- SINGLE PLAYER ---
-            // Hide the opponent's score and stamina
             if (opponentScoreText != null) opponentScoreText.gameObject.SetActive(false);
             if (opponentStaminaBarFill != null) opponentStaminaBarFill.transform.parent.gameObject.SetActive(false); 
         }
@@ -46,7 +42,6 @@ public class MultiplayerMatchManager : MonoBehaviourPun
     /// <summary>
     /// Checks if the current game is a multiplayer match.
     /// </summary>
-    /// <returns>True if online and in a room with more than one player, false otherwise.</returns>
     public bool IsMultiplayerGame()
     {
         return !PhotonNetwork.OfflineMode && PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount > 1;
@@ -55,8 +50,10 @@ public class MultiplayerMatchManager : MonoBehaviourPun
     // --- SCORE SYNC ---
     public void SyncMyScore(int myTotalScore)
     {
-        if (!IsMultiplayerGame()) return;
         currentMyScore = myTotalScore;
+
+        if (!IsMultiplayerGame()) return;
+        
         photonView.RPC("ReceiveOpponentScore_RPC", RpcTarget.Others, myTotalScore);
     }
 
@@ -68,18 +65,6 @@ public class MultiplayerMatchManager : MonoBehaviourPun
         {
             opponentScoreText.text = $"Opponent: {opponentScore}";
         }
-    }
-
-    // --- STAMINA SYNC (No longer used, but kept for reference) ---
-    public void SyncMyStamina(float currentStamina, float maxStamina)
-    {
-        // This functionality is now disabled in multiplayer.
-    }
-
-    [PunRPC]
-    private void ReceiveOpponentStamina_RPC(float opponentFillFraction)
-    {
-        // This functionality is now disabled in multiplayer.
     }
 
     // --- ATTACK SYNC ---
@@ -103,27 +88,17 @@ public class MultiplayerMatchManager : MonoBehaviourPun
                     ScoreAndStaminaManager.Instance.ActivateScoreMultiplier(0.5f, 10f);
                 break;
             case "TempoShift":
-                WordGenerator generator = FindObjectOfType<WordGenerator>();
+                // --- FIXED FOR UNITY 6: Using FindAnyObjectByType ---
+                WordGenerator generator = FindAnyObjectByType<WordGenerator>();
                 if (generator != null)
                 {
-                    // The opponent hit us! Hardcode the punishment values here:
                     generator.TriggerSpeedAttack(2.5f, 4f); 
                 }
-                break;
-            case "HalveStamina":
-                // This attack is now effectively disabled as stamina is not used in multiplayer.
                 break;
         }
     }
 
     // --- Public Score Getters ---
-    public int GetOpponentScore()
-    {
-        return currentOpponentScore;
-    }
-
-    public int GetMyScore()
-    {
-        return currentMyScore;
-    }
+    public int GetOpponentScore() => currentOpponentScore;
+    public int GetMyScore() => currentMyScore;
 }

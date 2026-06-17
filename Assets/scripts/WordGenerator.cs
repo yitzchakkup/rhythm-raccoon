@@ -35,7 +35,6 @@ public class WordGenerator : MonoBehaviour
     public AnimationCurve spawnDelayCurve = AnimationCurve.Linear(0, 0, 1, 1);
     public AnimationCurve clusterCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
-    // --- NEW: The Master Speed Multiplier for Powerups ---
     [Header("Powerup States")]
     public float powerupSpeedMultiplier = 1f; 
 
@@ -55,7 +54,6 @@ public class WordGenerator : MonoBehaviour
 
     void Update()
     {
-        // Safety check uses the new BoxCollider2D
         if (spawnArea == null) return;
 
         gameTimer += Time.deltaTime;
@@ -68,11 +66,9 @@ public class WordGenerator : MonoBehaviour
 
         currentSpawnDelay = Mathf.Lerp(initialSpawnDelay, minimumSpawnDelay, delayMultiplier);
         
-        // --- THE FIX: Calculate base speed, then warp it with the powerup ---
         float baseSpeed = Mathf.Lerp(initialFallSpeed, maxFallSpeed, speedMultiplier);
         currentFallSpeed = baseSpeed * powerupSpeedMultiplier;
 
-        // --- THE FIX: Actively push the new speed to every living letter ---
         foreach (List<FallingLetter> wave in activeWaves)
         {
             foreach (FallingLetter letter in wave)
@@ -93,7 +89,6 @@ public class WordGenerator : MonoBehaviour
         CheckActiveWaves();
     }
 
-    // --- NEW: The Powerup Coroutine (No UI References for this branch) ---
     public void TriggerSpeedAttack(float multiplier, float duration)
     {
         StartCoroutine(SpeedWarpRoutine(multiplier, duration));
@@ -127,6 +122,7 @@ public class WordGenerator : MonoBehaviour
             bool waveComplete = true;
             foreach (FallingLetter letter in wave)
             {
+                // Relying purely on the new trigger system from FallingLetter.cs
                 if (!letter.inZone || !letter.isPressed)
                 {
                     waveComplete = false;
@@ -136,14 +132,10 @@ public class WordGenerator : MonoBehaviour
 
             if (waveComplete)
             {
+                // --- NEW: Add exactly 1 point per completed word ---
                 if (ScoreAndStaminaManager.Instance != null)
                 {
-                    int totalWaveScore = 0;
-                    foreach (FallingLetter letter in wave)
-                    {
-                        totalWaveScore += letter.GetScoreValue();
-                    }
-                    ScoreAndStaminaManager.Instance.AddScoreAndStamina(totalWaveScore);
+                    ScoreAndStaminaManager.Instance.AddScoreAndStamina(1);
                 }
 
                 foreach (FallingLetter letter in wave)
@@ -152,7 +144,8 @@ public class WordGenerator : MonoBehaviour
                     {
                         powerup.ApplyEffect();
                     }
-                    letter.TriggerPopAndDestroy();
+                    // This visually "disposes" of the word
+                    letter.TriggerPopAndDestroy(); 
                 }
 
                 activeWaves.RemoveAt(i);
@@ -185,7 +178,6 @@ public class WordGenerator : MonoBehaviour
         float clusterMultiplier = clusterCurve.Evaluate(progress);
         float currentClusterChance = Mathf.Lerp(minClusterProbability, maxClusterProbability, clusterMultiplier);
 
-        // --- NEW: Calculate edges and spawn height dynamically from the Collider ---
         float leftEdge = spawnArea.bounds.min.x;
         float rightEdge = spawnArea.bounds.max.x;
         float spacing = (rightEdge - leftEdge) / (lettersToSpawn + 1);
@@ -238,7 +230,6 @@ public class WordGenerator : MonoBehaviour
             FallingLetter letterScript = spawnedObj.GetComponent<FallingLetter>();
             if (letterScript != null)
             {
-                // Assign the warped speed right at birth
                 letterScript.SetFallSpeed(currentFallSpeed);
                 
                 int randomKeyIndex = Random.Range(0, availableKeys.Count);

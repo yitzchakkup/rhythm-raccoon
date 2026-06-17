@@ -14,8 +14,8 @@ public class BuffSlowMo : Powerup
 
     public override void ApplyEffect()
     {
-        // Buffs affect us directly, so we find our local generator and warp the speed!
-        WordGenerator generator = FindObjectOfType<WordGenerator>();
+        // --- MULTIPLAYER/UNITY 6 FIX: Must be FindAnyObjectByType ---
+        WordGenerator generator = Object.FindAnyObjectByType<WordGenerator>();
         
         if (generator != null)
         {

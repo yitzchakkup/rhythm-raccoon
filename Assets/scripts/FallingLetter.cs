@@ -22,9 +22,7 @@ public class FallingLetter : MonoBehaviour
     [Header("Effects")]
     [SerializeField] private GameObject explosionPrefab;
 
-    public bool inInnerZone { get; private set; } = false;
-    public bool inOuterZone { get; private set; } = false;
-    public bool inZone => inInnerZone || inOuterZone;
+    public bool inZone { get; private set; } = false;
     public bool isPressed { get; private set; } = false;
 
     private SpriteRenderer spriteRenderer;
@@ -99,22 +97,25 @@ public class FallingLetter : MonoBehaviour
 
     public int GetScoreValue()
     {
-        if (inInnerZone) return 2;
-        if (inOuterZone) return 1;
+        if (inZone) return 1;
         return 0;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("TargetLineInner")) inInnerZone = true;
-        else if (other.CompareTag("TargetLineOuter")) inOuterZone = true;
-        else if (other.CompareTag("LineOnderGame")) Destroy(gameObject); 
+        if (other.CompareTag("TargetZone"))
+        {
+            inZone = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("TargetLineInner")) inInnerZone = false;
-        else if (other.CompareTag("TargetLineOuter")) inOuterZone = false;
+        if (other.CompareTag("TargetZone"))
+        {
+            inZone = false;
+        }
+        else if (other.CompareTag("LineOnderGame")) Destroy(gameObject); 
 
         if (!inZone)
         {

@@ -5,9 +5,9 @@ using System.Collections;
 
 public class WordGenerator : MonoBehaviour
 {
-    [Header("Spawn Zone (Anchor Points)")]
-    public Transform leftSpawnBound;
-    public Transform rightSpawnBound;
+    [Header("Spawn Zone (Play Area)")]
+    [Tooltip("Attach the object with a BoxCollider2D that defines the exact screen area where letters fall.")]
+    public BoxCollider2D spawnArea;
 
     [Header("Prefabs")]
     public GameObject[] spawnablePrefabs; 
@@ -55,7 +55,8 @@ public class WordGenerator : MonoBehaviour
 
     void Update()
     {
-        if (leftSpawnBound == null || rightSpawnBound == null) return;
+        // Safety check uses the new BoxCollider2D
+        if (spawnArea == null) return;
 
         gameTimer += Time.deltaTime;
         spawnTimer += Time.deltaTime;
@@ -92,7 +93,7 @@ public class WordGenerator : MonoBehaviour
         CheckActiveWaves();
     }
 
-    // --- NEW: The Powerup Coroutine ---
+    // --- NEW: The Powerup Coroutine (No UI References for this branch) ---
     public void TriggerSpeedAttack(float multiplier, float duration)
     {
         StartCoroutine(SpeedWarpRoutine(multiplier, duration));
@@ -184,10 +185,11 @@ public class WordGenerator : MonoBehaviour
         float clusterMultiplier = clusterCurve.Evaluate(progress);
         float currentClusterChance = Mathf.Lerp(minClusterProbability, maxClusterProbability, clusterMultiplier);
 
-        float leftEdge = leftSpawnBound.position.x;
-        float rightEdge = rightSpawnBound.position.x;
+        // --- NEW: Calculate edges and spawn height dynamically from the Collider ---
+        float leftEdge = spawnArea.bounds.min.x;
+        float rightEdge = spawnArea.bounds.max.x;
         float spacing = (rightEdge - leftEdge) / (lettersToSpawn + 1);
-        float spawnY = leftSpawnBound.position.y; 
+        float spawnY = spawnArea.bounds.max.y; 
 
         List<Key> availableKeys = new List<Key>();
         for (int k = (int)Key.A; k <= (int)Key.Z; k++)

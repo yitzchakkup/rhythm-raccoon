@@ -96,11 +96,17 @@ public class ScoreAndStaminaManager : MonoBehaviour
         
         float calculatedStamina = staminaRewardAmount * staminaMultiplier;
         AddStamina(calculatedStamina);
+        
+        // --- INSTRUCTOR TRIGGER ---
+        if (InstructorManager.Instance != null)
+        {
+            InstructorManager.Instance.EvaluateGameState();
+        }
     }
 
     public void AddStamina(float amount)
     {
-        // --- NEW: Disable stamina gain in multiplayer ---
+        // Disable stamina gain in multiplayer
         if (MultiplayerMatchManager.Instance != null && MultiplayerMatchManager.Instance.IsMultiplayerGame())
         {
             return;
@@ -126,11 +132,11 @@ public class ScoreAndStaminaManager : MonoBehaviour
 
     private IEnumerator DrainStamina()
     {
-        // --- NEW: Disable stamina drain in multiplayer ---
+        // Disable stamina drain in multiplayer
         if (MultiplayerMatchManager.Instance != null && MultiplayerMatchManager.Instance.IsMultiplayerGame())
         {
             Debug.Log("Stamina drain disabled for multiplayer match.");
-            yield break; // Exit the coroutine immediately
+            yield break; 
         }
 
         while (true)
@@ -159,5 +165,22 @@ public class ScoreAndStaminaManager : MonoBehaviour
     private void UpdateStaminaUI()
     {
         if (staminaBarFill != null) staminaBarFill.fillAmount = currentStamina / maxStamina;
+    }
+
+    // --- NEW: Public Getters for the InstructorManager ---
+    
+    public int GetCurrentScore()
+    {
+        return Score;
+    }
+
+    public float GetCurrentStamina()
+    {
+        return currentStamina;
+    }
+
+    public float GetMaxStamina()
+    {
+        return maxStamina;
     }
 }

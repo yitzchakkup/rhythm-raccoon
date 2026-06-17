@@ -10,17 +10,19 @@ public class SceneUIRefs : MonoBehaviour
     [SerializeField] private Image inspectorStaminaBarFill;
     [SerializeField] private TMP_Text inspectorScoreText;
     [SerializeField] private GameObject inspectorGameOverUI;
-    // --- NEW: Inspector fields for Win/Loss screens ---
     [SerializeField] private GameObject inspectorWinUI;
     [SerializeField] private GameObject inspectorLoseUI;
+    // --- NEW: Tug of War UI Reference ---
+    [SerializeField] private GameObject inspectorTugOfWarUI;
 
     // --- Static properties for easy access ---
     public static Image staminaBarFill { get; private set; }
     public static TMP_Text scoreText { get; private set; }
     public static GameObject gameOverUI { get; private set; }
-    // --- NEW: Static properties for Win/Loss screens ---
     public static GameObject winUI { get; private set; }
     public static GameObject loseUI { get; private set; }
+    // --- NEW: Tug of War UI Static Property ---
+    public static GameObject tugOfWarUI { get; private set; }
 
     private void Awake()
     {
@@ -37,5 +39,6 @@ public class SceneUIRefs : MonoBehaviour
         gameOverUI = inspectorGameOverUI;
         winUI = inspectorWinUI;
         loseUI = inspectorLoseUI;
+        tugOfWarUI = inspectorTugOfWarUI;
     }
 }

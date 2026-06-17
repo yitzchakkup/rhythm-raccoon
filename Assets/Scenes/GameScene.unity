@@ -456,6 +456,7 @@ MonoBehaviour:
   inspectorGameOverUI: {fileID: 141944887}
   inspectorWinUI: {fileID: 141944887}
   inspectorLoseUI: {fileID: 141944887}
+  inspectorTugOfWarUI: {fileID: 478019206}
 --- !u!1 &268796672
 GameObject:
   m_ObjectHideFlags: 0

@@ -37,16 +37,18 @@ public class MultiplayerMatchManager : MonoBehaviourPun
         else
         {
             // --- SINGLE PLAYER ---
-            // Hide the opponent's score and stamina
+            // Hide all multiplayer-specific UI elements
             if (opponentScoreText != null) opponentScoreText.gameObject.SetActive(false);
             if (opponentStaminaBarFill != null) opponentStaminaBarFill.transform.parent.gameObject.SetActive(false); 
+            
+            // --- NEW: Hide the Tug of War UI ---
+            if (SceneUIRefs.tugOfWarUI != null)
+            {
+                SceneUIRefs.tugOfWarUI.SetActive(false);
+            }
         }
     }
 
-    /// <summary>
-    /// Checks if the current game is a multiplayer match.
-    /// </summary>
-    /// <returns>True if online and in a room with more than one player, false otherwise.</returns>
     public bool IsMultiplayerGame()
     {
         return !PhotonNetwork.OfflineMode && PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount > 1;
@@ -68,18 +70,6 @@ public class MultiplayerMatchManager : MonoBehaviourPun
         {
             opponentScoreText.text = $"Opponent: {opponentScore}";
         }
-    }
-
-    // --- STAMINA SYNC (No longer used, but kept for reference) ---
-    public void SyncMyStamina(float currentStamina, float maxStamina)
-    {
-        // This functionality is now disabled in multiplayer.
-    }
-
-    [PunRPC]
-    private void ReceiveOpponentStamina_RPC(float opponentFillFraction)
-    {
-        // This functionality is now disabled in multiplayer.
     }
 
     // --- ATTACK SYNC ---
@@ -106,12 +96,8 @@ public class MultiplayerMatchManager : MonoBehaviourPun
                 WordGenerator generator = FindObjectOfType<WordGenerator>();
                 if (generator != null)
                 {
-                    // The opponent hit us! Hardcode the punishment values here:
                     generator.TriggerSpeedAttack(2.5f, 4f); 
                 }
-                break;
-            case "HalveStamina":
-                // This attack is now effectively disabled as stamina is not used in multiplayer.
                 break;
         }
     }

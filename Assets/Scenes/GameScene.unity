@@ -1581,10 +1581,12 @@ MonoBehaviour:
   opponentFillBar: {fileID: 689320294}
   localFaceImage: {fileID: 78180315}
   opponentFaceImage: {fileID: 612792804}
-  localNormalSprite: {fileID: 21300000, guid: a477365c24c2f4c73a41f4d14bcb76f9, type: 3}
-  localFearSprite: {fileID: 21300000, guid: 6935110d8a2a04ebda4979a980ada4fc, type: 3}
-  opponentNormalSprite: {fileID: 21300000, guid: bc5dc525bcd43476397283a0a576aacd, type: 3}
-  opponentFearSprite: {fileID: 21300000, guid: 6db8c11aba3364729ba4fb8464647d96, type: 3}
+  hostNormalSprite: {fileID: 21300000, guid: a477365c24c2f4c73a41f4d14bcb76f9, type: 3}
+  hostFearSprite: {fileID: 21300000, guid: 6935110d8a2a04ebda4979a980ada4fc, type: 3}
+  hostBarSprite: {fileID: 21300000, guid: d29b754a534e64c6687833135ab23ed5, type: 3}
+  clientNormalSprite: {fileID: 21300000, guid: bc5dc525bcd43476397283a0a576aacd, type: 3}
+  clientFearSprite: {fileID: 21300000, guid: 6db8c11aba3364729ba4fb8464647d96, type: 3}
+  clientBarSprite: {fileID: 21300000, guid: 54887e2b71bea4d739cab3ce5b75352d, type: 3}
   maxScoreDifference: 25
   fearThreshold: 5
 --- !u!114 &478019209

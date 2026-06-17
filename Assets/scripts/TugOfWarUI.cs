@@ -1,16 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun; 
 
-/// <summary>
-/// Manages a UI Slider to visually represent the score difference, update face expressions,
-/// animate dynamic team progress bars, and trigger the multiplayer game over condition.
-/// </summary>
 public class TugOfWarUI : MonoBehaviour
 {
     [Header("UI Components")]
     [SerializeField] private Slider tugOfWarSlider;
     
-    [Header("Dynamic Progress Bars (.png Assets)")]
+    [Header("Dynamic Progress Bars")]
     [SerializeField] private Image localFillBar;
     [SerializeField] private Image opponentFillBar;
     
@@ -18,65 +15,81 @@ public class TugOfWarUI : MonoBehaviour
     [SerializeField] private Image localFaceImage;
     [SerializeField] private Image opponentFaceImage;
 
-    [Header("Local Player Sprites")]
-    [SerializeField] private Sprite localNormalSprite;
-    [SerializeField] private Sprite localFearSprite;
+    [Header("Host Assets (Master Client)")]
+    [SerializeField] private Sprite hostNormalSprite;
+    [SerializeField] private Sprite hostFearSprite;
+    [SerializeField] private Sprite hostBarSprite; // --- NEW: Host Bar Color ---
 
-    [Header("Opponent Sprites")]
-    [SerializeField] private Sprite opponentNormalSprite;
-    [SerializeField] private Sprite opponentFearSprite;
+    [Header("Client Assets (Player 2)")]
+    [SerializeField] private Sprite clientNormalSprite;
+    [SerializeField] private Sprite clientFearSprite;
+    [SerializeField] private Sprite clientBarSprite; // --- NEW: Client Bar Color ---
 
     [Header("Settings")]
     [SerializeField] private int maxScoreDifference = 25;
-    [Tooltip("How many points away from losing before a player's face changes to fear.")]
     [SerializeField] private int fearThreshold = 5;
 
     private bool isGameOver = false;
+
+    private Sprite myNormalSprite;
+    private Sprite myFearSprite;
+    private Sprite opponentNormalSprite;
+    private Sprite opponentFearSprite;
 
     void Start()
     {
         if (tugOfWarSlider != null)
         {
-            // Configure the slider's range based on the max score difference.
             tugOfWarSlider.minValue = -maxScoreDifference;
             tugOfWarSlider.maxValue = maxScoreDifference;
             tugOfWarSlider.value = 0;
         }
-        else
-        {
-            Debug.LogError("TugOfWarSlider is not assigned in the Inspector!", this.gameObject);
-        }
 
-        // Initialize faces to their normal expressions
+        AssignNetworkSprites();
         ResetFaces();
+    }
+
+    private void AssignNetworkSprites()
+    {
+        // Assign both the Faces and the Colored Bars based on who is playing
+        if (PhotonNetwork.OfflineMode || PhotonNetwork.IsMasterClient)
+        {
+            myNormalSprite = hostNormalSprite;
+            myFearSprite = hostFearSprite;
+            if (localFillBar != null) localFillBar.sprite = hostBarSprite;
+            
+            opponentNormalSprite = clientNormalSprite;
+            opponentFearSprite = clientFearSprite;
+            if (opponentFillBar != null) opponentFillBar.sprite = clientBarSprite;
+        }
+        else 
+        {
+            myNormalSprite = clientNormalSprite;
+            myFearSprite = clientFearSprite;
+            if (localFillBar != null) localFillBar.sprite = clientBarSprite;
+            
+            opponentNormalSprite = hostNormalSprite;
+            opponentFearSprite = hostFearSprite;
+            if (opponentFillBar != null) opponentFillBar.sprite = hostBarSprite;
+        }
     }
 
     void Update()
     {
-        // If the game is over or the manager doesn't exist, do nothing.
-        if (isGameOver || MultiplayerMatchManager.Instance == null)
-        {
-            return;
-        }
+        if (isGameOver || MultiplayerMatchManager.Instance == null) return;
 
-        // Calculate the current difference in scores.
         int myScore = MultiplayerMatchManager.Instance.GetMyScore();
         int opponentScore = MultiplayerMatchManager.Instance.GetOpponentScore();
-        int scoreDifference = myScore - opponentScore;
+        
+        // --- THE PULL FIX ---
+        // If Local is on the Left, scoring points drops the value (pulling the slider Left)
+        int scoreDifference = opponentScore - myScore;
 
-        // Apply the difference to the slider's value.
-        if (tugOfWarSlider != null)
-        {
-            tugOfWarSlider.value = scoreDifference;
-        }
+        if (tugOfWarSlider != null) tugOfWarSlider.value = scoreDifference;
 
-        // --- NEW: Calculate Territory and Update Bars ---
         UpdateProgressBars(scoreDifference);
-
-        // Update the expressive face assets based on who is losing
         UpdateFaceExpressions(scoreDifference);
 
-        // Check if one player has reached the max score difference.
         if (scoreDifference >= maxScoreDifference || scoreDifference <= -maxScoreDifference)
         {
             isGameOver = true;
@@ -89,71 +102,40 @@ public class TugOfWarUI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Translates the raw score delta into filling percentages for both individual player bars.
-    /// </summary>
     private void UpdateProgressBars(int scoreDifference)
     {
-        // Total points spread possible (e.g., from -25 to +25 is a 50 point window)
         float totalRange = maxScoreDifference * 2f;
-
-        // Normalize the position to a clean 0.0 to 1.0 percentage float scale
+        // Normalize the slider position between 0.0 (Far Left) and 1.0 (Far Right)
         float normalizedValue = (scoreDifference + maxScoreDifference) / totalRange;
 
-        // Update the filling boundaries
-        if (localFillBar != null)
-        {
-            // Local wins as value approaches 1.0, loses as it hits 0.0
-            localFillBar.fillAmount = normalizedValue;
-        }
-
-        if (opponentFillBar != null)
-        {
-            // Opponent fills from the opposite direction (grows when local losing)
-            opponentFillBar.fillAmount = 1f - normalizedValue;
-        }
+        // The Local Bar (anchored Left) shrinks as you pull the handle towards the Left
+        if (localFillBar != null) localFillBar.fillAmount = normalizedValue;
+        
+        // The Opponent Bar (anchored Right) stretches to follow the handle
+        if (opponentFillBar != null) opponentFillBar.fillAmount = 1f - normalizedValue;
     }
 
-    /// <summary>
-    /// Checks the current score delta and swaps sprites if a player is dangerously close to losing.
-    /// </summary>
     private void UpdateFaceExpressions(int scoreDifference)
     {
-        // Check Local Player State (Losing when slider goes highly negative)
-        if (localFaceImage != null && localNormalSprite != null && localFearSprite != null)
+        if (localFaceImage != null && myNormalSprite != null && myFearSprite != null)
         {
-            int localLossBoundary = -maxScoreDifference + fearThreshold;
-            
-            if (scoreDifference <= localLossBoundary)
-            {
-                localFaceImage.sprite = localFearSprite;
-            }
-            else
-            {
-                localFaceImage.sprite = localNormalSprite;
-            }
+            int localLossBoundary = maxScoreDifference - fearThreshold;
+            // Local fears when slider is pulled too far Right (away from them)
+            localFaceImage.sprite = (scoreDifference >= localLossBoundary) ? myFearSprite : myNormalSprite;
         }
 
-        // Check Opponent State (Losing when slider goes highly positive)
         if (opponentFaceImage != null && opponentNormalSprite != null && opponentFearSprite != null)
         {
-            int opponentLossBoundary = maxScoreDifference - fearThreshold;
-            
-            if (scoreDifference >= opponentLossBoundary)
-            {
-                opponentFaceImage.sprite = opponentFearSprite;
-            }
-            else
-            {
-                opponentFaceImage.sprite = opponentNormalSprite;
-            }
+            int opponentLossBoundary = -maxScoreDifference + fearThreshold;
+            // Opponent fears when slider is pulled too far Left (away from them)
+            opponentFaceImage.sprite = (scoreDifference <= opponentLossBoundary) ? opponentFearSprite : opponentNormalSprite;
         }
     }
 
     private void ResetFaces()
     {
-        if (localFaceImage != null && localNormalSprite != null) 
-            localFaceImage.sprite = localNormalSprite;
+        if (localFaceImage != null && myNormalSprite != null) 
+            localFaceImage.sprite = myNormalSprite;
             
         if (opponentFaceImage != null && opponentNormalSprite != null) 
             opponentFaceImage.sprite = opponentNormalSprite;

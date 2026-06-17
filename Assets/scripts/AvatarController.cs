@@ -1,5 +1,5 @@
 using UnityEngine;
-using Photon.Pun; // --- NEW: We need this to check our Host status ---
+using Photon.Pun; 
 
 public class AvatarController : MonoBehaviour
 {
@@ -9,9 +9,9 @@ public class AvatarController : MonoBehaviour
     public SpriteRenderer localPlayer;
     public SpriteRenderer opponent;
 
-    // --- NEW: Variables to remember our assigned colors ---
-    private Color myBaseColor;
-    private Color opponentBaseColor;
+    [Header("Character Art (.png Assets)")]
+    public Sprite hostSprite;   // Drag your Host character PNG here
+    public Sprite clientSprite; // Drag your Client character PNG here
 
     private void Awake()
     {
@@ -21,31 +21,32 @@ public class AvatarController : MonoBehaviour
 
     private void Start()
     {
-        // --- NEW: Hide opponent if playing Single Player ---
+        // Ensure both renderers start with clean white coloring so sprites aren't tinted
+        if (localPlayer != null) localPlayer.color = Color.white;
+        if (opponent != null) opponent.color = Color.white;
+
+        // Hide opponent if playing Single Player
         if (PhotonNetwork.OfflineMode || PhotonNetwork.CurrentRoom == null || PhotonNetwork.CurrentRoom.PlayerCount <= 1)
         {
             if (opponent != null) opponent.gameObject.SetActive(false);
-            myBaseColor = Color.green; // Default our player to Green in single-player
+            
+            // Default our player to the Host sprite in single-player
+            if (localPlayer != null) localPlayer.sprite = hostSprite;
         }
         else
         {
-            // If Multiplayer, do our standard color assignment
+            // If Multiplayer, assign sprites based on who is the Master Client
             if (PhotonNetwork.IsMasterClient)
             {
-                myBaseColor = Color.green;         
-                opponentBaseColor = Color.yellow;  
+                if (localPlayer != null) localPlayer.sprite = hostSprite;         
+                if (opponent != null) opponent.sprite = clientSprite;  
             }
             else
             {
-                myBaseColor = Color.yellow;        
-                opponentBaseColor = Color.green;   
+                if (localPlayer != null) localPlayer.sprite = clientSprite;        
+                if (opponent != null) opponent.sprite = hostSprite;   
             }
-
-            if (opponent != null) opponent.color = opponentBaseColor;
         }
-
-        // Always apply our local color
-        if (localPlayer != null) localPlayer.color = myBaseColor;
     }
 
     public void PlayLocalDamageEffect()
@@ -64,7 +65,7 @@ public class AvatarController : MonoBehaviour
         Invoke(nameof(ResetOpponentColor), 0.5f);
     }
 
-    // --- UPDATED: Revert back to our specific identity colors, not just White ---
-    private void ResetLocalColor() => localPlayer.color = myBaseColor;
-    private void ResetOpponentColor() => opponent.color = opponentBaseColor;
+    // Revert color back to pure white so the original PNG artwork shows perfectly
+    private void ResetLocalColor() => localPlayer.color = Color.white;
+    private void ResetOpponentColor() => opponent.color = Color.white;
 }

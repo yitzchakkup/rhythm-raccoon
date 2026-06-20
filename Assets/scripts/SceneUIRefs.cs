@@ -7,7 +7,8 @@ public class SceneUIRefs : MonoBehaviour
     public static SceneUIRefs Instance { get; private set; }
 
     [Header("Inspector References")]
-    [SerializeField] private Image inspectorStaminaBarFill;
+    [SerializeField] private Image inspectorStaminaFill;
+    [SerializeField] private RectTransform inspectorStaminaHead;
     [SerializeField] private TMP_Text inspectorScoreText;
     [SerializeField] private GameObject inspectorGameOverUI;
     [SerializeField] private GameObject inspectorWinUI;
@@ -16,7 +17,8 @@ public class SceneUIRefs : MonoBehaviour
     [SerializeField] private GameObject inspectorTugOfWarUI;
 
     // --- Static properties for easy access ---
-    public static Image staminaBarFill { get; private set; }
+    public static Image staminaFill { get; private set; }
+    public static RectTransform staminaHead { get; private set; }
     public static TMP_Text scoreText { get; private set; }
     public static GameObject gameOverUI { get; private set; }
     public static GameObject winUI { get; private set; }
@@ -34,7 +36,8 @@ public class SceneUIRefs : MonoBehaviour
         Instance = this;
 
         // Map the inspector fields to the static properties
-        staminaBarFill = inspectorStaminaBarFill;
+        staminaFill = inspectorStaminaFill;
+        staminaHead = inspectorStaminaHead;
         scoreText = inspectorScoreText;
         gameOverUI = inspectorGameOverUI;
         winUI = inspectorWinUI;

@@ -19,13 +19,16 @@ public class ScoreAndStaminaManager : MonoBehaviour
     [SerializeField] private float startingStamina = 75f;
     [SerializeField] private float staminaDrainAmount = 1f;
     [SerializeField] private float staminaDrainTickRate = 0.05f;
+    [SerializeField] private float staminaHeadEmptyYPosition; // Y position when stamina is zero
     private float currentStamina;
     private float staminaMultiplier = 1f;
     private float staminaMultiplierTimer = 0f;
     private Coroutine drainCoroutine;
+    private float staminaHeadFullYPosition; // Starting Y position when stamina is full
 
     private TMP_Text scoreText;
-    private Image staminaBarFill;
+    private Image staminaFill;
+    private RectTransform staminaHead;
 
     private void Awake()
     {
@@ -46,7 +49,8 @@ public class ScoreAndStaminaManager : MonoBehaviour
         if (SceneUIRefs.Instance != null)
         {
             scoreText = SceneUIRefs.scoreText;
-            staminaBarFill = SceneUIRefs.staminaBarFill;
+            staminaFill = SceneUIRefs.staminaFill;
+            staminaHead = SceneUIRefs.staminaHead;
         }
         Initialize();
     }
@@ -63,6 +67,12 @@ public class ScoreAndStaminaManager : MonoBehaviour
         currentStamina = startingStamina;
         staminaMultiplier = 1f;
         staminaMultiplierTimer = 0f;
+
+        if (staminaHead != null)
+        {
+            staminaHeadFullYPosition = staminaHead.anchoredPosition.y;
+        }
+        
         UpdateStaminaUI();
         
         drainCoroutine = StartCoroutine(DrainStamina());
@@ -164,7 +174,17 @@ public class ScoreAndStaminaManager : MonoBehaviour
 
     private void UpdateStaminaUI()
     {
-        if (staminaBarFill != null) staminaBarFill.fillAmount = currentStamina / maxStamina;
+        if (staminaFill != null)
+        {
+            staminaFill.fillAmount = currentStamina / maxStamina;
+        }
+
+        if (staminaHead != null)
+        {
+            float percentage = currentStamina / maxStamina;
+            float newY = Mathf.Lerp(staminaHeadEmptyYPosition, staminaHeadFullYPosition, percentage);
+            staminaHead.anchoredPosition = new Vector2(staminaHead.anchoredPosition.x, newY);
+        }
     }
 
     // --- NEW: Public Getters for the InstructorManager ---

@@ -1,19 +1,13 @@
 using UnityEngine;
 using Photon.Pun;
-using TMPro;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(PhotonView))] 
 public class MultiplayerMatchManager : MonoBehaviourPun
 {
     public static MultiplayerMatchManager Instance { get; private set; }
 
-    [Header("Opponent UI")]
-    public TMP_Text opponentScoreText;
-    public Image opponentStaminaBarFill;
-
-    private int currentOpponentScore = 0;
     private int currentMyScore = 0;
+    private int currentOpponentScore = 0;
 
     private void Awake()
     {
@@ -23,19 +17,8 @@ public class MultiplayerMatchManager : MonoBehaviourPun
     
     private void Start()
     {
-        if (IsMultiplayerGame())
+        if (!IsMultiplayerGame())
         {
-            if (opponentStaminaBarFill != null) opponentStaminaBarFill.transform.parent.gameObject.SetActive(false);
-        
-            if (SceneUIRefs.staminaBarFill != null) 
-            {
-                SceneUIRefs.staminaBarFill.transform.parent.gameObject.SetActive(false);
-            }
-        }
-        else
-        {
-            if (opponentScoreText != null) opponentScoreText.gameObject.SetActive(false);
-            if (opponentStaminaBarFill != null) opponentStaminaBarFill.transform.parent.gameObject.SetActive(false);
             if (SceneUIRefs.tugOfWarUI != null) SceneUIRefs.tugOfWarUI.SetActive(false);
         }
     }
@@ -62,10 +45,6 @@ public class MultiplayerMatchManager : MonoBehaviourPun
     private void ReceiveOpponentScore_RPC(int opponentScore)
     {
         currentOpponentScore = opponentScore;
-        if (opponentScoreText != null) 
-        {
-            opponentScoreText.text = $"Opponent: {opponentScore}";
-        }
     }
 
     // --- ATTACK SYNC ---
@@ -100,6 +79,6 @@ public class MultiplayerMatchManager : MonoBehaviourPun
     }
 
     // --- Public Score Getters ---
-    public int GetOpponentScore() => currentOpponentScore;
     public int GetMyScore() => currentMyScore;
+    public int GetOpponentScore() => currentOpponentScore;
 }

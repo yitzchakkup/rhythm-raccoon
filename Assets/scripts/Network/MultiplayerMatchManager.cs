@@ -21,6 +21,10 @@ public class MultiplayerMatchManager : MonoBehaviourPun
         {
             if (SceneUIRefs.tugOfWarUI != null) SceneUIRefs.tugOfWarUI.SetActive(false);
         }
+        else
+        {
+            if (SceneUIRefs.staminaBar != null) SceneUIRefs.staminaBar.SetActive(false);
+        }
     }
 
     /// <summary>

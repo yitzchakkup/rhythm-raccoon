@@ -20,6 +20,8 @@ public class ScoreAndStaminaManager : MonoBehaviour
     [SerializeField] private float staminaDrainAmount = 1f;
     [SerializeField] private float staminaDrainTickRate = 0.05f;
     [SerializeField] private float staminaHeadEmptyYPosition; // Y position when stamina is zero
+    [SerializeField] private float staminaHeadYOffset = 0f;
+    [SerializeField] private float lowStaminaThreshold = 25f;
     private float currentStamina;
     private float staminaMultiplier = 1f;
     private float staminaMultiplierTimer = 0f;
@@ -29,6 +31,9 @@ public class ScoreAndStaminaManager : MonoBehaviour
     private TMP_Text scoreText;
     private Image staminaFill;
     private RectTransform staminaHead;
+    private Image staminaHeadImage;
+    private Sprite normalStaminaFillSprite;
+    private Sprite normalHeadSprite;
 
     private void Awake()
     {
@@ -71,6 +76,19 @@ public class ScoreAndStaminaManager : MonoBehaviour
         if (staminaHead != null)
         {
             staminaHeadFullYPosition = staminaHead.anchoredPosition.y;
+        }
+
+        if (staminaFill != null)
+        {
+            normalStaminaFillSprite = staminaFill.sprite;
+        }
+        if (staminaHead != null)
+        {
+            staminaHeadImage = staminaHead.GetComponent<Image>();
+            if (staminaHeadImage != null)
+            {
+                normalHeadSprite = staminaHeadImage.sprite;
+            }
         }
         
         UpdateStaminaUI();
@@ -182,8 +200,31 @@ public class ScoreAndStaminaManager : MonoBehaviour
         if (staminaHead != null)
         {
             float percentage = currentStamina / maxStamina;
-            float newY = Mathf.Lerp(staminaHeadEmptyYPosition, staminaHeadFullYPosition, percentage);
+            float newY = Mathf.Lerp(staminaHeadEmptyYPosition, staminaHeadFullYPosition, percentage) + staminaHeadYOffset;
             staminaHead.anchoredPosition = new Vector2(staminaHead.anchoredPosition.x, newY);
+        }
+
+        if (currentStamina <= lowStaminaThreshold)
+        {
+            if (staminaFill != null && SceneUIRefs.lowStaminaFillSprite != null)
+            {
+                staminaFill.sprite = SceneUIRefs.lowStaminaFillSprite;
+            }
+            if (staminaHeadImage != null && SceneUIRefs.sadHeadSprite != null)
+            {
+                staminaHeadImage.sprite = SceneUIRefs.sadHeadSprite;
+            }
+        }
+        else
+        {
+            if (staminaFill != null)
+            {
+                staminaFill.sprite = normalStaminaFillSprite;
+            }
+            if (staminaHeadImage != null)
+            {
+                staminaHeadImage.sprite = normalHeadSprite;
+            }
         }
     }
 

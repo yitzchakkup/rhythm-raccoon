@@ -35,7 +35,8 @@ public class MultiplayerMatchManager : MonoBehaviourPun
         else
         {
             if (opponentScoreText != null) opponentScoreText.gameObject.SetActive(false);
-            if (opponentStaminaBarFill != null) opponentStaminaBarFill.transform.parent.gameObject.SetActive(false); 
+            if (opponentStaminaBarFill != null) opponentStaminaBarFill.transform.parent.gameObject.SetActive(false);
+            if (SceneUIRefs.tugOfWarUI != null) SceneUIRefs.tugOfWarUI.SetActive(false);
         }
     }
 

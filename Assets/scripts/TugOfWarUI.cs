@@ -38,6 +38,13 @@ public class TugOfWarUI : MonoBehaviour
 
     void Start()
     {
+        // Disable Tug of War UI if in single player mode
+        if (MultiplayerMatchManager.Instance == null || !IsMultiplayerGame())
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
         if (tugOfWarSlider != null)
         {
             tugOfWarSlider.minValue = -maxScoreDifference;
@@ -47,6 +54,14 @@ public class TugOfWarUI : MonoBehaviour
 
         AssignNetworkSprites();
         ResetFaces();
+    }
+
+    /// <summary>
+    /// Checks if the current game is a multiplayer match.
+    /// </summary>
+    private bool IsMultiplayerGame()
+    {
+        return !PhotonNetwork.OfflineMode && PhotonNetwork.CurrentRoom != null && PhotonNetwork.CurrentRoom.PlayerCount > 1;
     }
 
     private void AssignNetworkSprites()
@@ -76,7 +91,7 @@ public class TugOfWarUI : MonoBehaviour
 
     void Update()
     {
-        if (isGameOver || MultiplayerMatchManager.Instance == null) return;
+        if (isGameOver || MultiplayerMatchManager.Instance == null || !IsMultiplayerGame()) return;
 
         int myScore = MultiplayerMatchManager.Instance.GetMyScore();
         int opponentScore = MultiplayerMatchManager.Instance.GetOpponentScore();

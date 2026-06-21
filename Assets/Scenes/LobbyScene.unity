@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 235017090}
   - component: {fileID: 235017091}
   m_Layer: 5
-  m_Name: LobyPanel
+  m_Name: LobyPanel from the paset been removed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -567,15 +567,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkManager
   startPanel: {fileID: 1676405270}
-  lobbyPanel: {fileID: 235017089}
-  createButton: {fileID: 1583856377}
-  joinButton: {fileID: 1289582774}
-  statusText: {fileID: 504101205}
   waitingRoomPanel: {fileID: 1865936089}
   readyButton: {fileID: 1726015130}
   waitingRoomText: {fileID: 544972756}
   countdownText: {fileID: 1374343905}
   readyCountText: {fileID: 1860085965}
+  startBackground: {fileID: 1650459527}
+  waitingRoomBackground: {fileID: 435395615}
   transitionDuration: 0.15
   fadeBlock: {fileID: 1338496052}
   sceneFadeSpeed: 0.5
@@ -2352,7 +2350,7 @@ GameObject:
   - component: {fileID: 1650459528}
   - component: {fileID: 1650459529}
   m_Layer: 0
-  m_Name: chossing_screen_if_single_or _multy_player_0
+  m_Name: StartScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2448,7 +2446,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1676405271
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2778,8 +2776,8 @@ RectTransform:
   m_GameObject: {fileID: 1865936089}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.85, y: 0.85, z: 0.85}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 544972755}
   - {fileID: 1374343904}

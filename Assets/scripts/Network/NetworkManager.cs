@@ -4,32 +4,30 @@ using Photon.Realtime;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
-using Hashtable = ExitGames.Client.Photon.Hashtable; 
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class NetworkManager : MonoBehaviourPunCallbacks 
+public class NetworkManager : MonoBehaviourPunCallbacks
 {
     [Header("Start Menu UI")]
-    public GameObject startPanel; 
-
-    [Header("Lobby UI Elements")]
-    public GameObject lobbyPanel; 
-    public Button createButton;
-    public Button joinButton;
-    public TMP_Text statusText;
+    public GameObject startPanel;
 
     [Header("Waiting Room UI Elements")]
-    public GameObject waitingRoomPanel; 
+    public GameObject waitingRoomPanel;
     public Button readyButton;
     public TMP_Text waitingRoomText;
     public TMP_Text countdownText;
-    public TMP_Text readyCountText; 
+    public TMP_Text readyCountText;
+
+    [Header("Background Screens")]
+    public GameObject startBackground;
+    public GameObject waitingRoomBackground;
 
     [Header("Juice Settings")]
-    public float transitionDuration = 0.15f; 
+    public float transitionDuration = 0.15f;
     private Coroutine currentTransition;
 
     [Header("Scene Transition")]
-    public CanvasGroup fadeBlock; 
+    public CanvasGroup fadeBlock;
     public float sceneFadeSpeed = 0.5f;
 
     private bool isReady = false;
@@ -37,13 +35,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     void Start()
     {
         startPanel.SetActive(true);
-        lobbyPanel.SetActive(false);
         waitingRoomPanel.SetActive(false);
-        
+        startBackground.SetActive(true);
+        waitingRoomBackground.SetActive(false);
+
         EnsureCanvasGroup(startPanel);
-        EnsureCanvasGroup(lobbyPanel);
         EnsureCanvasGroup(waitingRoomPanel);
-        
+
         if (fadeBlock != null)
         {
             fadeBlock.alpha = 0f;
@@ -75,16 +73,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             CanvasGroup fromGroup = fromPanel.GetComponent<CanvasGroup>();
             Vector3 startScale = fromPanel.transform.localScale;
-            Vector3 endScale = Vector3.one * 0.9f; 
+            Vector3 endScale = Vector3.one * 0.9f;
 
             while (timer < transitionDuration)
             {
                 float t = timer / transitionDuration;
-                float ease = Mathf.Sin(t * Mathf.PI * 0.5f); 
+                float ease = Mathf.Sin(t * Mathf.PI * 0.5f);
 
                 if (fromGroup != null) fromGroup.alpha = 1f - ease;
                 fromPanel.transform.localScale = Vector3.Lerp(startScale, endScale, ease);
-                
+
                 timer += Time.deltaTime;
                 yield return null;
             }
@@ -97,8 +95,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             toPanel.SetActive(true);
             CanvasGroup toGroup = toPanel.GetComponent<CanvasGroup>();
-            Vector3 startScale = Vector3.one * 0.9f; 
-            Vector3 endScale = Vector3.one;          
+            Vector3 startScale = Vector3.one * 0.9f;
+            Vector3 endScale = Vector3.one;
 
             while (timer < transitionDuration)
             {
@@ -121,101 +119,74 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void OnSinglePlayerClicked()
     {
-        // UPDATED: Start a coroutine to handle the safe disconnect!
         StartCoroutine(SinglePlayerStartRoutine());
     }
 
     private IEnumerator SinglePlayerStartRoutine()
     {
-        // 1. If we are connected, gracefully disconnect first
         if (PhotonNetwork.IsConnected)
         {
             PhotonNetwork.Disconnect();
-            
-            // Wait right here until Photon confirms the internet is fully disconnected
             while (PhotonNetwork.IsConnected)
             {
                 yield return null;
             }
         }
-
-        // 2. Now it is 100% safe to turn on offline mode and create the local room
         PhotonNetwork.OfflineMode = true;
-        PhotonNetwork.CreateRoom("OfflineRoom"); 
+        PhotonNetwork.CreateRoom("OfflineRoom");
     }
 
     public void OnMultiplayerClicked()
     {
-        SwitchPanel(startPanel, lobbyPanel);
-        
-        createButton.interactable = false;
-        joinButton.interactable = false;
-        statusText.text = "Connecting to Servers...";
-        
+        SwitchPanel(startPanel, waitingRoomPanel);
+        startBackground.SetActive(false);
+        waitingRoomBackground.SetActive(true);
+        waitingRoomText.text = "Connecting to Server...";
         PhotonNetwork.ConnectUsingSettings();
     }
 
     public void OnBackToMainMenuClicked()
     {
         if (PhotonNetwork.IsConnected) PhotonNetwork.Disconnect();
-
-        GameObject activePanel = lobbyPanel.activeSelf ? lobbyPanel : waitingRoomPanel.activeSelf ? waitingRoomPanel : null;
-        SwitchPanel(activePanel, startPanel);
+        SwitchPanel(waitingRoomPanel, startPanel);
+        waitingRoomBackground.SetActive(false);
+        startBackground.SetActive(true);
     }
 
-    // --- LOBBY LOGIC ---
+    // --- PHOTON CALLBACKS ---
 
     public override void OnConnectedToMaster()
     {
-        statusText.text = "Connected to Master! Joining Lobby...";
-        PhotonNetwork.JoinLobby();
+        waitingRoomText.text = "Connected! Finding a room...";
+        PhotonNetwork.JoinRandomRoom();
     }
 
-    public override void OnJoinedLobby()
+    public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        statusText.text = "In Lobby. Ready to play!";
-        createButton.interactable = true;
-        joinButton.interactable = true;
-    }
-
-    public void CreateGameRoom()
-    {
-        statusText.text = "Creating Room...";
+        waitingRoomText.text = "Creating Room...";
         RoomOptions roomOptions = new RoomOptions() { MaxPlayers = 2 };
         PhotonNetwork.CreateRoom("TypingArena", roomOptions);
     }
-
-    public void JoinGameRoom()
-    {
-        statusText.text = "Joining Room...";
-        PhotonNetwork.JoinRoom("TypingArena");
-    }
-
-    // --- ROOM LOGIC ---
 
     public override void OnJoinedRoom()
     {
         if (PhotonNetwork.OfflineMode)
         {
-            // UPDATED: Do not load instantly! Trigger the fade to black first.
             StartCoroutine(SinglePlayerFadeRoutine());
             return;
         }
 
-        SwitchPanel(lobbyPanel, waitingRoomPanel);
-        
         countdownText.text = "";
         SetPlayerReadyState(false);
         UpdateWaitingRoomText();
-        UpdateReadyCountUI(); 
+        UpdateReadyCountUI();
     }
 
-    // --- NEW: Single Player Fade Routine ---
     private IEnumerator SinglePlayerFadeRoutine()
     {
         if (fadeBlock != null)
         {
-            fadeBlock.blocksRaycasts = true; 
+            fadeBlock.blocksRaycasts = true;
             float timer = 0f;
             while (timer < sceneFadeSpeed)
             {
@@ -225,23 +196,24 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             }
             fadeBlock.alpha = 1f;
         }
-
         PhotonNetwork.LoadLevel("GameScene");
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         UpdateWaitingRoomText();
-        UpdateReadyCountUI(); 
+        UpdateReadyCountUI();
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         SetPlayerReadyState(false);
         UpdateWaitingRoomText();
-        UpdateReadyCountUI(); 
+        UpdateReadyCountUI();
         countdownText.text = "Player left. Waiting...";
     }
+
+
 
     public void ToggleReady()
     {
@@ -282,7 +254,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         if (changedProps.ContainsKey("IsReady"))
         {
-            UpdateReadyCountUI(); 
+            UpdateReadyCountUI();
             CheckIfAllPlayersReady();
         }
     }
@@ -296,7 +268,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         {
             if (!p.CustomProperties.TryGetValue("IsReady", out object readyState) || !(bool)readyState)
             {
-                return; 
+                return;
             }
         }
 
@@ -306,7 +278,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void StartCountdown_RPC()
     {
-        readyButton.interactable = false; 
+        readyButton.interactable = false;
         StartCoroutine(CountdownRoutine());
     }
 
@@ -323,7 +295,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         if (fadeBlock != null)
         {
-            fadeBlock.blocksRaycasts = true; 
+            fadeBlock.blocksRaycasts = true;
             float timer = 0f;
             while (timer < sceneFadeSpeed)
             {

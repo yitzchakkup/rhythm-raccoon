@@ -14,6 +14,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [Header("Waiting Room UI Elements")]
     public GameObject waitingRoomPanel;
     public Button readyButton;
+    public Button backButton;
     public TMP_Text waitingRoomText;
     public TMP_Text countdownText;
     public TMP_Text readyCountText;
@@ -178,6 +179,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         countdownText.text = "";
         SetPlayerReadyState(false);
+        if (backButton != null) backButton.interactable = true;
         UpdateWaitingRoomText();
         UpdateReadyCountUI();
     }
@@ -212,8 +214,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         UpdateReadyCountUI();
         countdownText.text = "Player left. Waiting...";
     }
-
-
 
     public void ToggleReady()
     {
@@ -279,6 +279,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     private void StartCountdown_RPC()
     {
         readyButton.interactable = false;
+        if (backButton != null) backButton.interactable = false;
         StartCoroutine(CountdownRoutine());
     }
 

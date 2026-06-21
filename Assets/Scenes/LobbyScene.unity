@@ -569,6 +569,7 @@ MonoBehaviour:
   startPanel: {fileID: 1676405270}
   waitingRoomPanel: {fileID: 1865936089}
   readyButton: {fileID: 1726015130}
+  backButton: {fileID: 1977706519}
   waitingRoomText: {fileID: 544972756}
   countdownText: {fileID: 1374343905}
   readyCountText: {fileID: 1860085965}

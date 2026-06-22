@@ -8,7 +8,7 @@ public class UIRestartHelper : MonoBehaviour
         // We use the Singleton Instance so we don't need the Inspector!
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.RestartGame();
+            GameManager.Instance.ReturnToMainMenu();
         }
         else
         {

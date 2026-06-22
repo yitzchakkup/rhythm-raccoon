@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    private bool isDisconnecting = false;
 
     private void Awake()
     {
@@ -35,6 +38,12 @@ public class GameManager : MonoBehaviour
     {
         Time.timeScale = 0f;
 
+        if (PhotonNetwork.InRoom && PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+            PhotonNetwork.CurrentRoom.IsVisible = false;
+        }
+
         if (MultiplayerMatchManager.Instance != null)
         {
             int myScore = MultiplayerMatchManager.Instance.GetMyScore();
@@ -64,15 +73,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void RestartGame()
+    public void ReturnToMainMenu()
     {
+        if (isDisconnecting) return;
+        StartCoroutine(ReturnToMainMenuRoutine());
+    }
+
+    private IEnumerator ReturnToMainMenuRoutine()
+    {
+        isDisconnecting = true;
         Time.timeScale = 1f;
-        // Ensure all UI is hidden before restart
+
+        if (PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.Disconnect();
+            while (PhotonNetwork.IsConnected) { yield return null; }
+        }
+
+        PhotonNetwork.OfflineMode = false;
+
         if (SceneUIRefs.winUI != null) SceneUIRefs.winUI.SetActive(false);
         if (SceneUIRefs.loseUI != null) SceneUIRefs.loseUI.SetActive(false);
         if (SceneUIRefs.gameOverUI != null) SceneUIRefs.gameOverUI.SetActive(false);
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        isDisconnecting = false;
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
     public void QuitGame()

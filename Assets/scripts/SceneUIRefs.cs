@@ -11,24 +11,26 @@ public class SceneUIRefs : MonoBehaviour
     [SerializeField] private Image inspectorStaminaFill;
     [SerializeField] private RectTransform inspectorStaminaHead;
     [SerializeField] private TMP_Text inspectorScoreText;
-    [SerializeField] private GameObject inspectorGameOverUI;
-    [SerializeField] private GameObject inspectorWinUI;
-    [SerializeField] private GameObject inspectorLoseUI;
     [SerializeField] private GameObject inspectorTugOfWarUI;
     [SerializeField] private Sprite inspectorLowStaminaFillSprite;
     [SerializeField] private Sprite inspectorSadHeadSprite;
+    [SerializeField] private GameObject inspectorWinBackground;
+    [SerializeField] private GameObject inspectorLoseBackground;
+    [SerializeField] private GameObject inspectorOfflineLoseBackground;
+    [SerializeField] private GameObject inspectorSharedEndGameLayout;
 
     // --- Static properties for easy access ---
     public static GameObject staminaBar { get; private set; }
     public static Image staminaFill { get; private set; }
     public static RectTransform staminaHead { get; private set; }
     public static TMP_Text scoreText { get; private set; }
-    public static GameObject gameOverUI { get; private set; }
-    public static GameObject winUI { get; private set; }
-    public static GameObject loseUI { get; private set; }
     public static GameObject tugOfWarUI { get; private set; }
     public static Sprite lowStaminaFillSprite { get; private set; }
     public static Sprite sadHeadSprite { get; private set; }
+    public static GameObject winBackground { get; private set; }
+    public static GameObject loseBackground { get; private set; }
+    public static GameObject offlineLoseBackground { get; private set; }
+    public static GameObject sharedEndGameLayout { get; private set; }
 
     private void Awake()
     {
@@ -44,11 +46,12 @@ public class SceneUIRefs : MonoBehaviour
         staminaFill = inspectorStaminaFill;
         staminaHead = inspectorStaminaHead;
         scoreText = inspectorScoreText;
-        gameOverUI = inspectorGameOverUI;
-        winUI = inspectorWinUI;
-        loseUI = inspectorLoseUI;
         tugOfWarUI = inspectorTugOfWarUI;
         lowStaminaFillSprite = inspectorLowStaminaFillSprite;
         sadHeadSprite = inspectorSadHeadSprite;
+        winBackground = inspectorWinBackground;
+        loseBackground = inspectorLoseBackground;
+        offlineLoseBackground = inspectorOfflineLoseBackground;
+        sharedEndGameLayout = inspectorSharedEndGameLayout;
     }
 }

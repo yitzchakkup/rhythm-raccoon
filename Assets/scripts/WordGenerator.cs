@@ -36,6 +36,9 @@ public class WordGenerator : MonoBehaviour
     public AnimationCurve speedCurve = AnimationCurve.Linear(0, 0, 1, 1);
     public AnimationCurve spawnDelayCurve = AnimationCurve.Linear(0, 0, 1, 1);
     public AnimationCurve clusterCurve = AnimationCurve.Linear(0, 0, 1, 1);
+    
+    [Tooltip("Controls how fast the game ramps up from minLetters to maxLetters")]
+    public AnimationCurve letterCountCurve = AnimationCurve.Linear(0, 0, 1, 1); // <-- NEW VARIABLE
 
     [Header("Powerup States")]
     public float powerupSpeedMultiplier = 1f; 
@@ -80,17 +83,15 @@ public class WordGenerator : MonoBehaviour
         float baseSpawnDelay = Mathf.Lerp(initialSpawnDelay, minimumSpawnDelay, delayMultiplier);
         float baseSpeed = Mathf.Lerp(initialFallSpeed, maxFallSpeed, speedMultiplier);
 
-        // --- THE FIX: Apply Powerup Multiplier to Both Speed AND Delay ---
+        // 3. Apply Powerup Multiplier
         currentFallSpeed = baseSpeed * powerupSpeedMultiplier;
         
-        // If speed is 0.4x (SlowMo), delay becomes 2.5x longer.
-        // If speed is 2.5x (TempoShift), delay becomes 0.4x shorter.
         if (powerupSpeedMultiplier > 0)
         {
             currentSpawnDelay = baseSpawnDelay / powerupSpeedMultiplier;
         }
 
-        // 3. Apply speed to already falling letters
+        // 4. Apply speed to already falling letters
         foreach (List<FallingLetter> wave in activeWaves)
         {
             foreach (FallingLetter letter in wave)
@@ -102,7 +103,7 @@ public class WordGenerator : MonoBehaviour
             }
         }
 
-        // 4. Check if it is time to spawn
+        // 5. Check if it is time to spawn
         if (spawnTimer >= currentSpawnDelay)
         {
             SpawnWave();
@@ -161,7 +162,7 @@ public class WordGenerator : MonoBehaviour
                     }
                     letter.TriggerPopAndDestroy(); 
                 }
-                // Use the Singleton instance to strictly grab the local player's animator
+
                 if (AvatarController.Instance != null && AvatarController.Instance.localAnimator != null)
                 {
                     AvatarController.Instance.localAnimator.TriggerRandomPose();
@@ -192,7 +193,10 @@ public class WordGenerator : MonoBehaviour
     private void SpawnWave()
     {
         float progress = Mathf.Clamp01(gameTimer / timeToReachMaxDifficulty);
-        int lettersToSpawn = Mathf.RoundToInt(Mathf.Lerp(minLettersPerWave, maxLettersLimit, progress));
+        
+        // --- THE FIX: Evaluate the new curve to get the multiplier before Lerping ---
+        float letterCountMultiplier = letterCountCurve.Evaluate(progress);
+        int lettersToSpawn = Mathf.RoundToInt(Mathf.Lerp(minLettersPerWave, maxLettersLimit, letterCountMultiplier));
         
         float clusterMultiplier = clusterCurve.Evaluate(progress);
         float currentClusterChance = Mathf.Lerp(minClusterProbability, maxClusterProbability, clusterMultiplier);

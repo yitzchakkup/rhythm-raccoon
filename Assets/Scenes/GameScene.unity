@@ -1564,6 +1564,48 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  letterCountCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.13396364
+      value: 0.32453683
+      inSlope: 0.36168563
+      outSlope: 0.36168563
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 1
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.69671935
+      value: 0.5681169
+      inSlope: 0.87355006
+      outSlope: 0.87355006
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.12887627
+      outWeight: 0.120247535
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   powerupSpeedMultiplier: 1
 --- !u!4 &415607409
 Transform:
@@ -2768,7 +2810,7 @@ MonoBehaviour:
   staminaRewardAmount: 4
   maxStamina: 100
   startingStamina: 100
-  staminaDrainAmount: 0.2
+  staminaDrainAmount: 0.05
   staminaDrainTickRate: 0.05
   staminaHeadEmptyYPosition: -400
   staminaHeadYOffset: 50

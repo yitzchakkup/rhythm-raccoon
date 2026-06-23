@@ -13,6 +13,12 @@ public class DoubleScorePowerup : Powerup
         {
             ScoreAndStaminaManager.Instance.ActivateScoreMultiplier(scoreMultiplier, durationInSeconds);
             Debug.Log($"Applied {powerupName}!");
+            
+            if (PowerupUIManager.Instance != null)
+            {
+                // Match the exact string you typed in the Inspector, and pass the duration!
+                PowerupUIManager.Instance.ActivateIcon("Double Score", durationInSeconds); 
+            }
         }
     }
 }

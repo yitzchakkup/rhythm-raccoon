@@ -65,20 +65,27 @@ public class MultiplayerMatchManager : MonoBehaviourPun
         
         if (AvatarController.Instance != null) AvatarController.Instance.PlayLocalDamageEffect();
 
+        float duration = 0f;
         switch (attackName)
         {
             case "HalveScore":
+                duration = 10f;
                 if (ScoreAndStaminaManager.Instance != null)
-                    ScoreAndStaminaManager.Instance.ActivateScoreMultiplier(0.5f, 10f);
+                    ScoreAndStaminaManager.Instance.ActivateScoreMultiplier(0.5f, duration);
                 break;
             case "TempoShift":
-                // --- FIXED FOR UNITY 6: Using FindAnyObjectByType ---
+                duration = 4f;
                 WordGenerator generator = FindAnyObjectByType<WordGenerator>();
                 if (generator != null)
                 {
-                    generator.TriggerSpeedAttack(2.5f, 4f); 
+                    generator.TriggerSpeedAttack(2.5f, duration); 
                 }
                 break;
+        }
+        
+        if (PowerupUIManager.Instance != null)
+        {
+            PowerupUIManager.Instance.ActivateIcon(attackName, duration);
         }
     }
 

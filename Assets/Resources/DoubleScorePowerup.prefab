@@ -5219,7 +5219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fe64a74acd2b4a358c904add214ec47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoubleScorePowerup
-  powerupName: Double Score Powerup
+  powerupName: Double Score
   target: 0
   scoreMultiplier: 2
   durationInSeconds: 10

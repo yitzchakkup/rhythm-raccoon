@@ -5219,7 +5219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c37e36a3225145c6be6925dfd2ac27ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuffSlowMo
-  powerupName: Zen Mode
+  powerupName: SlowMo
   target: 0
   speedMultiplier: 0.4
   duration: 5

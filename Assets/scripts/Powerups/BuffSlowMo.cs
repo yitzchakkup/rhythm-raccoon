@@ -21,6 +21,12 @@ public class BuffSlowMo : Powerup
         {
             generator.TriggerSpeedAttack(speedMultiplier, duration);
             Debug.Log($"Applied {powerupName}! Time slowed.");
+            
+            if (PowerupUIManager.Instance != null)
+            {
+                // Match the exact string you typed in the Inspector, and pass the duration!
+                PowerupUIManager.Instance.ActivateIcon("SlowMo", duration); 
+            }
         }
     }
 }

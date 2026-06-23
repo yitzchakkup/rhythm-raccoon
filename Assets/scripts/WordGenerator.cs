@@ -51,10 +51,16 @@ public class WordGenerator : MonoBehaviour
 
     private List<List<FallingLetter>> activeWaves = new List<List<FallingLetter>>();
 
+    // Inside WordGenerator.cs
+    
     void Start()
     {
         currentSpawnDelay = initialSpawnDelay;
         currentFallSpeed = initialFallSpeed;
+    }
+
+    public void StartGameLoop()
+    {
         SpawnWave();
     }
 

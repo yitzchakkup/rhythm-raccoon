@@ -1,0 +1,1235 @@
+fileFormatVersion: 2
+guid: 5ec33f08cf1f349738645a6a3b91f24e
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4347892666249829501
+    second: racoon fall idle_0
+  - first:
+      213: 5798090514949561392
+    second: racoon fall idle_1
+  - first:
+      213: -171251500773799371
+    second: racoon fall idle_2
+  - first:
+      213: -1381466365218178251
+    second: racoon fall idle_3
+  - first:
+      213: -9034088296018381321
+    second: racoon fall idle_4
+  - first:
+      213: 4202928886663603043
+    second: racoon fall idle_5
+  - first:
+      213: 4673636593883014733
+    second: racoon fall idle_6
+  - first:
+      213: 7398250006122559167
+    second: racoon fall idle_7
+  - first:
+      213: 5446665893686966885
+    second: racoon fall idle_8
+  - first:
+      213: 2848570087853179303
+    second: racoon fall idle_9
+  - first:
+      213: 3683675716797153700
+    second: racoon fall idle_10
+  - first:
+      213: 5169125932936670453
+    second: racoon fall idle_11
+  - first:
+      213: -5324453392454451821
+    second: racoon fall idle_12
+  - first:
+      213: 4650733357414962293
+    second: racoon fall idle_13
+  - first:
+      213: 5744735019666838749
+    second: racoon fall idle_14
+  - first:
+      213: 195031886533391923
+    second: racoon fall idle_15
+  - first:
+      213: -1217607783103588363
+    second: racoon fall idle_16
+  - first:
+      213: -7858594624577117199
+    second: racoon fall idle_17
+  - first:
+      213: 7608656186281391080
+    second: racoon fall idle_18
+  - first:
+      213: -7276536598375705700
+    second: racoon fall idle_19
+  - first:
+      213: -5458884336680250222
+    second: racoon fall idle_20
+  - first:
+      213: 2800711624066723522
+    second: racoon fall idle_21
+  - first:
+      213: -4417759163129890456
+    second: racoon fall idle_22
+  - first:
+      213: -6557236169722720713
+    second: racoon fall idle_23
+  - first:
+      213: 1078918083270091117
+    second: racoon fall idle_24
+  - first:
+      213: 938896331479584394
+    second: racoon fall idle_25
+  - first:
+      213: 8131364751951786163
+    second: racoon fall idle_26
+  - first:
+      213: 7454265598589879977
+    second: racoon fall idle_27
+  - first:
+      213: 5698109167920188255
+    second: racoon fall idle_28
+  - first:
+      213: -4793765288521468447
+    second: racoon fall idle_29
+  - first:
+      213: 8779996673768467533
+    second: racoon fall idle_30
+  - first:
+      213: 8659817678838106294
+    second: racoon fall idle_31
+  - first:
+      213: -1405993642285675694
+    second: racoon fall idle_32
+  - first:
+      213: -8506387624815476632
+    second: racoon fall idle_33
+  - first:
+      213: 8859592107415055036
+    second: racoon fall idle_34
+  - first:
+      213: 3376096662705496219
+    second: racoon fall idle_35
+  - first:
+      213: -613178480719773769
+    second: racoon fall idle_36
+  - first:
+      213: 4760699220376208667
+    second: racoon fall idle_37
+  - first:
+      213: -6625575671716926071
+    second: racoon fall idle_38
+  - first:
+      213: 2635877706915098192
+    second: racoon fall idle_39
+  - first:
+      213: 8812141914658640905
+    second: racoon fall idle_40
+  - first:
+      213: -2614990747941884222
+    second: racoon fall idle_41
+  - first:
+      213: -2639984488920234445
+    second: racoon fall idle_42
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: racoon fall idle_0
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 2130
+        width: 577
+        height: 623
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7cd8550851d65c30800000000000000
+      internalID: 4347892666249829501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_1
+      rect:
+        serializedVersion: 2
+        x: 1265
+        y: 2130
+        width: 553
+        height: 611
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 03c512f8a94f67050800000000000000
+      internalID: 5798090514949561392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_2
+      rect:
+        serializedVersion: 2
+        x: 2241
+        y: 2130
+        width: 577
+        height: 623
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53a0029daa79f9df0800000000000000
+      internalID: -171251500773799371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_3
+      rect:
+        serializedVersion: 2
+        x: 3347
+        y: 2143
+        width: 401
+        height: 618
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53b350009ab04dce0800000000000000
+      internalID: -1381466365218178251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_4
+      rect:
+        serializedVersion: 2
+        x: 4191
+        y: 2147
+        width: 563
+        height: 572
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f57f463f8870a280800000000000000
+      internalID: -9034088296018381321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_5
+      rect:
+        serializedVersion: 2
+        x: 5154
+        y: 2178
+        width: 575
+        height: 415
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 363efc9ed8dc35a30800000000000000
+      internalID: 4202928886663603043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_6
+      rect:
+        serializedVersion: 2
+        x: 6080
+        y: 2125
+        width: 585
+        height: 390
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d46e9ab58b71cd040800000000000000
+      internalID: 4673636593883014733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_7
+      rect:
+        serializedVersion: 2
+        x: 7075
+        y: 2125
+        width: 592
+        height: 369
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb67776de2ddba660800000000000000
+      internalID: 7398250006122559167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_8
+      rect:
+        serializedVersion: 2
+        x: 8073
+        y: 2120
+        width: 601
+        height: 419
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56a727bc5c1769b40800000000000000
+      internalID: 5446665893686966885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_9
+      rect:
+        serializedVersion: 2
+        x: 9070
+        y: 2120
+        width: 613
+        height: 438
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a1ca4c0767288720800000000000000
+      internalID: 2848570087853179303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_10
+      rect:
+        serializedVersion: 2
+        x: 10069
+        y: 2120
+        width: 624
+        height: 428
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a14d672c8b0f1330800000000000000
+      internalID: 3683675716797153700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_11
+      rect:
+        serializedVersion: 2
+        x: 11069
+        y: 2120
+        width: 628
+        height: 398
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5fc23f716ac6cb740800000000000000
+      internalID: 5169125932936670453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_12
+      rect:
+        serializedVersion: 2
+        x: 12069
+        y: 2120
+        width: 628
+        height: 376
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39df0a789ddbb16b0800000000000000
+      internalID: -5324453392454451821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_13
+      rect:
+        serializedVersion: 2
+        x: 13069
+        y: 2120
+        width: 628
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57457c11959ba8040800000000000000
+      internalID: 4650733357414962293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_14
+      rect:
+        serializedVersion: 2
+        x: 14069
+        y: 2120
+        width: 628
+        height: 383
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd41dff301669bf40800000000000000
+      internalID: 5744735019666838749
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_15
+      rect:
+        serializedVersion: 2
+        x: 15069
+        y: 2120
+        width: 628
+        height: 383
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33672bca774e4b200800000000000000
+      internalID: 195031886533391923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_16
+      rect:
+        serializedVersion: 2
+        x: 16069
+        y: 2120
+        width: 628
+        height: 383
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f71c542c203a1fe0800000000000000
+      internalID: -1217607783103588363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_17
+      rect:
+        serializedVersion: 2
+        x: 17069
+        y: 2120
+        width: 628
+        height: 383
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1f3694853d9a0f290800000000000000
+      internalID: -7858594624577117199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_18
+      rect:
+        serializedVersion: 2
+        x: 18069
+        y: 2120
+        width: 628
+        height: 383
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e371613d70679960800000000000000
+      internalID: 7608656186281391080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_19
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 1129
+        width: 602
+        height: 625
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c93dfaa348c840b90800000000000000
+      internalID: -7276536598375705700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_20
+      rect:
+        serializedVersion: 2
+        x: 1235
+        y: 1129
+        width: 602
+        height: 624
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 294da324e952e34b0800000000000000
+      internalID: -5458884336680250222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_21
+      rect:
+        serializedVersion: 2
+        x: 2234
+        y: 1129
+        width: 601
+        height: 622
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ceedce12602ed620800000000000000
+      internalID: 2800711624066723522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_22
+      rect:
+        serializedVersion: 2
+        x: 3233
+        y: 1129
+        width: 598
+        height: 621
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8697a6a8277f0b2c0800000000000000
+      internalID: -4417759163129890456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_23
+      rect:
+        serializedVersion: 2
+        x: 4231
+        y: 1129
+        width: 596
+        height: 620
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73e855302740005a0800000000000000
+      internalID: -6557236169722720713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_24
+      rect:
+        serializedVersion: 2
+        x: 5229
+        y: 1128
+        width: 595
+        height: 620
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d612f07c74619fe00800000000000000
+      internalID: 1078918083270091117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_25
+      rect:
+        serializedVersion: 2
+        x: 6227
+        y: 1128
+        width: 596
+        height: 619
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8e02ce2d31a70d00800000000000000
+      internalID: 938896331479584394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_26
+      rect:
+        serializedVersion: 2
+        x: 7226
+        y: 1128
+        width: 599
+        height: 619
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b0f73bf82968d070800000000000000
+      internalID: 8131364751951786163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_27
+      rect:
+        serializedVersion: 2
+        x: 8224
+        y: 1129
+        width: 605
+        height: 618
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9a64d59411fd27760800000000000000
+      internalID: 7454265598589879977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_28
+      rect:
+        serializedVersion: 2
+        x: 9222
+        y: 1129
+        width: 611
+        height: 618
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5b874d2910c31f40800000000000000
+      internalID: 5698109167920188255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_29
+      rect:
+        serializedVersion: 2
+        x: 10221
+        y: 1129
+        width: 615
+        height: 619
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e574195edf197db0800000000000000
+      internalID: -4793765288521468447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_30
+      rect:
+        serializedVersion: 2
+        x: 11220
+        y: 1129
+        width: 618
+        height: 620
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d4ca415d470d8d970800000000000000
+      internalID: 8779996673768467533
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_31
+      rect:
+        serializedVersion: 2
+        x: 12219
+        y: 1129
+        width: 619
+        height: 621
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b80bc61c4add2870800000000000000
+      internalID: 8659817678838106294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_32
+      rect:
+        serializedVersion: 2
+        x: 13219
+        y: 1129
+        width: 618
+        height: 622
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 25bca1b4b38ec7ce0800000000000000
+      internalID: -1405993642285675694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_33
+      rect:
+        serializedVersion: 2
+        x: 14220
+        y: 1129
+        width: 614
+        height: 623
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8604815268d33f980800000000000000
+      internalID: -8506387624815476632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_34
+      rect:
+        serializedVersion: 2
+        x: 15221
+        y: 1129
+        width: 610
+        height: 624
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cba2451e41893fa70800000000000000
+      internalID: 8859592107415055036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_35
+      rect:
+        serializedVersion: 2
+        x: 16223
+        y: 1129
+        width: 603
+        height: 626
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9061f3070e4ade20800000000000000
+      internalID: 3376096662705496219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_36
+      rect:
+        serializedVersion: 2
+        x: 17225
+        y: 1130
+        width: 596
+        height: 626
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bfb8c8ab6d8d77f0800000000000000
+      internalID: -613178480719773769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_37
+      rect:
+        serializedVersion: 2
+        x: 18226
+        y: 1130
+        width: 592
+        height: 626
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b15c009b7b6611240800000000000000
+      internalID: 4760699220376208667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_38
+      rect:
+        serializedVersion: 2
+        x: 228
+        y: 130
+        width: 592
+        height: 627
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 98da7d6c70a3d04a0800000000000000
+      internalID: -6625575671716926071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_39
+      rect:
+        serializedVersion: 2
+        x: 1230
+        y: 129
+        width: 593
+        height: 628
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05eab081fc4849420800000000000000
+      internalID: 2635877706915098192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_40
+      rect:
+        serializedVersion: 2
+        x: 2232
+        y: 129
+        width: 596
+        height: 627
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9041f85f1640b4a70800000000000000
+      internalID: 8812141914658640905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_41
+      rect:
+        serializedVersion: 2
+        x: 3234
+        y: 129
+        width: 599
+        height: 627
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ceadf105cfa5bbd0800000000000000
+      internalID: -2614990747941884222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon fall idle_42
+      rect:
+        serializedVersion: 2
+        x: 4235
+        y: 129
+        width: 601
+        height: 626
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3364e553814ec5bd0800000000000000
+      internalID: -2639984488920234445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      racoon fall idle_0: 4347892666249829501
+      racoon fall idle_1: 5798090514949561392
+      racoon fall idle_10: 3683675716797153700
+      racoon fall idle_11: 5169125932936670453
+      racoon fall idle_12: -5324453392454451821
+      racoon fall idle_13: 4650733357414962293
+      racoon fall idle_14: 5744735019666838749
+      racoon fall idle_15: 195031886533391923
+      racoon fall idle_16: -1217607783103588363
+      racoon fall idle_17: -7858594624577117199
+      racoon fall idle_18: 7608656186281391080
+      racoon fall idle_19: -7276536598375705700
+      racoon fall idle_2: -171251500773799371
+      racoon fall idle_20: -5458884336680250222
+      racoon fall idle_21: 2800711624066723522
+      racoon fall idle_22: -4417759163129890456
+      racoon fall idle_23: -6557236169722720713
+      racoon fall idle_24: 1078918083270091117
+      racoon fall idle_25: 938896331479584394
+      racoon fall idle_26: 8131364751951786163
+      racoon fall idle_27: 7454265598589879977
+      racoon fall idle_28: 5698109167920188255
+      racoon fall idle_29: -4793765288521468447
+      racoon fall idle_3: -1381466365218178251
+      racoon fall idle_30: 8779996673768467533
+      racoon fall idle_31: 8659817678838106294
+      racoon fall idle_32: -1405993642285675694
+      racoon fall idle_33: -8506387624815476632
+      racoon fall idle_34: 8859592107415055036
+      racoon fall idle_35: 3376096662705496219
+      racoon fall idle_36: -613178480719773769
+      racoon fall idle_37: 4760699220376208667
+      racoon fall idle_38: -6625575671716926071
+      racoon fall idle_39: 2635877706915098192
+      racoon fall idle_4: -9034088296018381321
+      racoon fall idle_40: 8812141914658640905
+      racoon fall idle_41: -2614990747941884222
+      racoon fall idle_42: -2639984488920234445
+      racoon fall idle_5: 4202928886663603043
+      racoon fall idle_6: 4673636593883014733
+      racoon fall idle_7: 7398250006122559167
+      racoon fall idle_8: 5446665893686966885
+      racoon fall idle_9: 2848570087853179303
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,3081 @@
+fileFormatVersion: 2
+guid: 2bef4d280ab0744719420b84cf321ed2
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -3984712993798128630
+    second: racoon poses_0
+  - first:
+      213: -8659074446735308155
+    second: racoon poses_1
+  - first:
+      213: -6781816452988676348
+    second: racoon poses_2
+  - first:
+      213: -8978777053760301919
+    second: racoon poses_3
+  - first:
+      213: 8754176716298584020
+    second: racoon poses_4
+  - first:
+      213: 5389508453400490323
+    second: racoon poses_5
+  - first:
+      213: -6558193829071292629
+    second: racoon poses_6
+  - first:
+      213: -7707984112959096028
+    second: racoon poses_7
+  - first:
+      213: -7681678486804726194
+    second: racoon poses_8
+  - first:
+      213: -2782715514239598916
+    second: racoon poses_9
+  - first:
+      213: -1865580746907833026
+    second: racoon poses_10
+  - first:
+      213: 1156643050828969396
+    second: racoon poses_11
+  - first:
+      213: -2603754414550240502
+    second: racoon poses_12
+  - first:
+      213: -5745927534021901206
+    second: racoon poses_13
+  - first:
+      213: 4656253979502415591
+    second: racoon poses_14
+  - first:
+      213: -8071247864077042864
+    second: racoon poses_15
+  - first:
+      213: 6155768452738126781
+    second: racoon poses_16
+  - first:
+      213: -5074140296418042465
+    second: racoon poses_17
+  - first:
+      213: 465058013430997987
+    second: racoon poses_18
+  - first:
+      213: 7978137526828956061
+    second: racoon poses_19
+  - first:
+      213: -5990325714714421825
+    second: racoon poses_20
+  - first:
+      213: 1129156744058185006
+    second: racoon poses_21
+  - first:
+      213: 3233543791598565018
+    second: racoon poses_22
+  - first:
+      213: 1760474544288809422
+    second: racoon poses_23
+  - first:
+      213: 6764534985369954599
+    second: racoon poses_24
+  - first:
+      213: -5359864849208032345
+    second: racoon poses_25
+  - first:
+      213: 9055608213598159093
+    second: racoon poses_26
+  - first:
+      213: 1415583858031164299
+    second: racoon poses_27
+  - first:
+      213: -5722531334397433495
+    second: racoon poses_28
+  - first:
+      213: 6321209210612249174
+    second: racoon poses_29
+  - first:
+      213: -2740406577588594443
+    second: racoon poses_30
+  - first:
+      213: -4348848745959386058
+    second: racoon poses_31
+  - first:
+      213: 4013559562397990256
+    second: racoon poses_32
+  - first:
+      213: -9065136570403835940
+    second: racoon poses_33
+  - first:
+      213: -3585188748856166038
+    second: racoon poses_34
+  - first:
+      213: -1467853565191149865
+    second: racoon poses_35
+  - first:
+      213: -6576969307162854129
+    second: racoon poses_36
+  - first:
+      213: 3480377526249848133
+    second: racoon poses_37
+  - first:
+      213: -6299007990364824046
+    second: racoon poses_38
+  - first:
+      213: -5357777631306340653
+    second: racoon poses_39
+  - first:
+      213: -1320021235412916771
+    second: racoon poses_40
+  - first:
+      213: -4828330973821071994
+    second: racoon poses_41
+  - first:
+      213: -5325515815602214123
+    second: racoon poses_42
+  - first:
+      213: -5616447212134701689
+    second: racoon poses_43
+  - first:
+      213: 1414797038347677878
+    second: racoon poses_44
+  - first:
+      213: -3081513594855441700
+    second: racoon poses_45
+  - first:
+      213: 3411748819245649008
+    second: racoon poses_46
+  - first:
+      213: -4624551021965989295
+    second: racoon poses_47
+  - first:
+      213: -4853647888130239964
+    second: racoon poses_48
+  - first:
+      213: -4047110356480528125
+    second: racoon poses_49
+  - first:
+      213: 2936020862911016993
+    second: racoon poses_50
+  - first:
+      213: 1927113712374536807
+    second: racoon poses_51
+  - first:
+      213: 7719649873639028497
+    second: racoon poses_52
+  - first:
+      213: -1642919254957900659
+    second: racoon poses_53
+  - first:
+      213: 1772719623917826456
+    second: racoon poses_54
+  - first:
+      213: 2529893422154544742
+    second: racoon poses_55
+  - first:
+      213: 3655838052106412263
+    second: racoon poses_56
+  - first:
+      213: -7222916399764390638
+    second: racoon poses_57
+  - first:
+      213: -445443715823178011
+    second: racoon poses_58
+  - first:
+      213: 917869289448964020
+    second: racoon poses_59
+  - first:
+      213: 360016307451699186
+    second: racoon poses_60
+  - first:
+      213: 9207604548261822278
+    second: racoon poses_61
+  - first:
+      213: -3450496045099759832
+    second: racoon poses_62
+  - first:
+      213: -5816778301150495699
+    second: racoon poses_63
+  - first:
+      213: -567614469182740284
+    second: racoon poses_64
+  - first:
+      213: 2264942010840156777
+    second: racoon poses_65
+  - first:
+      213: 777691408023898786
+    second: racoon poses_66
+  - first:
+      213: 4083313432323628111
+    second: racoon poses_67
+  - first:
+      213: -4417539152775147859
+    second: racoon poses_68
+  - first:
+      213: -4118264973189446719
+    second: racoon poses_69
+  - first:
+      213: -2894420228232735542
+    second: racoon poses_70
+  - first:
+      213: -2940871736713392754
+    second: racoon poses_71
+  - first:
+      213: 7429451168930523702
+    second: racoon poses_72
+  - first:
+      213: -4076795184227492777
+    second: racoon poses_73
+  - first:
+      213: -7627350794733254634
+    second: racoon poses_74
+  - first:
+      213: 6600390288402324670
+    second: racoon poses_75
+  - first:
+      213: 5194129641184275845
+    second: racoon poses_76
+  - first:
+      213: -5680357451075752556
+    second: racoon poses_77
+  - first:
+      213: 8801161640519375042
+    second: racoon poses_78
+  - first:
+      213: 9112935624641581343
+    second: racoon poses_79
+  - first:
+      213: 7033044451754930753
+    second: racoon poses_80
+  - first:
+      213: -8207101396372079077
+    second: racoon poses_81
+  - first:
+      213: 4211508039692371779
+    second: racoon poses_82
+  - first:
+      213: -523726294136449049
+    second: racoon poses_83
+  - first:
+      213: -5838900870941333572
+    second: racoon poses_84
+  - first:
+      213: -5223707981876017438
+    second: racoon poses_85
+  - first:
+      213: 1239125266507709352
+    second: racoon poses_86
+  - first:
+      213: -6473814852527206737
+    second: racoon poses_87
+  - first:
+      213: 5988327533304292757
+    second: racoon poses_88
+  - first:
+      213: 5155391329475435899
+    second: racoon poses_89
+  - first:
+      213: -6989633648752892570
+    second: racoon poses_90
+  - first:
+      213: -1208218057949940113
+    second: racoon poses_91
+  - first:
+      213: -5458512405163557741
+    second: racoon poses_92
+  - first:
+      213: -7214763527689719950
+    second: racoon poses_93
+  - first:
+      213: -1058799379749306188
+    second: racoon poses_94
+  - first:
+      213: -6913804354255359592
+    second: racoon poses_95
+  - first:
+      213: -2545410050813639776
+    second: racoon poses_96
+  - first:
+      213: 7582515526983180984
+    second: racoon poses_97
+  - first:
+      213: 2471099880296993398
+    second: racoon poses_98
+  - first:
+      213: 9002557307560438213
+    second: racoon poses_99
+  - first:
+      213: 3801333325532514392
+    second: racoon poses_100
+  - first:
+      213: 8455484167237470262
+    second: racoon poses_101
+  - first:
+      213: 1957424487457976421
+    second: racoon poses_102
+  - first:
+      213: 882923489933197631
+    second: racoon poses_103
+  - first:
+      213: 330276725173027297
+    second: racoon poses_104
+  - first:
+      213: 5716447217955444143
+    second: racoon poses_105
+  - first:
+      213: -138262600105896286
+    second: racoon poses_106
+  - first:
+      213: 7107461199266064007
+    second: racoon poses_107
+  - first:
+      213: 4816102342570489617
+    second: racoon poses_108
+  - first:
+      213: -2886717430772551384
+    second: racoon poses_109
+  - first:
+      213: -1731430845088822237
+    second: racoon poses_110
+  - first:
+      213: -6752756752927939598
+    second: racoon poses_111
+  - first:
+      213: 6053084014083945243
+    second: racoon poses_112
+  - first:
+      213: 1967968453745682950
+    second: racoon poses_113
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 16384
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: racoon poses_0
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 5130
+        width: 577
+        height: 623
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0c77c0e4a473b8c0800000000000000
+      internalID: -3984712993798128630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_1
+      rect:
+        serializedVersion: 2
+        x: 1265
+        y: 5130
+        width: 553
+        height: 611
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58a0eae1ba9c4d780800000000000000
+      internalID: -8659074446735308155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_2
+      rect:
+        serializedVersion: 2
+        x: 2241
+        y: 5130
+        width: 577
+        height: 623
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 407d5bb1ed522e1a0800000000000000
+      internalID: -6781816452988676348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_3
+      rect:
+        serializedVersion: 2
+        x: 3181
+        y: 5130
+        width: 595
+        height: 642
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1a4503957d9f46380800000000000000
+      internalID: -8978777053760301919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_4
+      rect:
+        serializedVersion: 2
+        x: 4171
+        y: 5130
+        width: 581
+        height: 651
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4dff8f387551d7970800000000000000
+      internalID: 8754176716298584020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_5
+      rect:
+        serializedVersion: 2
+        x: 5165
+        y: 5130
+        width: 605
+        height: 660
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 351b6ee22616bca40800000000000000
+      internalID: 5389508453400490323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_6
+      rect:
+        serializedVersion: 2
+        x: 6162
+        y: 5130
+        width: 627
+        height: 665
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b27fb02957d9cf4a0800000000000000
+      internalID: -6558193829071292629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_7
+      rect:
+        serializedVersion: 2
+        x: 7161
+        y: 5130
+        width: 628
+        height: 665
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42bf7b4b94db70590800000000000000
+      internalID: -7707984112959096028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_8
+      rect:
+        serializedVersion: 2
+        x: 8158
+        y: 5130
+        width: 631
+        height: 666
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4e7e339d12356590800000000000000
+      internalID: -7681678486804726194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_9
+      rect:
+        serializedVersion: 2
+        x: 9154
+        y: 5130
+        width: 634
+        height: 667
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cbeb7c6bbfec169d0800000000000000
+      internalID: -2782715514239598916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_10
+      rect:
+        serializedVersion: 2
+        x: 10150
+        y: 5130
+        width: 637
+        height: 669
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e3d20c8e1302c16e0800000000000000
+      internalID: -1865580746907833026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_11
+      rect:
+        serializedVersion: 2
+        x: 11145
+        y: 5130
+        width: 642
+        height: 670
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b5b5900ab83d0010800000000000000
+      internalID: 1156643050828969396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_12
+      rect:
+        serializedVersion: 2
+        x: 12141
+        y: 5130
+        width: 645
+        height: 672
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a03b06eb72b9ddbd0800000000000000
+      internalID: -2603754414550240502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_13
+      rect:
+        serializedVersion: 2
+        x: 13138
+        y: 5130
+        width: 647
+        height: 673
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a640d7dd95d5240b0800000000000000
+      internalID: -5745927534021901206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_14
+      rect:
+        serializedVersion: 2
+        x: 14136
+        y: 5130
+        width: 648
+        height: 674
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ee8d3013565e9040800000000000000
+      internalID: 4656253979502415591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_15
+      rect:
+        serializedVersion: 2
+        x: 15135
+        y: 5130
+        width: 649
+        height: 675
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05bbe87b4da2dff80800000000000000
+      internalID: -8071247864077042864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_16
+      rect:
+        serializedVersion: 2
+        x: 16138
+        y: 5130
+        width: 627
+        height: 669
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db313090bcead6550800000000000000
+      internalID: 6155768452738126781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_17
+      rect:
+        serializedVersion: 2
+        x: 17147
+        y: 5130
+        width: 574
+        height: 657
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9dd18bc8480599b0800000000000000
+      internalID: -5074140296418042465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_18
+      rect:
+        serializedVersion: 2
+        x: 18164
+        y: 5130
+        width: 580
+        height: 645
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3e3e08a9cc7347600800000000000000
+      internalID: 465058013430997987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_19
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 4130
+        width: 577
+        height: 623
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d997ad78fc908be60800000000000000
+      internalID: 7978137526828956061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_20
+      rect:
+        serializedVersion: 2
+        x: 1265
+        y: 4130
+        width: 553
+        height: 611
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb51f8520861edca0800000000000000
+      internalID: -5990325714714421825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_21
+      rect:
+        serializedVersion: 2
+        x: 2241
+        y: 4130
+        width: 577
+        height: 623
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e25235183129baf00800000000000000
+      internalID: 1129156744058185006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_22
+      rect:
+        serializedVersion: 2
+        x: 3186
+        y: 4141
+        width: 629
+        height: 604
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a96f6e742fadfdc20800000000000000
+      internalID: 3233543791598565018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_23
+      rect:
+        serializedVersion: 2
+        x: 4185
+        y: 4152
+        width: 620
+        height: 580
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec1c37845467e6810800000000000000
+      internalID: 1760474544288809422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_24
+      rect:
+        serializedVersion: 2
+        x: 5185
+        y: 4155
+        width: 614
+        height: 565
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 729ada9aab470ed50800000000000000
+      internalID: 6764534985369954599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_25
+      rect:
+        serializedVersion: 2
+        x: 6185
+        y: 4155
+        width: 615
+        height: 560
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a34ad2415fed95b0800000000000000
+      internalID: -5359864849208032345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_26
+      rect:
+        serializedVersion: 2
+        x: 7185
+        y: 4155
+        width: 615
+        height: 560
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f0c0ac01bbfbad70800000000000000
+      internalID: 9055608213598159093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_27
+      rect:
+        serializedVersion: 2
+        x: 8185
+        y: 4155
+        width: 615
+        height: 558
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8b79bfc40a25a310800000000000000
+      internalID: 1415583858031164299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_28
+      rect:
+        serializedVersion: 2
+        x: 9185
+        y: 4155
+        width: 621
+        height: 556
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 969e235121c7590b0800000000000000
+      internalID: -5722531334397433495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_29
+      rect:
+        serializedVersion: 2
+        x: 10185
+        y: 4155
+        width: 634
+        height: 553
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 652787d294279b750800000000000000
+      internalID: 6321209210612249174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_30
+      rect:
+        serializedVersion: 2
+        x: 11186
+        y: 4155
+        width: 636
+        height: 550
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f810baacbe18f9d0800000000000000
+      internalID: -2740406577588594443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_31
+      rect:
+        serializedVersion: 2
+        x: 12186
+        y: 4154
+        width: 632
+        height: 548
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63410335b19c5a3c0800000000000000
+      internalID: -4348848745959386058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_32
+      rect:
+        serializedVersion: 2
+        x: 13186
+        y: 4154
+        width: 630
+        height: 546
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07dba91482703b730800000000000000
+      internalID: 4013559562397990256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_33
+      rect:
+        serializedVersion: 2
+        x: 14186
+        y: 4154
+        width: 629
+        height: 544
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdf2da0815a223280800000000000000
+      internalID: -9065136570403835940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_34
+      rect:
+        serializedVersion: 2
+        x: 15186
+        y: 4154
+        width: 628
+        height: 543
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6973bbf3d9de3ec0800000000000000
+      internalID: -3585188748856166038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_35
+      rect:
+        serializedVersion: 2
+        x: 16186
+        y: 4155
+        width: 630
+        height: 550
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d6ad70a5f221abe0800000000000000
+      internalID: -1467853565191149865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_36
+      rect:
+        serializedVersion: 2
+        x: 17185
+        y: 4153
+        width: 634
+        height: 567
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f0d39ebe249e9b4a0800000000000000
+      internalID: -6576969307162854129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_37
+      rect:
+        serializedVersion: 2
+        x: 18186
+        y: 4141
+        width: 636
+        height: 598
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54dff589be8cc4030800000000000000
+      internalID: 3480377526249848133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_38
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 3130
+        width: 577
+        height: 623
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21e15f83b9d6598a0800000000000000
+      internalID: -6299007990364824046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_39
+      rect:
+        serializedVersion: 2
+        x: 1265
+        y: 3130
+        width: 553
+        height: 611
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d6a37c81a955a5b0800000000000000
+      internalID: -5357777631306340653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_40
+      rect:
+        serializedVersion: 2
+        x: 2241
+        y: 3130
+        width: 577
+        height: 623
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd5ad3f1ea75eade0800000000000000
+      internalID: -1320021235412916771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_41
+      rect:
+        serializedVersion: 2
+        x: 3242
+        y: 3120
+        width: 517
+        height: 624
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68d01679f825efcb0800000000000000
+      internalID: -4828330973821071994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_42
+      rect:
+        serializedVersion: 2
+        x: 4161
+        y: 3122
+        width: 591
+        height: 596
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51b2e4dd497f716b0800000000000000
+      internalID: -5325515815602214123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_43
+      rect:
+        serializedVersion: 2
+        x: 5145
+        y: 3122
+        width: 600
+        height: 566
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7856afc840f5e02b0800000000000000
+      internalID: -5616447212134701689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_44
+      rect:
+        serializedVersion: 2
+        x: 6149
+        y: 3122
+        width: 593
+        height: 552
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b0fcf3196e52a310800000000000000
+      internalID: 1414797038347677878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_45
+      rect:
+        serializedVersion: 2
+        x: 7151
+        y: 3122
+        width: 591
+        height: 552
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdaba1846b34c35d0800000000000000
+      internalID: -3081513594855441700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_46
+      rect:
+        serializedVersion: 2
+        x: 8154
+        y: 3123
+        width: 588
+        height: 551
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 07ccef19977f85f20800000000000000
+      internalID: 3411748819245649008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_47
+      rect:
+        serializedVersion: 2
+        x: 9156
+        y: 3124
+        width: 586
+        height: 551
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15a2c02f85b42dfb0800000000000000
+      internalID: -4624551021965989295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_48
+      rect:
+        serializedVersion: 2
+        x: 10155
+        y: 3125
+        width: 576
+        height: 550
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4221c2326f064acb0800000000000000
+      internalID: -4853647888130239964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_49
+      rect:
+        serializedVersion: 2
+        x: 11155
+        y: 3126
+        width: 566
+        height: 549
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3017c23c296c5d7c0800000000000000
+      internalID: -4047110356480528125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_50
+      rect:
+        serializedVersion: 2
+        x: 12154
+        y: 3127
+        width: 561
+        height: 548
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12072fa4b67deb820800000000000000
+      internalID: 2936020862911016993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_51
+      rect:
+        serializedVersion: 2
+        x: 13153
+        y: 3129
+        width: 557
+        height: 546
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76a5edb06bb7eba10800000000000000
+      internalID: 1927113712374536807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_52
+      rect:
+        serializedVersion: 2
+        x: 14153
+        y: 3129
+        width: 555
+        height: 546
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 117b4acd8a4b12b60800000000000000
+      internalID: 7719649873639028497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_53
+      rect:
+        serializedVersion: 2
+        x: 15152
+        y: 3130
+        width: 555
+        height: 546
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8cb59564ad2339e0800000000000000
+      internalID: -1642919254957900659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_54
+      rect:
+        serializedVersion: 2
+        x: 16170
+        y: 3129
+        width: 553
+        height: 563
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8917cfd0b17f99810800000000000000
+      internalID: 1772719623917826456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_55
+      rect:
+        serializedVersion: 2
+        x: 17170
+        y: 3127
+        width: 585
+        height: 597
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6667e1bd9acfb1320800000000000000
+      internalID: 2529893422154544742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_56
+      rect:
+        serializedVersion: 2
+        x: 18274
+        y: 3122
+        width: 506
+        height: 628
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e0a824c6552cb230800000000000000
+      internalID: 3655838052106412263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_57
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 2130
+        width: 577
+        height: 623
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21d33b59dcb03cb90800000000000000
+      internalID: -7222916399764390638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_58
+      rect:
+        serializedVersion: 2
+        x: 1265
+        y: 2130
+        width: 553
+        height: 611
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5eeedeeec4771d9f0800000000000000
+      internalID: -445443715823178011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_59
+      rect:
+        serializedVersion: 2
+        x: 2241
+        y: 2130
+        width: 577
+        height: 623
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bf78d3714decbc00800000000000000
+      internalID: 917869289448964020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_60
+      rect:
+        serializedVersion: 2
+        x: 3248
+        y: 2127
+        width: 511
+        height: 541
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ff91079ce80ff400800000000000000
+      internalID: 360016307451699186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_61
+      rect:
+        serializedVersion: 2
+        x: 4259
+        y: 2152
+        width: 482
+        height: 478
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64fba6b7d8bf7cf70800000000000000
+      internalID: 9207604548261822278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_62
+      rect:
+        serializedVersion: 2
+        x: 5270
+        y: 2120
+        width: 495
+        height: 480
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 82740f4e0206d10d0800000000000000
+      internalID: -3450496045099759832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_63
+      rect:
+        serializedVersion: 2
+        x: 6267
+        y: 2106
+        width: 508
+        height: 482
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2c79b624f6a64fa0800000000000000
+      internalID: -5816778301150495699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_64
+      rect:
+        serializedVersion: 2
+        x: 7268
+        y: 2107
+        width: 503
+        height: 482
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c8adfac5ad6f18f0800000000000000
+      internalID: -567614469182740284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_65
+      rect:
+        serializedVersion: 2
+        x: 8270
+        y: 2110
+        width: 491
+        height: 482
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96a8cf832c0be6f10800000000000000
+      internalID: 2264942010840156777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_66
+      rect:
+        serializedVersion: 2
+        x: 9272
+        y: 2116
+        width: 473
+        height: 481
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2aa4328173aeaca00800000000000000
+      internalID: 777691408023898786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_67
+      rect:
+        serializedVersion: 2
+        x: 10275
+        y: 2129
+        width: 451
+        height: 471
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f4c1b30bee7daa830800000000000000
+      internalID: 4083313432323628111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_68
+      rect:
+        serializedVersion: 2
+        x: 11278
+        y: 2129
+        width: 427
+        height: 474
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dae0571bb8fb1b2c0800000000000000
+      internalID: -4417539152775147859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_69
+      rect:
+        serializedVersion: 2
+        x: 12281
+        y: 2130
+        width: 418
+        height: 477
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c30c1e83dbf8d6c0800000000000000
+      internalID: -4118264973189446719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_70
+      rect:
+        serializedVersion: 2
+        x: 13284
+        y: 2130
+        width: 413
+        height: 484
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac49b714324f4d7d0800000000000000
+      internalID: -2894420228232735542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_71
+      rect:
+        serializedVersion: 2
+        x: 14285
+        y: 2130
+        width: 410
+        height: 489
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8d4633acbcef27d0800000000000000
+      internalID: -2940871736713392754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_72
+      rect:
+        serializedVersion: 2
+        x: 15286
+        y: 2130
+        width: 408
+        height: 491
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63ae638a976ba1760800000000000000
+      internalID: 7429451168930523702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_73
+      rect:
+        serializedVersion: 2
+        x: 16292
+        y: 2143
+        width: 406
+        height: 492
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75cd81631605c67c0800000000000000
+      internalID: -4076795184227492777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_74
+      rect:
+        serializedVersion: 2
+        x: 17312
+        y: 2173
+        width: 401
+        height: 496
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61881a61dd4362690800000000000000
+      internalID: -7627350794733254634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_75
+      rect:
+        serializedVersion: 2
+        x: 18343
+        y: 2171
+        width: 402
+        height: 540
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebc98273ffb499b50800000000000000
+      internalID: 6600390288402324670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_76
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 1130
+        width: 577
+        height: 623
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58dad149361451840800000000000000
+      internalID: 5194129641184275845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_77
+      rect:
+        serializedVersion: 2
+        x: 1265
+        y: 1130
+        width: 553
+        height: 611
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49de26b7ef05b21b0800000000000000
+      internalID: -5680357451075752556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_78
+      rect:
+        serializedVersion: 2
+        x: 2241
+        y: 1130
+        width: 577
+        height: 623
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c893f9a1e1042a70800000000000000
+      internalID: 8801161640519375042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_79
+      rect:
+        serializedVersion: 2
+        x: 3195
+        y: 1121
+        width: 543
+        height: 603
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1193cf0ba6a77e70800000000000000
+      internalID: 9112935624641581343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_80
+      rect:
+        serializedVersion: 2
+        x: 4118
+        y: 1123
+        width: 561
+        height: 534
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 142726c8aa46a9160800000000000000
+      internalID: 7033044451754930753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_81
+      rect:
+        serializedVersion: 2
+        x: 5077
+        y: 1124
+        width: 617
+        height: 465
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1e31a953c48a1e80800000000000000
+      internalID: -8207101396372079077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_82
+      rect:
+        serializedVersion: 2
+        x: 6066
+        y: 1125
+        width: 647
+        height: 470
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 347c092af38427a30800000000000000
+      internalID: 4211508039692371779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_83
+      rect:
+        serializedVersion: 2
+        x: 7065
+        y: 1125
+        width: 647
+        height: 471
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7e71776d5b95bb8f0800000000000000
+      internalID: -523726294136449049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_84
+      rect:
+        serializedVersion: 2
+        x: 8064
+        y: 1125
+        width: 648
+        height: 475
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cb7a2dcf79e08fea0800000000000000
+      internalID: -5838900870941333572
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_85
+      rect:
+        serializedVersion: 2
+        x: 9062
+        y: 1125
+        width: 649
+        height: 481
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e648e15449a187b0800000000000000
+      internalID: -5223707981876017438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_86
+      rect:
+        serializedVersion: 2
+        x: 10060
+        y: 1125
+        width: 651
+        height: 491
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ab376e5dd1423110800000000000000
+      internalID: 1239125266507709352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_87
+      rect:
+        serializedVersion: 2
+        x: 11058
+        y: 1125
+        width: 651
+        height: 490
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: faec77df0b36826a0800000000000000
+      internalID: -6473814852527206737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_88
+      rect:
+        serializedVersion: 2
+        x: 12057
+        y: 1125
+        width: 651
+        height: 489
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5952b4df920da1350800000000000000
+      internalID: 5988327533304292757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_89
+      rect:
+        serializedVersion: 2
+        x: 13057
+        y: 1125
+        width: 650
+        height: 489
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7d13878911ab8740800000000000000
+      internalID: 5155391329475435899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_90
+      rect:
+        serializedVersion: 2
+        x: 14058
+        y: 1124
+        width: 649
+        height: 490
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 66567f7aa35dffe90800000000000000
+      internalID: -6989633648752892570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_91
+      rect:
+        serializedVersion: 2
+        x: 15061
+        y: 1125
+        width: 646
+        height: 489
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f667ea4e31c8b3fe0800000000000000
+      internalID: -1208218057949940113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_92
+      rect:
+        serializedVersion: 2
+        x: 16080
+        y: 1124
+        width: 609
+        height: 490
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 39cb92053e77f34b0800000000000000
+      internalID: -5458512405163557741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_93
+      rect:
+        serializedVersion: 2
+        x: 17146
+        y: 1122
+        width: 513
+        height: 562
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 27f2c990cc200eb90800000000000000
+      internalID: -7214763527689719950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_94
+      rect:
+        serializedVersion: 2
+        x: 18229
+        y: 1119
+        width: 508
+        height: 629
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b083a9e2936e41f0800000000000000
+      internalID: -1058799379749306188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_95
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 130
+        width: 577
+        height: 623
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8917f0a129b3d00a0800000000000000
+      internalID: -6913804354255359592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_96
+      rect:
+        serializedVersion: 2
+        x: 1265
+        y: 130
+        width: 553
+        height: 611
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a34b818b03ecacd0800000000000000
+      internalID: -2545410050813639776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_97
+      rect:
+        serializedVersion: 2
+        x: 2241
+        y: 130
+        width: 577
+        height: 623
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8b267b9a2b18a3960800000000000000
+      internalID: 7582515526983180984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_98
+      rect:
+        serializedVersion: 2
+        x: 3108
+        y: 131
+        width: 687
+        height: 575
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 672dc99af3c1b4220800000000000000
+      internalID: 2471099880296993398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_99
+      rect:
+        serializedVersion: 2
+        x: 4079
+        y: 144
+        width: 686
+        height: 521
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5c9ac337c228fec70800000000000000
+      internalID: 9002557307560438213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_100
+      rect:
+        serializedVersion: 2
+        x: 5070
+        y: 133
+        width: 675
+        height: 520
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 858483de48c01c430800000000000000
+      internalID: 3801333325532514392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_101
+      rect:
+        serializedVersion: 2
+        x: 6067
+        y: 129
+        width: 672
+        height: 533
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63801201d0ae75570800000000000000
+      internalID: 8455484167237470262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_102
+      rect:
+        serializedVersion: 2
+        x: 7068
+        y: 128
+        width: 668
+        height: 535
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5607591533b2a2b10800000000000000
+      internalID: 1957424487457976421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_103
+      rect:
+        serializedVersion: 2
+        x: 8072
+        y: 126
+        width: 642
+        height: 539
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3101557c36c04c00800000000000000
+      internalID: 882923489933197631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_104
+      rect:
+        serializedVersion: 2
+        x: 9074
+        y: 125
+        width: 635
+        height: 543
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e184818ee0659400800000000000000
+      internalID: 330276725173027297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_105
+      rect:
+        serializedVersion: 2
+        x: 10076
+        y: 126
+        width: 632
+        height: 547
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa5118b2576e45f40800000000000000
+      internalID: 5716447217955444143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_106
+      rect:
+        serializedVersion: 2
+        x: 11076
+        y: 127
+        width: 632
+        height: 552
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a657f2d5eac41ef0800000000000000
+      internalID: -138262600105896286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_107
+      rect:
+        serializedVersion: 2
+        x: 12077
+        y: 128
+        width: 631
+        height: 559
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7862025cd46c2a260800000000000000
+      internalID: 7107461199266064007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_108
+      rect:
+        serializedVersion: 2
+        x: 13077
+        y: 130
+        width: 631
+        height: 567
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11737d2509b36d240800000000000000
+      internalID: 4816102342570489617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_109
+      rect:
+        serializedVersion: 2
+        x: 14077
+        y: 130
+        width: 631
+        height: 578
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 821bfdb8ac150f7d0800000000000000
+      internalID: -2886717430772551384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_110
+      rect:
+        serializedVersion: 2
+        x: 15077
+        y: 130
+        width: 631
+        height: 580
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32c8355e1d8b8f7e0800000000000000
+      internalID: -1731430845088822237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_111
+      rect:
+        serializedVersion: 2
+        x: 16092
+        y: 128
+        width: 614
+        height: 575
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f32c17c2836942a0800000000000000
+      internalID: -6752756752927939598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_112
+      rect:
+        serializedVersion: 2
+        x: 17144
+        y: 124
+        width: 625
+        height: 616
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b13b11717dfd00450800000000000000
+      internalID: 6053084014083945243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: racoon poses_113
+      rect:
+        serializedVersion: 2
+        x: 18196
+        y: 128
+        width: 628
+        height: 644
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60aafa6c1e0af4b10800000000000000
+      internalID: 1967968453745682950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      racoon poses_0: -3984712993798128630
+      racoon poses_1: -8659074446735308155
+      racoon poses_10: -1865580746907833026
+      racoon poses_100: 3801333325532514392
+      racoon poses_101: 8455484167237470262
+      racoon poses_102: 1957424487457976421
+      racoon poses_103: 882923489933197631
+      racoon poses_104: 330276725173027297
+      racoon poses_105: 5716447217955444143
+      racoon poses_106: -138262600105896286
+      racoon poses_107: 7107461199266064007
+      racoon poses_108: 4816102342570489617
+      racoon poses_109: -2886717430772551384
+      racoon poses_11: 1156643050828969396
+      racoon poses_110: -1731430845088822237
+      racoon poses_111: -6752756752927939598
+      racoon poses_112: 6053084014083945243
+      racoon poses_113: 1967968453745682950
+      racoon poses_12: -2603754414550240502
+      racoon poses_13: -5745927534021901206
+      racoon poses_14: 4656253979502415591
+      racoon poses_15: -8071247864077042864
+      racoon poses_16: 6155768452738126781
+      racoon poses_17: -5074140296418042465
+      racoon poses_18: 465058013430997987
+      racoon poses_19: 7978137526828956061
+      racoon poses_2: -6781816452988676348
+      racoon poses_20: -5990325714714421825
+      racoon poses_21: 1129156744058185006
+      racoon poses_22: 3233543791598565018
+      racoon poses_23: 1760474544288809422
+      racoon poses_24: 6764534985369954599
+      racoon poses_25: -5359864849208032345
+      racoon poses_26: 9055608213598159093
+      racoon poses_27: 1415583858031164299
+      racoon poses_28: -5722531334397433495
+      racoon poses_29: 6321209210612249174
+      racoon poses_3: -8978777053760301919
+      racoon poses_30: -2740406577588594443
+      racoon poses_31: -4348848745959386058
+      racoon poses_32: 4013559562397990256
+      racoon poses_33: -9065136570403835940
+      racoon poses_34: -3585188748856166038
+      racoon poses_35: -1467853565191149865
+      racoon poses_36: -6576969307162854129
+      racoon poses_37: 3480377526249848133
+      racoon poses_38: -6299007990364824046
+      racoon poses_39: -5357777631306340653
+      racoon poses_4: 8754176716298584020
+      racoon poses_40: -1320021235412916771
+      racoon poses_41: -4828330973821071994
+      racoon poses_42: -5325515815602214123
+      racoon poses_43: -5616447212134701689
+      racoon poses_44: 1414797038347677878
+      racoon poses_45: -3081513594855441700
+      racoon poses_46: 3411748819245649008
+      racoon poses_47: -4624551021965989295
+      racoon poses_48: -4853647888130239964
+      racoon poses_49: -4047110356480528125
+      racoon poses_5: 5389508453400490323
+      racoon poses_50: 2936020862911016993
+      racoon poses_51: 1927113712374536807
+      racoon poses_52: 7719649873639028497
+      racoon poses_53: -1642919254957900659
+      racoon poses_54: 1772719623917826456
+      racoon poses_55: 2529893422154544742
+      racoon poses_56: 3655838052106412263
+      racoon poses_57: -7222916399764390638
+      racoon poses_58: -445443715823178011
+      racoon poses_59: 917869289448964020
+      racoon poses_6: -6558193829071292629
+      racoon poses_60: 360016307451699186
+      racoon poses_61: 9207604548261822278
+      racoon poses_62: -3450496045099759832
+      racoon poses_63: -5816778301150495699
+      racoon poses_64: -567614469182740284
+      racoon poses_65: 2264942010840156777
+      racoon poses_66: 777691408023898786
+      racoon poses_67: 4083313432323628111
+      racoon poses_68: -4417539152775147859
+      racoon poses_69: -4118264973189446719
+      racoon poses_7: -7707984112959096028
+      racoon poses_70: -2894420228232735542
+      racoon poses_71: -2940871736713392754
+      racoon poses_72: 7429451168930523702
+      racoon poses_73: -4076795184227492777
+      racoon poses_74: -7627350794733254634
+      racoon poses_75: 6600390288402324670
+      racoon poses_76: 5194129641184275845
+      racoon poses_77: -5680357451075752556
+      racoon poses_78: 8801161640519375042
+      racoon poses_79: 9112935624641581343
+      racoon poses_8: -7681678486804726194
+      racoon poses_80: 7033044451754930753
+      racoon poses_81: -8207101396372079077
+      racoon poses_82: 4211508039692371779
+      racoon poses_83: -523726294136449049
+      racoon poses_84: -5838900870941333572
+      racoon poses_85: -5223707981876017438
+      racoon poses_86: 1239125266507709352
+      racoon poses_87: -6473814852527206737
+      racoon poses_88: 5988327533304292757
+      racoon poses_89: 5155391329475435899
+      racoon poses_9: -2782715514239598916
+      racoon poses_90: -6989633648752892570
+      racoon poses_91: -1208218057949940113
+      racoon poses_92: -5458512405163557741
+      racoon poses_93: -7214763527689719950
+      racoon poses_94: -1058799379749306188
+      racoon poses_95: -6913804354255359592
+      racoon poses_96: -2545410050813639776
+      racoon poses_97: 7582515526983180984
+      racoon poses_98: 2471099880296993398
+      racoon poses_99: 9002557307560438213
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -5,14 +5,37 @@ public class PlayerAnimatorController : MonoBehaviour
     [Header("Components")]
     [SerializeField] private Animator animator;
 
+    [Header("Multiplayer Controllers")]
+    [Tooltip("Drag the PossumController here (Host)")]
+    [SerializeField] private RuntimeAnimatorController possumController;
+    [Tooltip("Drag the RaccoonController here (Client)")]
+    [SerializeField] private RuntimeAnimatorController raccoonController;
+
     [Header("Settings")]
     [Tooltip("How many pose animations do you have in the Animator?")]
     [SerializeField] private int totalPoses = 6;
 
     private void Awake()
     {
-        // Automatically grab the Animator component if it's on the same object
         if (animator == null) animator = GetComponent<Animator>();
+    }
+
+    /// <summary>
+    /// Call this exactly ONCE when the multiplayer match starts to assign the correct animal!
+    /// </summary>
+    public void SetupCharacter(bool isHost)
+    {
+        if (animator == null) return;
+
+        // Swap the "brain" of the animator based on network role
+        if (isHost)
+        {
+            animator.runtimeAnimatorController = possumController;
+        }
+        else
+        {
+            animator.runtimeAnimatorController = raccoonController;
+        }
     }
 
     /// <summary>
@@ -20,17 +43,12 @@ public class PlayerAnimatorController : MonoBehaviour
     /// </summary>
     public void TriggerRandomPose()
     {
-        if (animator == null || totalPoses <= 0) return;
+        // Safety check: Don't try to pose if a controller hasn't been assigned yet
+        if (animator == null || totalPoses <= 0 || animator.runtimeAnimatorController == null) return;
 
-        // Pick a random number between 1 and your total number of poses (e.g., 1 through 6)
         int randomIndex = Random.Range(0, totalPoses);
+        string animationStateName = "Pose_" + randomIndex;
 
-        // Construct the exact name of the state you typed in the Animator window
-        string animationStateName = "possum_" + randomIndex;
-
-        // Force the Animator to play this state immediately.
-        // '-1' targets the base animation layer.
-        // '0f' forces the animation to restart from frame 0 even if they type super fast!
-        animator.Play(animationStateName, -1, 0f);
+        animator.Play(animationStateName, 0, 0f);
     }
 }

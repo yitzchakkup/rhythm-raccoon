@@ -49,7 +49,7 @@ public class PlayerAnimatorController : MonoBehaviour
         if (animator == null || totalPoses <= 0 || animator.runtimeAnimatorController == null) return;
 
         // 1. Roll the random number locally
-        int randomIndex = Random.Range(1, totalPoses + 1);
+        int randomIndex = Random.Range(0, totalPoses);
 
         // 2. Play it on our own screen
         PlaySpecificPose(randomIndex);

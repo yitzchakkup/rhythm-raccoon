@@ -41,14 +41,34 @@ public class PlayerAnimatorController : MonoBehaviour
     /// <summary>
     /// Call this every time a letter is correctly typed!
     /// </summary>
+    /// <summary>
+    /// Call this ONLY on the local player when they type a letter!
+    /// </summary>
     public void TriggerRandomPose()
     {
-        // Safety check: Don't try to pose if a controller hasn't been assigned yet
         if (animator == null || totalPoses <= 0 || animator.runtimeAnimatorController == null) return;
 
-        int randomIndex = Random.Range(0, totalPoses);
-        string animationStateName = "Pose_" + randomIndex;
+        // 1. Roll the random number locally
+        int randomIndex = Random.Range(1, totalPoses + 1);
 
+        // 2. Play it on our own screen
+        PlaySpecificPose(randomIndex);
+
+        // 3. Tell the AvatarController to send this exact number across the internet!
+        if (AvatarController.Instance != null)
+        {
+            AvatarController.Instance.SendPoseToOpponent(randomIndex);
+        }
+    }
+
+    /// <summary>
+    /// Plays an exact pose. The network will use this to sync the opponent.
+    /// </summary>
+    public void PlaySpecificPose(int poseIndex)
+    {
+        if (animator == null || animator.runtimeAnimatorController == null) return;
+        
+        string animationStateName = "Pose_" + poseIndex;
         animator.Play(animationStateName, 0, 0f);
     }
 }

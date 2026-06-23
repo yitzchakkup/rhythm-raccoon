@@ -1,7 +1,7 @@
 using UnityEngine;
 using Photon.Pun; 
 
-public class AvatarController : MonoBehaviour
+public class AvatarController : MonoBehaviourPun
 {
     public static AvatarController Instance { get; private set; }
 
@@ -83,4 +83,32 @@ public class AvatarController : MonoBehaviour
 
     private void ResetLocalColor() => localPlayer.color = Color.white;
     private void ResetOpponentColor() => opponent.color = Color.white;
+    
+    // --- NEW NETWORK ANIMATION SYNC ---
+
+    /// <summary>
+    /// Grabs the PhotonView and sends the pose index to the other player.
+    /// </summary>
+    public void SendPoseToOpponent(int poseIndex)
+    {
+        // Only send if we are actually in a multiplayer room
+        if (PhotonNetwork.IsConnected && PhotonNetwork.InRoom && photonView != null)
+        {
+            // "RpcTarget.Others" means it sends to everyone EXCEPT the person who called it
+            photonView.RPC(nameof(ReceiveOpponentPose), RpcTarget.Others, poseIndex);
+        }
+    }
+
+    /// <summary>
+    /// This runs on the opponent's computer to update their screen!
+    /// </summary>
+    [PunRPC]
+    public void ReceiveOpponentPose(int poseIndex)
+    {
+        if (opponentAnimator != null)
+        {
+            // Force the opponent's character on OUR screen to play the exact pose they rolled
+            opponentAnimator.PlaySpecificPose(poseIndex);
+        }
+    }
 }

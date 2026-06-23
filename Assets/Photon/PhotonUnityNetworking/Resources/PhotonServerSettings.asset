@@ -45,6 +45,7 @@ MonoBehaviour:
   - ReceiveAttack_RPC
   - ReceiveOpponentScore_RPC
   - ReceiveOpponentStamina_RPC
+  - ReceiveOpponentPose
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 0

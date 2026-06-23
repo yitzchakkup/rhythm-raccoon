@@ -25,6 +25,10 @@ public class WordGenerator : MonoBehaviour
     public int minLettersPerWave = 1;
     public int maxLettersLimit = 5;
 
+    [Header("Layout & Scaling")]
+    [Tooltip("How much empty space to leave inside the letter's column (0.2 = 20% padding).")]
+    [Range(0f, 0.9f)] public float letterPadding = 0.2f;
+
     [Header("Difficulty: Clustering")]
     public float standardVerticalStagger = 1.5f;   
     [Range(0f, 1f)] public float minClusterProbability = 0.0f; 
@@ -122,7 +126,6 @@ public class WordGenerator : MonoBehaviour
             bool waveComplete = true;
             foreach (FallingLetter letter in wave)
             {
-                // Relying purely on the new trigger system from FallingLetter.cs
                 if (!letter.inZone || !letter.isPressed)
                 {
                     waveComplete = false;
@@ -132,7 +135,6 @@ public class WordGenerator : MonoBehaviour
 
             if (waveComplete)
             {
-                // --- NEW: Add exactly 1 point per completed word ---
                 if (ScoreAndStaminaManager.Instance != null)
                 {
                     ScoreAndStaminaManager.Instance.AddScoreAndStamina(1);
@@ -144,7 +146,6 @@ public class WordGenerator : MonoBehaviour
                     {
                         powerup.ApplyEffect();
                     }
-                    // This visually "disposes" of the word
                     letter.TriggerPopAndDestroy(); 
                 }
 
@@ -180,27 +181,41 @@ public class WordGenerator : MonoBehaviour
 
         float leftEdge = spawnArea.bounds.min.x;
         float rightEdge = spawnArea.bounds.max.x;
-        float spacing = (rightEdge - leftEdge) / (lettersToSpawn + 1);
         float spawnY = spawnArea.bounds.max.y; 
 
-        List<Key> availableKeys = new List<Key>();
-        for (int k = (int)Key.A; k <= (int)Key.Z; k++)
+        // --- FIXED GRID CALCULATION ---
+        float zoneWidth = rightEdge - leftEdge;
+        float columnWidth = zoneWidth / maxLettersLimit;
+        
+        // Target width for the prefab, minus the requested padding
+        float targetLetterWidth = columnWidth * (1f - letterPadding);
+
+        // Generate the exact center points for all available columns
+        List<float> availableColumns = new List<float>();
+        for (int i = 0; i < maxLettersLimit; i++)
         {
-            availableKeys.Add((Key)k);
+            availableColumns.Add(leftEdge + (columnWidth * 0.5f) + (columnWidth * i));
+        }
+
+        // Shuffle the columns so they spawn in random lanes
+        for (int i = 0; i < availableColumns.Count; i++)
+        {
+            float temp = availableColumns[i];
+            int randomIndex = Random.Range(i, availableColumns.Count);
+            availableColumns[i] = availableColumns[randomIndex];
+            availableColumns[randomIndex] = temp;
         }
 
         List<float> xPositions = new List<float>();
         for (int i = 0; i < lettersToSpawn; i++)
         {
-            xPositions.Add(leftEdge + (spacing * (i + 1)));
+            xPositions.Add(availableColumns[i]);
         }
 
-        for (int i = 0; i < xPositions.Count; i++)
+        List<Key> availableKeys = new List<Key>();
+        for (int k = (int)Key.A; k <= (int)Key.Z; k++)
         {
-            float temp = xPositions[i];
-            int randomIndex = Random.Range(i, xPositions.Count);
-            xPositions[i] = xPositions[randomIndex];
-            xPositions[randomIndex] = temp;
+            availableKeys.Add((Key)k);
         }
 
         List<FallingLetter> currentWorkingGroup = new List<FallingLetter>();
@@ -226,6 +241,19 @@ public class WordGenerator : MonoBehaviour
 
             Vector3 position = new Vector3(xPositions[i], currentY, 0f);
             GameObject spawnedObj = Instantiate(prefab, position, Quaternion.identity);
+
+            // --- DYNAMIC CONSISTENT SCALING ---
+            Renderer objRenderer = spawnedObj.GetComponentInChildren<Renderer>();
+            if (objRenderer != null)
+            {
+                float currentWidth = objRenderer.bounds.size.x;
+                if (currentWidth > 0)
+                {
+                    // Scale uniformly to match the calculated target width
+                    float scaleFactor = targetLetterWidth / currentWidth;
+                    spawnedObj.transform.localScale *= scaleFactor;
+                }
+            }
 
             FallingLetter letterScript = spawnedObj.GetComponent<FallingLetter>();
             if (letterScript != null)

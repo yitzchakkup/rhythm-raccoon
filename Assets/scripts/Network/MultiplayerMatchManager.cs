@@ -1,20 +1,20 @@
 using UnityEngine;
 using Photon.Pun;
 
-[RequireComponent(typeof(PhotonView))] 
+[RequireComponent(typeof(PhotonView))]
 public class MultiplayerMatchManager : MonoBehaviourPun
 {
     public static MultiplayerMatchManager Instance { get; private set; }
 
-    private int currentMyScore = 0;
-    private int currentOpponentScore = 0;
+    private float currentMyScore = 0f;
+    private float currentOpponentScore = 0f;
 
     private void Awake()
     {
         if (Instance != null && Instance != this) Destroy(this.gameObject);
         else Instance = this;
     }
-    
+
     private void Start()
     {
         if (!IsMultiplayerGame())
@@ -36,17 +36,17 @@ public class MultiplayerMatchManager : MonoBehaviourPun
     }
 
     // --- SCORE SYNC ---
-    public void SyncMyScore(int myTotalScore)
+    public void SyncMyScore(float myTotalScore)
     {
         currentMyScore = myTotalScore;
 
         if (!IsMultiplayerGame()) return;
-        
+
         photonView.RPC("ReceiveOpponentScore_RPC", RpcTarget.Others, myTotalScore);
     }
 
     [PunRPC]
-    private void ReceiveOpponentScore_RPC(int opponentScore)
+    private void ReceiveOpponentScore_RPC(float opponentScore)
     {
         currentOpponentScore = opponentScore;
     }
@@ -57,12 +57,12 @@ public class MultiplayerMatchManager : MonoBehaviourPun
         if (!IsMultiplayerGame()) return;
         photonView.RPC("ReceiveAttack_RPC", RpcTarget.Others, attackName);
     }
-    
+
     [PunRPC]
     private void ReceiveAttack_RPC(string attackName)
     {
         Debug.Log($"Hit by attack: {attackName}");
-        
+
         if (AvatarController.Instance != null) AvatarController.Instance.PlayLocalDamageEffect();
 
         float duration = 0f;
@@ -78,11 +78,11 @@ public class MultiplayerMatchManager : MonoBehaviourPun
                 WordGenerator generator = FindAnyObjectByType<WordGenerator>();
                 if (generator != null)
                 {
-                    generator.TriggerSpeedAttack(2.5f, duration); 
+                    generator.TriggerSpeedAttack(2.5f, duration);
                 }
                 break;
         }
-        
+
         if (PowerupUIManager.Instance != null)
         {
             PowerupUIManager.Instance.ActivateIcon(attackName, duration);
@@ -90,6 +90,6 @@ public class MultiplayerMatchManager : MonoBehaviourPun
     }
 
     // --- Public Score Getters ---
-    public int GetMyScore() => currentMyScore;
-    public int GetOpponentScore() => currentOpponentScore;
+    public float GetMyScore() => currentMyScore;
+    public float GetOpponentScore() => currentOpponentScore;
 }

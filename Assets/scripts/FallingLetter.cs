@@ -107,6 +107,14 @@ public class FallingLetter : MonoBehaviour
         {
             inZone = true;
         }
+        else if (other.CompareTag("missed"))
+        {
+            if (ScoreAndStaminaManager.Instance != null)
+            {
+                ScoreAndStaminaManager.Instance.MissedLetter();
+            }
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -115,7 +123,6 @@ public class FallingLetter : MonoBehaviour
         {
             inZone = false;
         }
-        else if (other.CompareTag("LineOnderGame")) Destroy(gameObject); 
 
         if (!inZone)
         {

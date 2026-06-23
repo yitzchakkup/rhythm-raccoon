@@ -26,8 +26,8 @@ public class TugOfWarUI : MonoBehaviour
     [SerializeField] private Sprite clientBarSprite; // --- NEW: Client Bar Color ---
 
     [Header("Settings")]
-    [SerializeField] private int maxScoreDifference = 25;
-    [SerializeField] private int fearThreshold = 5;
+    [SerializeField] private float maxScoreDifference = 25f;
+    [SerializeField] private float fearThreshold = 5f;
 
     private bool isGameOver = false;
 
@@ -93,12 +93,12 @@ public class TugOfWarUI : MonoBehaviour
     {
         if (isGameOver || MultiplayerMatchManager.Instance == null || !IsMultiplayerGame()) return;
 
-        int myScore = MultiplayerMatchManager.Instance.GetMyScore();
-        int opponentScore = MultiplayerMatchManager.Instance.GetOpponentScore();
+        float myScore = MultiplayerMatchManager.Instance.GetMyScore();
+        float opponentScore = MultiplayerMatchManager.Instance.GetOpponentScore();
         
         // --- THE PULL FIX ---
         // If Local is on the Left, scoring points drops the value (pulling the slider Left)
-        int scoreDifference = opponentScore - myScore;
+        float scoreDifference = opponentScore - myScore;
 
         if (tugOfWarSlider != null) tugOfWarSlider.value = scoreDifference;
 
@@ -117,7 +117,7 @@ public class TugOfWarUI : MonoBehaviour
         }
     }
 
-    private void UpdateProgressBars(int scoreDifference)
+    private void UpdateProgressBars(float scoreDifference)
     {
         float totalRange = maxScoreDifference * 2f;
         // Normalize the slider position between 0.0 (Far Left) and 1.0 (Far Right)
@@ -130,18 +130,18 @@ public class TugOfWarUI : MonoBehaviour
         if (opponentFillBar != null) opponentFillBar.fillAmount = 1f - normalizedValue;
     }
 
-    private void UpdateFaceExpressions(int scoreDifference)
+    private void UpdateFaceExpressions(float scoreDifference)
     {
         if (localFaceImage != null && myNormalSprite != null && myFearSprite != null)
         {
-            int localLossBoundary = maxScoreDifference - fearThreshold;
+            float localLossBoundary = maxScoreDifference - fearThreshold;
             // Local fears when slider is pulled too far Right (away from them)
             localFaceImage.sprite = (scoreDifference >= localLossBoundary) ? myFearSprite : myNormalSprite;
         }
 
         if (opponentFaceImage != null && opponentNormalSprite != null && opponentFearSprite != null)
         {
-            int opponentLossBoundary = -maxScoreDifference + fearThreshold;
+            float opponentLossBoundary = -maxScoreDifference + fearThreshold;
             // Opponent fears when slider is pulled too far Left (away from them)
             opponentFaceImage.sprite = (scoreDifference <= opponentLossBoundary) ? opponentFearSprite : opponentNormalSprite;
         }

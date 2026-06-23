@@ -97,8 +97,8 @@ public class HeartbeatCamera : MonoBehaviour
 
         if (MultiplayerMatchManager.Instance != null && MultiplayerMatchManager.Instance.IsMultiplayerGame())
         {
-            int myScore = MultiplayerMatchManager.Instance.GetMyScore();
-            int oppScore = MultiplayerMatchManager.Instance.GetOpponentScore();
+            float myScore = MultiplayerMatchManager.Instance.GetMyScore();
+            float oppScore = MultiplayerMatchManager.Instance.GetOpponentScore();
             
             if ((myScore - oppScore) <= -multiplayerDangerDeficit)
             {

@@ -1119,8 +1119,8 @@ GameObject:
   - component: {fileID: 323270474}
   - component: {fileID: 323270473}
   m_Layer: 0
-  m_Name: LineOnderGame
-  m_TagString: LineOnderGame
+  m_Name: missed
+  m_TagString: missed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1239,7 +1239,7 @@ Transform:
   m_GameObject: {fileID: 323270472}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.0009, y: -10.81, z: 0}
+  m_LocalPosition: {x: 0.0009, y: -6.26, z: 0}
   m_LocalScale: {x: 19.026524, y: 1.0687, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2810,11 +2810,15 @@ MonoBehaviour:
   staminaRewardAmount: 4
   maxStamina: 100
   startingStamina: 100
-  staminaDrainAmount: 0.05
-  staminaDrainTickRate: 0.05
+  staminaDrainAmount: 0.04
+  staminaDrainTickRate: 0.01
   staminaHeadEmptyYPosition: -400
   staminaHeadYOffset: 50
   lowStaminaThreshold: 50
+  gracePeriodDuration: 10
+  gracePeriodDrainMultiplier: 0.3
+  singlePlayerMissPenaltyMultiplier: 0.5
+  multiplayerMissScorePenalty: 0.5
 --- !u!1 &689320292
 GameObject:
   m_ObjectHideFlags: 0

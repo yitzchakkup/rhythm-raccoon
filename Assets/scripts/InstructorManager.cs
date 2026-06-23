@@ -53,8 +53,8 @@ public class InstructorManager : MonoBehaviour
         // --- 1. MULTIPLAYER LOGIC ---
         if (MultiplayerMatchManager.Instance != null && MultiplayerMatchManager.Instance.IsMultiplayerGame())
         {
-            int myScore = MultiplayerMatchManager.Instance.GetMyScore();
-            int oppScore = MultiplayerMatchManager.Instance.GetOpponentScore();
+            float myScore = MultiplayerMatchManager.Instance.GetMyScore();
+            float oppScore = MultiplayerMatchManager.Instance.GetOpponentScore();
 
             // If you are tied or leading, encourage!
             if (myScore >= oppScore)

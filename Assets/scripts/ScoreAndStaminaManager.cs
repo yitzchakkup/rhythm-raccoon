@@ -9,7 +9,7 @@ public class ScoreAndStaminaManager : MonoBehaviour
     public static ScoreAndStaminaManager Instance { get; private set; }
 
     [Header("Score Settings")]
-    public int Score { get; private set; } = 0;
+    public float Score { get; private set; } = 0f;
     private float scoreMultiplier = 1f;
     private float scoreMultiplierTimer = 0f;
 
@@ -22,6 +22,11 @@ public class ScoreAndStaminaManager : MonoBehaviour
     [SerializeField] private float staminaHeadEmptyYPosition; // Y position when stamina is zero
     [SerializeField] private float staminaHeadYOffset = 0f;
     [SerializeField] private float lowStaminaThreshold = 25f;
+    [SerializeField] private float gracePeriodDuration = 4f;
+    [SerializeField] private float gracePeriodDrainMultiplier = 0.1f;
+    private float gracePeriodTimer = 0f;
+    [SerializeField] private float singlePlayerMissPenaltyMultiplier = 0.5f;
+    [SerializeField] private float multiplayerMissScorePenalty = 0.5f;
     private float currentStamina;
     private float staminaMultiplier = 1f;
     private float staminaMultiplierTimer = 0f;
@@ -72,6 +77,7 @@ public class ScoreAndStaminaManager : MonoBehaviour
         currentStamina = startingStamina;
         staminaMultiplier = 1f;
         staminaMultiplierTimer = 0f;
+        gracePeriodTimer = gracePeriodDuration;
 
         if (staminaHead != null)
         {
@@ -109,15 +115,20 @@ public class ScoreAndStaminaManager : MonoBehaviour
             staminaMultiplierTimer -= Time.deltaTime;
             if (staminaMultiplierTimer <= 0) staminaMultiplier = 1f;
         }
+
+        if (gracePeriodTimer > 0)
+        {
+            gracePeriodTimer -= Time.deltaTime;
+        }
     }
 
-    public void AddScoreAndStamina(int pointsToAdd)
+    public void AddScoreAndStamina(float pointsToAdd)
     {
-        int calculatedPoints = Mathf.RoundToInt(pointsToAdd * scoreMultiplier);
+        float calculatedPoints = pointsToAdd * scoreMultiplier;
         Score += calculatedPoints;
         UpdateScoreUI();
         
-        if (MultiplayerMatchManager.Instance != null)
+        if (MultiplayerMatchManager.Instance != null && MultiplayerMatchManager.Instance.IsMultiplayerGame())
         {
             MultiplayerMatchManager.Instance.SyncMyScore(Score);
         }
@@ -125,16 +136,36 @@ public class ScoreAndStaminaManager : MonoBehaviour
         float calculatedStamina = staminaRewardAmount * staminaMultiplier;
         AddStamina(calculatedStamina);
         
-        // --- INSTRUCTOR TRIGGER ---
         if (InstructorManager.Instance != null)
         {
             InstructorManager.Instance.EvaluateGameState();
         }
     }
 
+    public void MissedLetter()
+    {
+        bool isMultiplayer = MultiplayerMatchManager.Instance != null && MultiplayerMatchManager.Instance.IsMultiplayerGame();
+
+        if (!isMultiplayer)
+        {
+            float penalty = staminaRewardAmount * singlePlayerMissPenaltyMultiplier;
+            currentStamina = Mathf.Max(0, currentStamina - penalty);
+            UpdateStaminaUI();
+            if (currentStamina <= 0)
+            {
+                GameManager.Instance.EndGame();
+            }
+        }
+        else
+        {
+            Score = Mathf.Max(0f, Score - multiplayerMissScorePenalty);
+            UpdateScoreUI();
+            MultiplayerMatchManager.Instance.SyncMyScore(Score);
+        }
+    }
+
     public void AddStamina(float amount)
     {
-        // Disable stamina gain in multiplayer
         if (MultiplayerMatchManager.Instance != null && MultiplayerMatchManager.Instance.IsMultiplayerGame())
         {
             return;
@@ -160,23 +191,23 @@ public class ScoreAndStaminaManager : MonoBehaviour
 
     private IEnumerator DrainStamina()
     {
-        // Disable stamina drain in multiplayer
         if (MultiplayerMatchManager.Instance != null && MultiplayerMatchManager.Instance.IsMultiplayerGame())
         {
             Debug.Log("Stamina drain disabled for multiplayer match.");
-            yield break; 
+            yield break;
         }
 
         while (true)
         {
-            currentStamina -= staminaDrainAmount;
+            float currentDrain = (gracePeriodTimer > 0) ? staminaDrainAmount * gracePeriodDrainMultiplier : staminaDrainAmount;
+            currentStamina -= currentDrain;
             UpdateStaminaUI();
 
             if (currentStamina <= 0)
             {
                 currentStamina = 0;
                 UpdateStaminaUI();
-                
+
                 if (GameManager.Instance != null) GameManager.Instance.EndGame();
                 yield break;
             }
@@ -187,7 +218,18 @@ public class ScoreAndStaminaManager : MonoBehaviour
 
     private void UpdateScoreUI()
     {
-        if (scoreText != null) scoreText.text = $"Score: {Score}";
+        if (scoreText == null) return;
+
+        bool isMultiplayer = MultiplayerMatchManager.Instance != null && MultiplayerMatchManager.Instance.IsMultiplayerGame();
+
+        if (!isMultiplayer)
+        {
+            scoreText.text = $"Score: {Mathf.RoundToInt(Score)}";
+        }
+        else
+        {
+            scoreText.text = $"Score: {Score:F1}";
+        }
     }
 
     private void UpdateStaminaUI()
@@ -227,10 +269,8 @@ public class ScoreAndStaminaManager : MonoBehaviour
             }
         }
     }
-
-    // --- NEW: Public Getters for the InstructorManager ---
     
-    public int GetCurrentScore()
+    public float GetCurrentScore()
     {
         return Score;
     }

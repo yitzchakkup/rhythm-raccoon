@@ -46,8 +46,8 @@ public class GameManager : MonoBehaviour
 
         if (MultiplayerMatchManager.Instance != null)
         {
-            int myScore = MultiplayerMatchManager.Instance.GetMyScore();
-            int opponentScore = MultiplayerMatchManager.Instance.GetOpponentScore();
+            float myScore = MultiplayerMatchManager.Instance.GetMyScore();
+            float opponentScore = MultiplayerMatchManager.Instance.GetOpponentScore();
 
             if (myScore >= opponentScore)
             {

@@ -161,6 +161,12 @@ public class WordGenerator : MonoBehaviour
                     }
                     letter.TriggerPopAndDestroy(); 
                 }
+                // Find the animator controller in the scene and tell it to pose
+                PlayerAnimatorController playerAnim = FindObjectOfType<PlayerAnimatorController>();
+                if (playerAnim != null)
+                {
+                    playerAnim.TriggerRandomPose();
+                }
 
                 activeWaves.RemoveAt(i);
             }

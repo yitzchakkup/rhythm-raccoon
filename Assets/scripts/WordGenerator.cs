@@ -6,7 +6,6 @@ using System.Collections;
 public class WordGenerator : MonoBehaviour
 {
     [Header("Spawn Zone (Play Area)")]
-    [Tooltip("Attach the object with a BoxCollider2D that defines the exact screen area where letters fall.")]
     public BoxCollider2D spawnArea;
 
     [Header("Prefabs")]
@@ -26,7 +25,6 @@ public class WordGenerator : MonoBehaviour
     public int maxLettersLimit = 5;
 
     [Header("Layout & Scaling")]
-    [Tooltip("How much empty space to leave inside the letter's column (0.2 = 20% padding).")]
     [Range(0f, 0.9f)] public float letterPadding = 0.2f;
 
     [Header("Difficulty: Clustering")]
@@ -34,13 +32,14 @@ public class WordGenerator : MonoBehaviour
     [Range(0f, 1f)] public float minClusterProbability = 0.0f; 
     [Range(0f, 1f)] public float maxClusterProbability = 0.6f; 
 
-    [Header("Difficulty: Trajectory Curves (0.0 to 1.0)")]
+    [Header("Difficulty: Trajectory Curves")]
     public AnimationCurve speedCurve = AnimationCurve.Linear(0, 0, 1, 1);
     public AnimationCurve spawnDelayCurve = AnimationCurve.Linear(0, 0, 1, 1);
     public AnimationCurve clusterCurve = AnimationCurve.Linear(0, 0, 1, 1);
 
     [Header("Powerup States")]
     public float powerupSpeedMultiplier = 1f; 
+    private float speedMultiplierTimer = 0f;
 
     private float currentSpawnDelay;
     private float currentFallSpeed;
@@ -60,19 +59,38 @@ public class WordGenerator : MonoBehaviour
     {
         if (spawnArea == null) return;
 
+        // 1. Check Powerup Timers
+        if (speedMultiplierTimer > 0)
+        {
+            speedMultiplierTimer -= Time.deltaTime;
+            if (speedMultiplierTimer <= 0) 
+            {
+                powerupSpeedMultiplier = 1f; // Revert to normal speed
+            }
+        }
+
         gameTimer += Time.deltaTime;
         spawnTimer += Time.deltaTime;
 
+        // 2. Calculate Base Difficulty
         float progress = Mathf.Clamp01(gameTimer / timeToReachMaxDifficulty);
-
         float delayMultiplier = spawnDelayCurve.Evaluate(progress);
         float speedMultiplier = speedCurve.Evaluate(progress);
 
-        currentSpawnDelay = Mathf.Lerp(initialSpawnDelay, minimumSpawnDelay, delayMultiplier);
-        
+        float baseSpawnDelay = Mathf.Lerp(initialSpawnDelay, minimumSpawnDelay, delayMultiplier);
         float baseSpeed = Mathf.Lerp(initialFallSpeed, maxFallSpeed, speedMultiplier);
-        currentFallSpeed = baseSpeed * powerupSpeedMultiplier;
 
+        // --- THE FIX: Apply Powerup Multiplier to Both Speed AND Delay ---
+        currentFallSpeed = baseSpeed * powerupSpeedMultiplier;
+        
+        // If speed is 0.4x (SlowMo), delay becomes 2.5x longer.
+        // If speed is 2.5x (TempoShift), delay becomes 0.4x shorter.
+        if (powerupSpeedMultiplier > 0)
+        {
+            currentSpawnDelay = baseSpawnDelay / powerupSpeedMultiplier;
+        }
+
+        // 3. Apply speed to already falling letters
         foreach (List<FallingLetter> wave in activeWaves)
         {
             foreach (FallingLetter letter in wave)
@@ -84,6 +102,7 @@ public class WordGenerator : MonoBehaviour
             }
         }
 
+        // 4. Check if it is time to spawn
         if (spawnTimer >= currentSpawnDelay)
         {
             SpawnWave();
@@ -95,14 +114,8 @@ public class WordGenerator : MonoBehaviour
 
     public void TriggerSpeedAttack(float multiplier, float duration)
     {
-        StartCoroutine(SpeedWarpRoutine(multiplier, duration));
-    }
-
-    private IEnumerator SpeedWarpRoutine(float multiplier, float duration)
-    {
-        powerupSpeedMultiplier = multiplier; 
-        yield return new WaitForSeconds(duration);
-        powerupSpeedMultiplier = 1f; 
+        powerupSpeedMultiplier = multiplier;
+        speedMultiplierTimer = duration; 
     }
 
     private void CheckActiveWaves()
@@ -183,21 +196,16 @@ public class WordGenerator : MonoBehaviour
         float rightEdge = spawnArea.bounds.max.x;
         float spawnY = spawnArea.bounds.max.y; 
 
-        // --- FIXED GRID CALCULATION ---
         float zoneWidth = rightEdge - leftEdge;
         float columnWidth = zoneWidth / maxLettersLimit;
-        
-        // Target width for the prefab, minus the requested padding
         float targetLetterWidth = columnWidth * (1f - letterPadding);
 
-        // Generate the exact center points for all available columns
         List<float> availableColumns = new List<float>();
         for (int i = 0; i < maxLettersLimit; i++)
         {
             availableColumns.Add(leftEdge + (columnWidth * 0.5f) + (columnWidth * i));
         }
 
-        // Shuffle the columns so they spawn in random lanes
         for (int i = 0; i < availableColumns.Count; i++)
         {
             float temp = availableColumns[i];
@@ -242,14 +250,12 @@ public class WordGenerator : MonoBehaviour
             Vector3 position = new Vector3(xPositions[i], currentY, 0f);
             GameObject spawnedObj = Instantiate(prefab, position, Quaternion.identity);
 
-            // --- DYNAMIC CONSISTENT SCALING ---
             Renderer objRenderer = spawnedObj.GetComponentInChildren<Renderer>();
             if (objRenderer != null)
             {
                 float currentWidth = objRenderer.bounds.size.x;
                 if (currentWidth > 0)
                 {
-                    // Scale uniformly to match the calculated target width
                     float scaleFactor = targetLetterWidth / currentWidth;
                     spawnedObj.transform.localScale *= scaleFactor;
                 }

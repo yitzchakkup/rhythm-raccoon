@@ -1,24 +1,23 @@
 using UnityEngine;
+using UnityEngine.UI; // --- NEW: Required for the Image component ---
 
 public class HeartbeatCamera : MonoBehaviour
 {
     [Header("Camera References")]
     [SerializeField] private Camera mainCamera;
 
-    [Header("Heartbeat Settings")]
-    [Tooltip("How aggressively the camera zooms in during a thump.")]
-    [SerializeField] private float zoomIntensity = 0.8f; 
-    
-    [Tooltip("How fast the heartbeat plays.")]
-    [SerializeField] private float heartbeatSpeed = 1.2f;
+    [Header("Vignette UI")]
+    [SerializeField] private Image vignetteOverlay; // Drag your DangerVignette here
+    [Tooltip("Keep this low (e.g., 0.15) so the red effect is subtle and not blinding.")]
+    [Range(0f, 1f)] [SerializeField] private float maxVignetteAlpha = 0.15f; 
 
-    [Tooltip("Draw your thump-thump rhythm here!")]
+    [Header("Heartbeat Settings")]
+    [SerializeField] private float zoomIntensity = 0.8f; 
+    [SerializeField] private float heartbeatSpeed = 1.2f;
     [SerializeField] private AnimationCurve heartbeatCurve;
 
     [Header("Danger Thresholds")]
-    [Tooltip("How many points behind before the heartbeat starts in Multiplayer.")]
     [SerializeField] private int multiplayerDangerDeficit = 15; 
-    [Tooltip("At what stamina percentage the heartbeat starts in Single Player.")]
     [SerializeField] private float singlePlayerDangerPct = 0.3f;
 
     private float defaultOrthoSize;
@@ -33,17 +32,24 @@ public class HeartbeatCamera : MonoBehaviour
             defaultOrthoSize = mainCamera.orthographicSize;
         }
 
-        // Failsafe: If you forget to draw a curve in the Inspector, this builds a default "Double Thump"
         if (heartbeatCurve == null || heartbeatCurve.keys.Length == 0)
         {
             heartbeatCurve = new AnimationCurve(
-                new Keyframe(0f, 0f),    // Start flat
-                new Keyframe(0.15f, 1f), // First thump (strong)
-                new Keyframe(0.3f, 0f),  // Back down
-                new Keyframe(0.45f, 0.6f),// Second thump (weaker)
-                new Keyframe(0.6f, 0f),  // Back down
-                new Keyframe(1f, 0f)     // Pause until next beat
+                new Keyframe(0f, 0f),    
+                new Keyframe(0.15f, 1f), 
+                new Keyframe(0.3f, 0f),  
+                new Keyframe(0.45f, 0.6f),
+                new Keyframe(0.6f, 0f),  
+                new Keyframe(1f, 0f)     
             );
+        }
+
+        // Ensure the vignette starts invisible
+        if (vignetteOverlay != null)
+        {
+            Color c = vignetteOverlay.color;
+            c.a = 0f;
+            vignetteOverlay.color = c;
         }
     }
 
@@ -55,17 +61,33 @@ public class HeartbeatCamera : MonoBehaviour
 
         if (isHeartbeatActive)
         {
-            // The modulo (%) operator loops the time from 0.0 to 1.0 continuously
             float curveTime = (Time.time * heartbeatSpeed) % 1f;
             float curveValue = heartbeatCurve.Evaluate(curveTime);
             
-            // Subtracting size zooms an orthographic camera IN
+            // 1. Sync the Camera Zoom
             mainCamera.orthographicSize = defaultOrthoSize - (curveValue * zoomIntensity);
+
+            // 2. Sync the Red Vignette Fade
+            if (vignetteOverlay != null)
+            {
+                Color c = vignetteOverlay.color;
+                // Multiplies the curve (0 to 1) by your max alpha limit (e.g., 0.15)
+                c.a = curveValue * maxVignetteAlpha; 
+                vignetteOverlay.color = c;
+            }
         }
         else
         {
-            // Smoothly ease the camera back to normal when they escape danger
+            // Smoothly ease the camera back out
             mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, defaultOrthoSize, Time.deltaTime * 5f);
+
+            // Smoothly fade the red vignette away
+            if (vignetteOverlay != null)
+            {
+                Color c = vignetteOverlay.color;
+                c.a = Mathf.Lerp(c.a, 0f, Time.deltaTime * 5f);
+                vignetteOverlay.color = c;
+            }
         }
     }
 
@@ -73,7 +95,6 @@ public class HeartbeatCamera : MonoBehaviour
     {
         bool inDanger = false;
 
-        // 1. Multiplayer Check (Am I losing badly?)
         if (MultiplayerMatchManager.Instance != null && MultiplayerMatchManager.Instance.IsMultiplayerGame())
         {
             int myScore = MultiplayerMatchManager.Instance.GetMyScore();
@@ -84,7 +105,6 @@ public class HeartbeatCamera : MonoBehaviour
                 inDanger = true;
             }
         }
-        // 2. Single Player Check (Is my stamina critically low?)
         else if (ScoreAndStaminaManager.Instance != null)
         {
             float current = ScoreAndStaminaManager.Instance.GetCurrentStamina();

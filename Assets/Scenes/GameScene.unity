@@ -685,10 +685,10 @@ MonoBehaviour:
   inspectorTugOfWarUI: {fileID: 478019206}
   inspectorLowStaminaFillSprite: {fileID: 21300000, guid: 2934079bda8414d20a8dc8984ac59a4e, type: 3}
   inspectorSadHeadSprite: {fileID: 21300000, guid: 6935110d8a2a04ebda4979a980ada4fc, type: 3}
-  inspectorWinBackground: {fileID: 0}
-  inspectorLoseBackground: {fileID: 0}
-  inspectorOfflineLoseBackground: {fileID: 0}
-  inspectorSharedEndGameLayout: {fileID: 0}
+  inspectorWinBackground: {fileID: 775166878}
+  inspectorLoseBackground: {fileID: 1597807044}
+  inspectorOfflineLoseBackground: {fileID: 868574222}
+  inspectorSharedEndGameLayout: {fileID: 141944887}
 --- !u!224 &218510307 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5665510280761224915, guid: c5664ddb4583f447e95672e09cdb3fdf, type: 3}

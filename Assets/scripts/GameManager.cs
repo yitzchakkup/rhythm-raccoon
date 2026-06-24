@@ -49,19 +49,17 @@ public class GameManager : MonoBehaviour
             float myScore = MultiplayerMatchManager.Instance.GetMyScore();
             float opponentScore = MultiplayerMatchManager.Instance.GetOpponentScore();
 
-            if (myScore >= opponentScore)
+            bool iWon = myScore >= opponentScore;
+            bool iAmPossum = PhotonNetwork.IsMasterClient;
+            bool possumWon = (iAmPossum && iWon) || (!iAmPossum && !iWon);
+
+            if (possumWon)
             {
-                if (SceneUIRefs.winBackground != null)
-                {
-                    SceneUIRefs.winBackground.SetActive(true);
-                }
+                if (SceneUIRefs.possumWinBackground != null) SceneUIRefs.possumWinBackground.SetActive(true);
             }
             else
             {
-                if (SceneUIRefs.loseBackground != null)
-                {
-                    SceneUIRefs.loseBackground.SetActive(true);
-                }
+                if (SceneUIRefs.raccoonWinBackground != null) SceneUIRefs.raccoonWinBackground.SetActive(true);
             }
             
             if (SceneUIRefs.sharedEndGameLayout != null)
@@ -95,8 +93,8 @@ public class GameManager : MonoBehaviour
 
         PhotonNetwork.OfflineMode = false;
 
-        if (SceneUIRefs.winBackground != null) SceneUIRefs.winBackground.SetActive(false);
-        if (SceneUIRefs.loseBackground != null) SceneUIRefs.loseBackground.SetActive(false);
+        if (SceneUIRefs.possumWinBackground != null) SceneUIRefs.possumWinBackground.SetActive(false);
+        if (SceneUIRefs.raccoonWinBackground != null) SceneUIRefs.raccoonWinBackground.SetActive(false);
         if (SceneUIRefs.offlineLoseBackground != null) SceneUIRefs.offlineLoseBackground.SetActive(false);
         if (SceneUIRefs.sharedEndGameLayout != null) SceneUIRefs.sharedEndGameLayout.SetActive(false);
 

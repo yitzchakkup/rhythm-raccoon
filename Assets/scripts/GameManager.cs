@@ -74,6 +74,45 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void RequestMultiplayerReplay()
+    {
+        PhotonView photonView = GetComponent<PhotonView>();
+        if (photonView != null)
+        {
+            photonView.RPC("RPC_RestartMultiplayerMatch", RpcTarget.AllViaServer);
+        }
+        else
+        {
+            Debug.LogError("GameManager is missing a PhotonView component. Cannot send RPC.");
+        }
+    }
+
+    [PunRPC]
+    private void RPC_RestartMultiplayerMatch()
+    {
+        // Unpause the game
+        Time.timeScale = 1f;
+
+        // Disable all endgame UI overlays
+        if (SceneUIRefs.possumWinBackground != null) SceneUIRefs.possumWinBackground.SetActive(false);
+        if (SceneUIRefs.raccoonWinBackground != null) SceneUIRefs.raccoonWinBackground.SetActive(false);
+        if (SceneUIRefs.offlineLoseBackground != null) SceneUIRefs.offlineLoseBackground.SetActive(false);
+        if (SceneUIRefs.sharedEndGameLayout != null) SceneUIRefs.sharedEndGameLayout.SetActive(false);
+
+        // Reset the match state
+        if (MultiplayerMatchManager.Instance != null)
+        {
+            MultiplayerMatchManager.Instance.ResetMatch();
+        }
+
+        // If this is the host, re-open the room for a potential rematch
+        if (PhotonNetwork.InRoom && PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.CurrentRoom.IsOpen = true;
+            PhotonNetwork.CurrentRoom.IsVisible = true;
+        }
+    }
+
     public void ReturnToMainMenu()
     {
         if (isDisconnecting) return;

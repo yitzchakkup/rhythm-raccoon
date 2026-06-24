@@ -65,7 +65,7 @@ public class ScoreAndStaminaManager : MonoBehaviour
         Initialize();
     }
 
-    private void Initialize()
+    public void Initialize()
     {
         Score = 0;
         scoreMultiplier = 1;

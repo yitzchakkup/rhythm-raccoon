@@ -14,8 +14,8 @@ public class SceneUIRefs : MonoBehaviour
     [SerializeField] private GameObject inspectorTugOfWarUI;
     [SerializeField] private Sprite inspectorLowStaminaFillSprite;
     [SerializeField] private Sprite inspectorSadHeadSprite;
-    [SerializeField] private GameObject inspectorWinBackground;
-    [SerializeField] private GameObject inspectorLoseBackground;
+    [SerializeField] private GameObject inspectorPossumWinBackground;
+    [SerializeField] private GameObject inspectorRaccoonWinBackground;
     [SerializeField] private GameObject inspectorOfflineLoseBackground;
     [SerializeField] private GameObject inspectorSharedEndGameLayout;
 
@@ -27,8 +27,8 @@ public class SceneUIRefs : MonoBehaviour
     public static GameObject tugOfWarUI { get; private set; }
     public static Sprite lowStaminaFillSprite { get; private set; }
     public static Sprite sadHeadSprite { get; private set; }
-    public static GameObject winBackground { get; private set; }
-    public static GameObject loseBackground { get; private set; }
+    public static GameObject possumWinBackground { get; private set; }
+    public static GameObject raccoonWinBackground { get; private set; }
     public static GameObject offlineLoseBackground { get; private set; }
     public static GameObject sharedEndGameLayout { get; private set; }
 
@@ -49,8 +49,8 @@ public class SceneUIRefs : MonoBehaviour
         tugOfWarUI = inspectorTugOfWarUI;
         lowStaminaFillSprite = inspectorLowStaminaFillSprite;
         sadHeadSprite = inspectorSadHeadSprite;
-        winBackground = inspectorWinBackground;
-        loseBackground = inspectorLoseBackground;
+        possumWinBackground = inspectorPossumWinBackground;
+        raccoonWinBackground = inspectorRaccoonWinBackground;
         offlineLoseBackground = inspectorOfflineLoseBackground;
         sharedEndGameLayout = inspectorSharedEndGameLayout;
     }

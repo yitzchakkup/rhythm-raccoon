@@ -158,7 +158,7 @@ public class ScoreAndStaminaManager : MonoBehaviour
         }
         else
         {
-            Score = Mathf.Max(0f, Score - multiplayerMissScorePenalty);
+            Score = Score - multiplayerMissScorePenalty;
             UpdateScoreUI();
             MultiplayerMatchManager.Instance.SyncMyScore(Score);
         }

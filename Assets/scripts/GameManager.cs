@@ -23,17 +23,19 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Game Over!");
         Time.timeScale = 0f;
-        
-        if (SceneUIRefs.offlineLoseBackground != null)
+
+        if (MultiplayerMatchManager.Instance != null && MultiplayerMatchManager.Instance.IsMultiplayerGame())
         {
-            SceneUIRefs.offlineLoseBackground.SetActive(true);
+            if (SceneUIRefs.multiplayerEndUI != null) SceneUIRefs.multiplayerEndUI.SetActive(true);
+            if (SceneUIRefs.singlePlayerEndUI != null) SceneUIRefs.singlePlayerEndUI.SetActive(false);
         }
-        if (SceneUIRefs.sharedEndGameLayout != null)
+        else
         {
-            SceneUIRefs.sharedEndGameLayout.SetActive(true);
+            if (SceneUIRefs.singlePlayerEndUI != null) SceneUIRefs.singlePlayerEndUI.SetActive(true);
+            if (SceneUIRefs.multiplayerEndUI != null) SceneUIRefs.multiplayerEndUI.SetActive(false);
         }
     }
-    
+
     public void EndGameMultiplayer()
     {
         Time.timeScale = 0f;
@@ -61,7 +63,7 @@ public class GameManager : MonoBehaviour
             {
                 if (SceneUIRefs.raccoonWinBackground != null) SceneUIRefs.raccoonWinBackground.SetActive(true);
             }
-            
+
             if (SceneUIRefs.sharedEndGameLayout != null)
             {
                 SceneUIRefs.sharedEndGameLayout.SetActive(true);
@@ -74,42 +76,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // --- UPDATED: Communicates with MatchSyncManager to register the replay vote ---
     public void RequestMultiplayerReplay()
     {
-        PhotonView photonView = GetComponent<PhotonView>();
-        if (photonView != null)
+        // Unpause the local engine immediately so network syncing and scene loading can process smoothly
+        Time.timeScale = 1f;
+
+        if (MatchSyncManager.Instance != null)
         {
-            photonView.RPC("RPC_RestartMultiplayerMatch", RpcTarget.AllViaServer);
+            // Set local custom property to alert the Master Client we are ready
+            MatchSyncManager.Instance.LocalPlayerWantsToPlayAgain();
+            Debug.Log("Replay requested. Waiting for opponent...");
         }
         else
         {
-            Debug.LogError("GameManager is missing a PhotonView component. Cannot send RPC.");
-        }
-    }
-
-    [PunRPC]
-    private void RPC_RestartMultiplayerMatch()
-    {
-        // Unpause the game
-        Time.timeScale = 1f;
-
-        // Disable all endgame UI overlays
-        if (SceneUIRefs.possumWinBackground != null) SceneUIRefs.possumWinBackground.SetActive(false);
-        if (SceneUIRefs.raccoonWinBackground != null) SceneUIRefs.raccoonWinBackground.SetActive(false);
-        if (SceneUIRefs.offlineLoseBackground != null) SceneUIRefs.offlineLoseBackground.SetActive(false);
-        if (SceneUIRefs.sharedEndGameLayout != null) SceneUIRefs.sharedEndGameLayout.SetActive(false);
-
-        // Reset the match state
-        if (MultiplayerMatchManager.Instance != null)
-        {
-            MultiplayerMatchManager.Instance.ResetMatch();
-        }
-
-        // If this is the host, re-open the room for a potential rematch
-        if (PhotonNetwork.InRoom && PhotonNetwork.IsMasterClient)
-        {
-            PhotonNetwork.CurrentRoom.IsOpen = true;
-            PhotonNetwork.CurrentRoom.IsVisible = true;
+            Debug.LogError("MatchSyncManager Instance not found! Cannot sync replay request.");
         }
     }
 

@@ -18,6 +18,9 @@ public class SceneUIRefs : MonoBehaviour
     [SerializeField] private GameObject inspectorRaccoonWinBackground;
     [SerializeField] private GameObject inspectorOfflineLoseBackground;
     [SerializeField] private GameObject inspectorSharedEndGameLayout;
+    [SerializeField] private GameObject inspectorSinglePlayerEndUI;
+    [SerializeField] private GameObject inspectorMultiplayerEndUI;
+
 
     // --- Static properties for easy access ---
     public static GameObject staminaBar { get; private set; }
@@ -31,6 +34,9 @@ public class SceneUIRefs : MonoBehaviour
     public static GameObject raccoonWinBackground { get; private set; }
     public static GameObject offlineLoseBackground { get; private set; }
     public static GameObject sharedEndGameLayout { get; private set; }
+    public static GameObject singlePlayerEndUI { get; private set; }
+    public static GameObject multiplayerEndUI { get; private set; }
+
 
     private void Awake()
     {
@@ -53,5 +59,7 @@ public class SceneUIRefs : MonoBehaviour
         raccoonWinBackground = inspectorRaccoonWinBackground;
         offlineLoseBackground = inspectorOfflineLoseBackground;
         sharedEndGameLayout = inspectorSharedEndGameLayout;
+        singlePlayerEndUI = inspectorSinglePlayerEndUI;
+        multiplayerEndUI = inspectorMultiplayerEndUI;
     }
 }

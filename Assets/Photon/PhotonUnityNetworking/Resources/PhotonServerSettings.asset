@@ -47,6 +47,8 @@ MonoBehaviour:
   - ReceiveOpponentStamina_RPC
   - ReceiveOpponentPose
   - TriggerSlideshow_RPC
+  - RPC_RestartMultiplayerMatch
+  - RPC_StartRematchCountdown
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 0

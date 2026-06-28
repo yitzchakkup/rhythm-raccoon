@@ -65,22 +65,30 @@ public class InstructorManager : MonoBehaviour
     private IEnumerator PlaySlideshowRoutine()
     {
         isTutorialActive = true;
-        isMessageActiveOrOnCooldown = true; // Lock normal gameplay reactions
+        isMessageActiveOrOnCooldown = true; 
 
-        // Scale up the UI so the banner is readable
+        // Initial setup for the very first slide
         if (instructorDisplay != null)
         {
+            instructorDisplay.sprite = tutorialSlides[0];
             instructorDisplay.rectTransform.localScale = new Vector3(reactionScale, reactionScale, reactionScale);
         }
 
-        // Loop through the array of images
-        for (int i = 0; i < tutorialSlides.Length; i++)
+        // Loop through the slides (starting at index 1 since we already showed index 0)
+        for (int i = 1; i < tutorialSlides.Length; i++)
         {
-            if (instructorDisplay != null) instructorDisplay.sprite = tutorialSlides[i];
-            
-            // Wait for the players to read it
+            // Wait for the player to read the CURRENT slide
             yield return new WaitForSeconds(timePerSlide);
+
+            // Play the juicy animation to swap to the NEXT slide
+            if (instructorDisplay != null) 
+            {
+                yield return StartCoroutine(TransitionSlide(tutorialSlides[i]));
+            }
         }
+
+        // Wait for the player to read the final slide
+        yield return new WaitForSeconds(timePerSlide);
 
         // Slideshow finished! Return to normal idle state
         if (instructorDisplay != null && defaultIdleSprite != null)
@@ -91,13 +99,11 @@ public class InstructorManager : MonoBehaviour
 
         isTutorialActive = false;
         
-        // Tell the network this player is done reading!
         if (MatchSyncManager.Instance != null)
         {
             MatchSyncManager.Instance.LocalPlayerFinishedTutorial();
         }
 
-        // Start cooldown so they don't immediately get yelled at when the game starts
         yield return new WaitForSeconds(cooldownTime);
         isMessageActiveOrOnCooldown = false; 
     }
@@ -177,5 +183,50 @@ public class InstructorManager : MonoBehaviour
         yield return new WaitForSeconds(cooldownTime);
 
         isMessageActiveOrOnCooldown = false;
+    }
+    
+    private IEnumerator TransitionSlide(Sprite nextSprite)
+    {
+        Vector3 baseScale = new Vector3(reactionScale, reactionScale, reactionScale);
+        Vector3 squishScale = baseScale * 0.7f; // Shrink down by 30%
+        Vector3 stretchScale = baseScale * 1.1f; // Overshoot by 10%
+
+        float shrinkDuration = 0.1f;
+        float growDuration = 0.15f;
+        float settleDuration = 0.05f;
+
+        float timer = 0f;
+
+        // Phase 1: Anticipation (Squish Down)
+        while (timer < shrinkDuration)
+        {
+            instructorDisplay.rectTransform.localScale = Vector3.Lerp(baseScale, squishScale, timer / shrinkDuration);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        // --- THE MAGIC MOMENT: Swap the image while it is squished! ---
+        instructorDisplay.sprite = nextSprite;
+
+        // Phase 2: The Pop (Overshoot)
+        timer = 0f;
+        while (timer < growDuration)
+        {
+            instructorDisplay.rectTransform.localScale = Vector3.Lerp(squishScale, stretchScale, timer / growDuration);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        // Phase 3: Settle into place
+        timer = 0f;
+        while (timer < settleDuration)
+        {
+            instructorDisplay.rectTransform.localScale = Vector3.Lerp(stretchScale, baseScale, timer / settleDuration);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        // Guarantee it ends exactly at the perfect scale
+        instructorDisplay.rectTransform.localScale = baseScale;
     }
 }

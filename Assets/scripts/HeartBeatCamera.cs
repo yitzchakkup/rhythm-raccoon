@@ -19,6 +19,10 @@ public class HeartbeatCamera : MonoBehaviour
     [Header("Danger Thresholds")]
     [SerializeField] private int multiplayerDangerDeficit = 15; 
     [SerializeField] private float singlePlayerDangerPct = 0.3f;
+    
+    [Header("Heartbeat Audio")]
+    [SerializeField] private AudioClip heartbeatSfx;
+    private float lastPlayedTime = 0f;
 
     private float defaultOrthoSize;
     private bool isHeartbeatActive = false;
@@ -63,6 +67,15 @@ public class HeartbeatCamera : MonoBehaviour
         {
             float curveTime = (Time.time * heartbeatSpeed) % 1f;
             float curveValue = heartbeatCurve.Evaluate(curveTime);
+            
+            if (curveTime < 0.1f && (Time.time - lastPlayedTime) > 0.5f)
+            {
+                if (AudioManager.Instance != null && heartbeatSfx != null)
+                {
+                    AudioManager.Instance.PlaySFX(heartbeatSfx, false);
+                    lastPlayedTime = Time.time;
+                }
+            }
             
             // 1. Sync the Camera Zoom
             mainCamera.orthographicSize = defaultOrthoSize - (curveValue * zoomIntensity);

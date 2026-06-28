@@ -2366,6 +2366,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   multiplayerDangerDeficit: 15
   singlePlayerDangerPct: 0.3
+  heartbeatSfx: {fileID: 8300000, guid: 6f3b7f1467ad64dfeac7c7d18588239a, type: 3}
 --- !u!1 &530035522
 GameObject:
   m_ObjectHideFlags: 0

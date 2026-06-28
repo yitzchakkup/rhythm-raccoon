@@ -30,7 +30,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [Header("Scene Transition")]
     public CanvasGroup fadeBlock;
     public float sceneFadeSpeed = 0.5f;
-    
+
     [Header("Audio")]
     public AudioClip lobbyMusic;
 
@@ -45,7 +45,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         EnsureCanvasGroup(startPanel);
         EnsureCanvasGroup(waitingRoomPanel);
-        
+
         if (AudioManager.Instance != null && lobbyMusic != null)
         {
             AudioManager.Instance.PlayMusic(lobbyMusic);
@@ -133,11 +133,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private IEnumerator SinglePlayerStartRoutine()
     {
-        // Step 1: Leave room if in one (covers offline ghost rooms too)
+        // Step 1: Kill any existing offline/online session
         if (PhotonNetwork.InRoom || PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joining)
         {
-            PhotonNetwork.OfflineMode = false; // Kills the offline session immediately
-            yield return null; // Give Photon one frame to process
+            PhotonNetwork.OfflineMode = false;
+            yield return null;
         }
 
         // Step 2: Disconnect if still connected in any way
@@ -148,17 +148,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                 yield return null;
         }
 
-        // Step 3: Extra safety — wait one more frame before re-enabling offline mode
         yield return null;
 
-        // Step 4: Start fresh offline session
+        // Step 3: Start fresh offline session
         PhotonNetwork.OfflineMode = true;
 
-        // Step 5: Wait until Photon is actually ready to accept a room call
         while (PhotonNetwork.NetworkClientState != Photon.Realtime.ClientState.ConnectedToMasterServer)
             yield return null;
 
-        // Step 6: Safe to create room now
         PhotonNetwork.JoinOrCreateRoom("OfflineRoom", new RoomOptions() { MaxPlayers = 1 }, null);
     }
 
@@ -173,7 +170,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void OnBackToMainMenuClicked()
     {
-        // PROPER CLEANUP: Always leave the room before disconnecting
         if (PhotonNetwork.InRoom)
         {
             PhotonNetwork.LeaveRoom();
@@ -192,15 +188,37 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        waitingRoomText.text = "Connected! Finding a room...";
-        PhotonNetwork.JoinRandomRoom();
+        waitingRoomText.text = "Connected! Looking for a room...";
+
+        // Try to join any open room with an available slot.
+        // Passing expectedMaxPlayers = 2 ensures we only match into 2-player rooms.
+        PhotonNetwork.JoinRandomRoom(null, 2, MatchmakingMode.FillRoom, null, null);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        waitingRoomText.text = "Creating Room...";
-        RoomOptions roomOptions = new RoomOptions() { MaxPlayers = 2 };
-        PhotonNetwork.CreateRoom("TypingArena", roomOptions);
+        // No open rooms found — create a fresh one with a unique name
+        // so multiple lobbies can coexist simultaneously.
+        waitingRoomText.text = "No open rooms found. Creating one...";
+
+        string roomName = "Room_" + Random.Range(1000, 9999);
+        RoomOptions roomOptions = new RoomOptions()
+        {
+            MaxPlayers = 2,
+            IsVisible = true,   // visible to random matchmaking
+            IsOpen = true        // accepting players
+        };
+
+        PhotonNetwork.CreateRoom(roomName, roomOptions);
+    }
+
+    public override void OnCreateRoomFailed(short returnCode, string message)
+    {
+        // Extremely rare: name collision. Retry with a different name.
+        Debug.LogWarning($"CreateRoom failed ({returnCode}): {message}. Retrying...");
+        string roomName = "Room_" + Random.Range(1000, 9999);
+        RoomOptions roomOptions = new RoomOptions() { MaxPlayers = 2, IsVisible = true, IsOpen = true };
+        PhotonNetwork.CreateRoom(roomName, roomOptions);
     }
 
     public override void OnJoinedRoom()
@@ -239,6 +257,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         UpdateWaitingRoomText();
         UpdateReadyCountUI();
+
+        // Close the room once it's full so it won't appear in matchmaking
+        if (PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount >= 2)
+        {
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+            PhotonNetwork.CurrentRoom.IsVisible = false;
+        }
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
@@ -247,6 +272,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         UpdateWaitingRoomText();
         UpdateReadyCountUI();
         countdownText.text = "Player left. Waiting...";
+
+        // Re-open the room so a new player can join to fill the slot
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.CurrentRoom.IsOpen = true;
+            PhotonNetwork.CurrentRoom.IsVisible = true;
+        }
     }
 
     public void ToggleReady()
@@ -301,9 +333,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         foreach (Player p in PhotonNetwork.PlayerList)
         {
             if (!p.CustomProperties.TryGetValue("IsReady", out object readyState) || !(bool)readyState)
-            {
                 return;
-            }
         }
 
         photonView.RPC("StartCountdown_RPC", RpcTarget.All);

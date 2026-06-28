@@ -9,6 +9,9 @@ public class MatchSyncManager : MonoBehaviourPunCallbacks
 
     [Header("Components")]
     public WordGenerator wordGenerator;
+    
+    [Header("Audio Settings")]
+    [SerializeField] private AudioClip backgroundMusic;
 
     private bool matchStarted = false;
     private double exactStartTime = 0;
@@ -26,7 +29,12 @@ public class MatchSyncManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        // 1. Tell the network: "My scene has finished loading, and I am starting the tutorial!"
+        if (AudioManager.Instance != null && backgroundMusic != null)
+        {
+            AudioManager.Instance.PlayMusic(backgroundMusic);
+        }
+        
+        // Tell the network: "My scene has finished loading, and I am starting the tutorial!"
         Hashtable props = new Hashtable { { LOADED_KEY, true }, { TUT_DONE_KEY, false } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
     }

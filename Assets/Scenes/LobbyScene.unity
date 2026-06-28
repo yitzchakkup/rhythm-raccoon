@@ -578,6 +578,7 @@ MonoBehaviour:
   transitionDuration: 0.15
   fadeBlock: {fileID: 1338496052}
   sceneFadeSpeed: 0.5
+  lobbyMusic: {fileID: 8300000, guid: fcf45bcc38e28435582f7c9785c97a7b, type: 3}
 --- !u!4 &608996385
 Transform:
   m_ObjectHideFlags: 0
@@ -1650,10 +1651,8 @@ MonoBehaviour:
   clickScaleMultiplier: 0.95
   maxTiltAngle: 2
   animationSpeed: 15
-  uiAudioSource: {fileID: 0}
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
-  pitchVariance: 0.1
+  hoverSound: {fileID: 8300000, guid: 7105fe36865b247f7bb8a5b99073c889, type: 3}
+  clickSound: {fileID: 8300000, guid: ae694bb4198fe473a8a9065466071051, type: 3}
 --- !u!1 &1338496051
 GameObject:
   m_ObjectHideFlags: 0
@@ -2166,10 +2165,8 @@ MonoBehaviour:
   clickScaleMultiplier: 0.95
   maxTiltAngle: 2
   animationSpeed: 15
-  uiAudioSource: {fileID: 0}
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
-  pitchVariance: 0.1
+  hoverSound: {fileID: 8300000, guid: 7105fe36865b247f7bb8a5b99073c889, type: 3}
+  clickSound: {fileID: 8300000, guid: ae694bb4198fe473a8a9065466071051, type: 3}
 --- !u!1 &1480154064
 GameObject:
   m_ObjectHideFlags: 0
@@ -2399,10 +2396,8 @@ MonoBehaviour:
   clickScaleMultiplier: 0.95
   maxTiltAngle: 2
   animationSpeed: 15
-  uiAudioSource: {fileID: 0}
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
-  pitchVariance: 0.1
+  hoverSound: {fileID: 8300000, guid: 7105fe36865b247f7bb8a5b99073c889, type: 3}
+  clickSound: {fileID: 8300000, guid: ae694bb4198fe473a8a9065466071051, type: 3}
 --- !u!1 &1650459527
 GameObject:
   m_ObjectHideFlags: 0
@@ -2694,10 +2689,65 @@ MonoBehaviour:
   clickScaleMultiplier: 0.95
   maxTiltAngle: 2
   animationSpeed: 15
-  uiAudioSource: {fileID: 0}
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
-  pitchVariance: 0.1
+  hoverSound: {fileID: 8300000, guid: 7105fe36865b247f7bb8a5b99073c889, type: 3}
+  clickSound: {fileID: 8300000, guid: ae694bb4198fe473a8a9065466071051, type: 3}
+--- !u!1001 &1732981938
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 967418239107845379, guid: 4db27d347396f4028b8d12f458f877b8, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1345224291348696487, guid: 4db27d347396f4028b8d12f458f877b8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.0009
+      objectReference: {fileID: 0}
+    - target: {fileID: 1345224291348696487, guid: 4db27d347396f4028b8d12f458f877b8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -6.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 1345224291348696487, guid: 4db27d347396f4028b8d12f458f877b8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1345224291348696487, guid: 4db27d347396f4028b8d12f458f877b8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1345224291348696487, guid: 4db27d347396f4028b8d12f458f877b8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1345224291348696487, guid: 4db27d347396f4028b8d12f458f877b8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1345224291348696487, guid: 4db27d347396f4028b8d12f458f877b8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1345224291348696487, guid: 4db27d347396f4028b8d12f458f877b8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1345224291348696487, guid: 4db27d347396f4028b8d12f458f877b8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1345224291348696487, guid: 4db27d347396f4028b8d12f458f877b8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4db27d347396f4028b8d12f458f877b8, type: 3}
 --- !u!1 &1860085963
 GameObject:
   m_ObjectHideFlags: 0
@@ -3038,10 +3088,8 @@ MonoBehaviour:
   clickScaleMultiplier: 0.95
   maxTiltAngle: 2
   animationSpeed: 15
-  uiAudioSource: {fileID: 0}
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
-  pitchVariance: 0.1
+  hoverSound: {fileID: 8300000, guid: 7105fe36865b247f7bb8a5b99073c889, type: 3}
+  clickSound: {fileID: 8300000, guid: ae694bb4198fe473a8a9065466071051, type: 3}
 --- !u!1 &1891328371
 GameObject:
   m_ObjectHideFlags: 0
@@ -3329,10 +3377,8 @@ MonoBehaviour:
   clickScaleMultiplier: 0.95
   maxTiltAngle: 2
   animationSpeed: 15
-  uiAudioSource: {fileID: 0}
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
-  pitchVariance: 0.1
+  hoverSound: {fileID: 8300000, guid: 7105fe36865b247f7bb8a5b99073c889, type: 3}
+  clickSound: {fileID: 8300000, guid: ae694bb4198fe473a8a9065466071051, type: 3}
 --- !u!1 &1993083181
 GameObject:
   m_ObjectHideFlags: 0
@@ -3483,10 +3529,8 @@ MonoBehaviour:
   clickScaleMultiplier: 0.95
   maxTiltAngle: 2
   animationSpeed: 15
-  uiAudioSource: {fileID: 0}
-  hoverSound: {fileID: 0}
-  clickSound: {fileID: 0}
-  pitchVariance: 0.1
+  hoverSound: {fileID: 8300000, guid: 7105fe36865b247f7bb8a5b99073c889, type: 3}
+  clickSound: {fileID: 8300000, guid: ae694bb4198fe473a8a9065466071051, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -3495,3 +3539,4 @@ SceneRoots:
   - {fileID: 996864561}
   - {fileID: 1480154067}
   - {fileID: 608996385}
+  - {fileID: 1732981938}

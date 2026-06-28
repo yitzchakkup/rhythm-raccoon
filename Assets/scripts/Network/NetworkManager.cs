@@ -30,6 +30,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     [Header("Scene Transition")]
     public CanvasGroup fadeBlock;
     public float sceneFadeSpeed = 0.5f;
+    
+    [Header("Audio")]
+    public AudioClip lobbyMusic;
 
     private bool isReady = false;
 
@@ -42,6 +45,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         EnsureCanvasGroup(startPanel);
         EnsureCanvasGroup(waitingRoomPanel);
+        
+        if (AudioManager.Instance != null && lobbyMusic != null)
+        {
+            AudioManager.Instance.PlayMusic(lobbyMusic);
+        }
 
         if (fadeBlock != null)
         {
@@ -125,16 +133,33 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private IEnumerator SinglePlayerStartRoutine()
     {
+        // Step 1: Leave room if in one (covers offline ghost rooms too)
+        if (PhotonNetwork.InRoom || PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joining)
+        {
+            PhotonNetwork.OfflineMode = false; // Kills the offline session immediately
+            yield return null; // Give Photon one frame to process
+        }
+
+        // Step 2: Disconnect if still connected in any way
         if (PhotonNetwork.IsConnected)
         {
             PhotonNetwork.Disconnect();
-            while (PhotonNetwork.IsConnected)
-            {
+            while (PhotonNetwork.NetworkClientState != Photon.Realtime.ClientState.Disconnected)
                 yield return null;
-            }
         }
+
+        // Step 3: Extra safety — wait one more frame before re-enabling offline mode
+        yield return null;
+
+        // Step 4: Start fresh offline session
         PhotonNetwork.OfflineMode = true;
-        PhotonNetwork.CreateRoom("OfflineRoom");
+
+        // Step 5: Wait until Photon is actually ready to accept a room call
+        while (PhotonNetwork.NetworkClientState != Photon.Realtime.ClientState.ConnectedToMasterServer)
+            yield return null;
+
+        // Step 6: Safe to create room now
+        PhotonNetwork.JoinOrCreateRoom("OfflineRoom", new RoomOptions() { MaxPlayers = 1 }, null);
     }
 
     public void OnMultiplayerClicked()
@@ -148,7 +173,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void OnBackToMainMenuClicked()
     {
-        if (PhotonNetwork.IsConnected) PhotonNetwork.Disconnect();
+        // PROPER CLEANUP: Always leave the room before disconnecting
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+        else if (PhotonNetwork.IsConnected)
+        {
+            PhotonNetwork.Disconnect();
+        }
+
         SwitchPanel(waitingRoomPanel, startPanel);
         waitingRoomBackground.SetActive(false);
         startBackground.SetActive(true);

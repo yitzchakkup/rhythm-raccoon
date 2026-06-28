@@ -21,6 +21,11 @@ public class InstructorManager : MonoBehaviour
     [Tooltip("How long each image stays on screen")]
     [SerializeField] private float timePerSlide = 2.5f; 
 
+    // --- NEW: Audio Settings ---
+    [Header("Audio")]
+    [Tooltip("The swoosh/pop sound when a new slide appears")]
+    [SerializeField] private AudioClip slideTransitionSound;
+
     [Header("Scale Settings")]
     [SerializeField] private float idleScale = 2.5f;
     [SerializeField] private float reactionScale = 8.4f;
@@ -54,7 +59,6 @@ public class InstructorManager : MonoBehaviour
     {
         if (tutorialSlides == null || tutorialSlides.Length == 0)
         {
-            // Failsafe: If you forgot to assign the images, just skip to the game!
             MatchSyncManager.Instance.LocalPlayerFinishedTutorial();
             return;
         }
@@ -70,6 +74,12 @@ public class InstructorManager : MonoBehaviour
         // Initial setup for the very first slide
         if (instructorDisplay != null)
         {
+            // --- NEW: Play sound for the very first slide! ---
+            if (slideTransitionSound != null && AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlaySFX(slideTransitionSound, true);
+            }
+
             instructorDisplay.sprite = tutorialSlides[0];
             instructorDisplay.rectTransform.localScale = new Vector3(reactionScale, reactionScale, reactionScale);
         }
@@ -77,20 +87,16 @@ public class InstructorManager : MonoBehaviour
         // Loop through the slides (starting at index 1 since we already showed index 0)
         for (int i = 1; i < tutorialSlides.Length; i++)
         {
-            // Wait for the player to read the CURRENT slide
             yield return new WaitForSeconds(timePerSlide);
 
-            // Play the juicy animation to swap to the NEXT slide
             if (instructorDisplay != null) 
             {
                 yield return StartCoroutine(TransitionSlide(tutorialSlides[i]));
             }
         }
 
-        // Wait for the player to read the final slide
         yield return new WaitForSeconds(timePerSlide);
 
-        // Slideshow finished! Return to normal idle state
         if (instructorDisplay != null && defaultIdleSprite != null)
         {
             instructorDisplay.sprite = defaultIdleSprite;
@@ -172,6 +178,8 @@ public class InstructorManager : MonoBehaviour
         instructorDisplay.sprite = activePool[randomIndex];
         instructorDisplay.rectTransform.localScale = new Vector3(reactionScale, reactionScale, reactionScale);
 
+        // --- OPTIONAL: You could also add a sound effect here for when she yells during the game! ---
+
         yield return new WaitForSeconds(displayTime);
 
         if (defaultIdleSprite != null)
@@ -187,9 +195,16 @@ public class InstructorManager : MonoBehaviour
     
     private IEnumerator TransitionSlide(Sprite nextSprite)
     {
+        // --- NEW: Play the swoosh sound right as the squish anticipation starts! ---
+        if (slideTransitionSound != null && AudioManager.Instance != null)
+        {
+            // Passing 'true' randomizes the pitch slightly so the swooshes don't sound repetitive
+            AudioManager.Instance.PlaySFX(slideTransitionSound, true);
+        }
+
         Vector3 baseScale = new Vector3(reactionScale, reactionScale, reactionScale);
-        Vector3 squishScale = baseScale * 0.7f; // Shrink down by 30%
-        Vector3 stretchScale = baseScale * 1.1f; // Overshoot by 10%
+        Vector3 squishScale = baseScale * 0.7f; 
+        Vector3 stretchScale = baseScale * 1.1f; 
 
         float shrinkDuration = 0.1f;
         float growDuration = 0.15f;
@@ -226,7 +241,6 @@ public class InstructorManager : MonoBehaviour
             yield return null;
         }
 
-        // Guarantee it ends exactly at the perfect scale
         instructorDisplay.rectTransform.localScale = baseScale;
     }
 }

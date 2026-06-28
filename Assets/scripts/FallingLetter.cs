@@ -5,6 +5,11 @@ using System.Collections;
 
 public class FallingLetter : MonoBehaviour
 {
+    [Header("Audio Settings")]
+    [Tooltip("Sound played when successfully typed")]
+    [SerializeField] private AudioClip popSound;
+    // ----------------------------------
+
     [Header("Input Settings")]
     [SerializeField] private Key letterKey;
     
@@ -152,6 +157,7 @@ public class FallingLetter : MonoBehaviour
             {
                 ScoreAndStaminaManager.Instance.MissedLetter();
             }
+
             Destroy(gameObject);
         }
     }
@@ -169,6 +175,13 @@ public class FallingLetter : MonoBehaviour
     {
         if (!isPopping) 
         {
+            // --- NEW: Play Pop Sound ---
+            if (popSound != null && AudioManager.Instance != null)
+            {
+                // Passing 'true' to randomize pitch for that juicy typewriter feel!
+                AudioManager.Instance.PlaySFX(popSound, true); 
+            }
+
             StartCoroutine(PopRoutine());
         }
     }

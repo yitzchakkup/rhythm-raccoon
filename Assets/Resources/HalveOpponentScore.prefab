@@ -5199,6 +5199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66fbdb69793ecb0468678e8aafb9e0dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FallingLetter
+  popSound: {fileID: 8300000, guid: e28d09451295247fca936d445411b277, type: 3}
   letterKey: 15
   letterText: {fileID: 4322878621582819765}
   fallSpeed: 1

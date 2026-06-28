@@ -26,13 +26,13 @@ public class GameManager : MonoBehaviour
 
         if (MultiplayerMatchManager.Instance != null && MultiplayerMatchManager.Instance.IsMultiplayerGame())
         {
-            if (SceneUIRefs.multiplayerEndUI != null) SceneUIRefs.multiplayerEndUI.SetActive(true);
-            if (SceneUIRefs.singlePlayerEndUI != null) SceneUIRefs.singlePlayerEndUI.SetActive(false);
+            if (SceneUIRefs.multiplayerEndLayout != null) SceneUIRefs.multiplayerEndLayout.SetActive(true);
+            if (SceneUIRefs.singlePlayerEndLayout != null) SceneUIRefs.singlePlayerEndLayout.SetActive(false);
         }
         else
         {
-            if (SceneUIRefs.singlePlayerEndUI != null) SceneUIRefs.singlePlayerEndUI.SetActive(true);
-            if (SceneUIRefs.multiplayerEndUI != null) SceneUIRefs.multiplayerEndUI.SetActive(false);
+            if (SceneUIRefs.singlePlayerEndLayout != null) SceneUIRefs.singlePlayerEndLayout.SetActive(true);
+            if (SceneUIRefs.multiplayerEndLayout != null) SceneUIRefs.multiplayerEndLayout.SetActive(false);
         }
     }
 
@@ -64,9 +64,9 @@ public class GameManager : MonoBehaviour
                 if (SceneUIRefs.raccoonWinBackground != null) SceneUIRefs.raccoonWinBackground.SetActive(true);
             }
 
-            if (SceneUIRefs.sharedEndGameLayout != null)
+            if (SceneUIRefs.multiplayerEndLayout != null)
             {
-                SceneUIRefs.sharedEndGameLayout.SetActive(true);
+                SceneUIRefs.multiplayerEndLayout.SetActive(true);
             }
         }
         else
@@ -117,6 +117,10 @@ public class GameManager : MonoBehaviour
         if (SceneUIRefs.raccoonWinBackground != null) SceneUIRefs.raccoonWinBackground.SetActive(false);
         if (SceneUIRefs.offlineLoseBackground != null) SceneUIRefs.offlineLoseBackground.SetActive(false);
         if (SceneUIRefs.sharedEndGameLayout != null) SceneUIRefs.sharedEndGameLayout.SetActive(false);
+        if (SceneUIRefs.singlePlayerEndLayout != null) SceneUIRefs.singlePlayerEndLayout.SetActive(false);
+        if (SceneUIRefs.multiplayerEndLayout != null) SceneUIRefs.multiplayerEndLayout.SetActive(false);
+
+
 
         isDisconnecting = false;
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);

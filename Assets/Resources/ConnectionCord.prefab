@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2170151692260436532}
   - component: {fileID: 1634291073878262094}
   - component: {fileID: 6276952108744200882}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: ConnectionCord
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 58ef38ae5cfd24ee389e05409220d08f, type: 2}
+  - {fileID: 2100000, guid: 107f6031b61da479fb375cc7e1745e17, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -135,7 +135,7 @@ LineRenderer:
       m_NumAlphaKeys: 2
     numCornerVertices: 0
     numCapVertices: 0
-    alignment: 0
+    alignment: 1
     textureMode: 1
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
@@ -157,5 +157,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LetterConnectionCord
   pointsPerSegment: 20
   sagAmount: 0.2
-  swayAmount: 0.2
+  swayAmount: 0.1
   swaySpeed: 2

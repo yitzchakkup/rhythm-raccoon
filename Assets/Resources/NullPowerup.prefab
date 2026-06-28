@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8289514591485282115}
   - component: {fileID: 4903223337929816696}
   - component: {fileID: 2211696889502995920}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4847,7 +4847,7 @@ GameObject:
   - component: {fileID: 5244794296590581439}
   - component: {fileID: 2204218073151607074}
   - component: {fileID: 4322878621582819765}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5031,7 +5031,7 @@ GameObject:
   - component: {fileID: 2956474542381959999}
   - component: {fileID: 8060468296852919911}
   - component: {fileID: 2317869322622512791}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: NullPowerup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5206,6 +5206,9 @@ MonoBehaviour:
   swaySpeed: 0.6
   maxRockAngle: 15
   rockSpeed: 0.7
+  disabledColor: {r: 0.3, g: 0.3, b: 0.3, a: 1}
+  scaleMultiplier: 1.15
+  pulseSpeed: 6
   explosionPrefab: {fileID: 3568531759729945030, guid: d281e2fbdf28842f8ae463fd197b6cd2, type: 3}
 --- !u!114 &2317869322622512791
 MonoBehaviour:

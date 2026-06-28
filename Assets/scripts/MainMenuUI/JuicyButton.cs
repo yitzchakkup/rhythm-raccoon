@@ -14,11 +14,8 @@ public class JuicyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public float animationSpeed = 15f;
 
     [Header("Audio Settings")]
-    public AudioSource uiAudioSource;
     public AudioClip hoverSound;
     public AudioClip clickSound;
-    [Tooltip("Randomizes pitch between 1-pitchVariance and 1+pitchVariance")]
-    public float pitchVariance = 0.1f;
 
     // Internal state tracking
     private Vector3 originalScale;
@@ -81,11 +78,10 @@ public class JuicyButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     private void PlaySound(AudioClip clip)
     {
-        if (uiAudioSource != null && clip != null)
+        // Call the Singleton Manager! Passing 'true' handles the pitch variance automatically.
+        if (clip != null && AudioManager.Instance != null)
         {
-            // Randomize the pitch slightly for that piano-key feel
-            uiAudioSource.pitch = 1f + Random.Range(-pitchVariance, pitchVariance);
-            uiAudioSource.PlayOneShot(clip);
+            AudioManager.Instance.PlaySFX(clip, true);
         }
     }
 }

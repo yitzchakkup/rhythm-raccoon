@@ -5,20 +5,34 @@ using System.Collections;
 
 public class FallingLetter : MonoBehaviour
 {
+    [Header("Audio Settings")]
+    [Tooltip("Sound played when successfully typed")]
+    [SerializeField] private AudioClip popSound;
+    // ----------------------------------
+
     [Header("Input Settings")]
     [SerializeField] private Key letterKey;
+    
     [Header("Visuals")]
     [SerializeField] private TMP_Text letterText;
+    
     [Header("Movement Settings")]
     [SerializeField] private float fallSpeed = 2f;
 
-    // --- UPDATED: Organic Juice Settings ---
     [Header("Juice Settings (Organic)")]
-    [SerializeField] private float swayAmount = 0.5f;      // Max drift distance
-    [SerializeField] private float swaySpeed = 0.8f;       // How fast the wind pushes
-    [SerializeField] private float maxRockAngle = 15f;     // NEVER flips! (Locks between -15 and 15 degrees)
-    [SerializeField] private float rockSpeed = 1f;         // How fast it wobbles
+    [SerializeField] private float swayAmount = 0.5f;      
+    [SerializeField] private float swaySpeed = 0.8f;       
+    [SerializeField] private float maxRockAngle = 15f;     
+    [SerializeField] private float rockSpeed = 1f;         
     
+    [Header("Juice Settings (Zone Feedback)")]
+    [Tooltip("The color when the letter is falling and cannot be pressed")]
+    [SerializeField] private Color disabledColor = new Color(0.3f, 0.3f, 0.3f, 1f);
+    [Tooltip("How much it inflates when in the zone")]
+    [SerializeField] private float scaleMultiplier = 1.7f; 
+    [Tooltip("How fast the heartbeat pulses")]
+    [SerializeField] private float pulseSpeed = 6f;
+
     [Header("Effects")]
     [SerializeField] private GameObject explosionPrefab;
 
@@ -32,16 +46,22 @@ public class FallingLetter : MonoBehaviour
     private float noiseOffset;
     
     private bool isPopping = false;
+    private bool hasEnteredZone = false;
+    private Vector3 baseScale;
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        if (spriteRenderer != null) originalColor = spriteRenderer.color;
+        if (spriteRenderer != null) 
+        {
+            originalColor = spriteRenderer.color;
+            // Start grayed out immediately
+            spriteRenderer.color = disabledColor; 
+        }
 
         startX = transform.position.x; 
-        
-        // Give each letter a completely unique starting point in the Perlin noise map
         noiseOffset = Random.Range(0f, 1000f); 
+        baseScale = transform.localScale;
     }
 
     void Update()
@@ -51,36 +71,60 @@ public class FallingLetter : MonoBehaviour
         // 1. Calculate downward movement
         float newY = transform.position.y - (fallSpeed * Time.deltaTime);
         
-        // 2. Calculate organic side-to-side sway using Perlin Noise
-        // PerlinNoise returns 0 to 1. We multiply by 2 and subtract 1 to get -1 to 1.
+        // 2. Calculate organic side-to-side sway
         float noiseValX = Mathf.PerlinNoise(Time.time * swaySpeed, noiseOffset);
         float organicSway = (noiseValX * 2f - 1f) * swayAmount;
         float newX = startX + organicSway;
 
-        // Apply Position
         transform.position = new Vector3(newX, newY, transform.position.z);
 
-        // 3. Calculate organic rocking (using reversed coordinates so it doesn't perfectly match the sway)
+        // 3. Calculate organic rocking
         float noiseValRot = Mathf.PerlinNoise(noiseOffset, Time.time * rockSpeed);
         float organicRock = (noiseValRot * 2f - 1f) * maxRockAngle;
 
-        // Apply Rotation (Strictly clamped by maxRockAngle so it stays readable!)
         transform.rotation = Quaternion.Euler(0, 0, organicRock);
 
-        // --- Standard Logic ---
+        // 4. Input Checking
         if (Keyboard.current != null && letterKey != Key.None)
         {
             bool isKeyCurrentlyHeld = Keyboard.current[letterKey].isPressed;
             isPressed = isKeyCurrentlyHeld && inZone;
         }
 
-        if (isPressed)
+        // 5. Zone Feedback (Heartbeat & Color)
+        if (inZone)
         {
-            spriteRenderer.color = Color.green;
+            if (!hasEnteredZone)
+            {
+                hasEnteredZone = true;
+                // Capture the exact scale set by the WordGenerator right as it enters
+                baseScale = transform.localScale; 
+            }
+
+            // Apply Heartbeat Scale
+            float wave = (Mathf.Sin(Time.time * pulseSpeed) * 0.5f) + 0.5f;
+            float currentScaleLerp = Mathf.Lerp(1f, scaleMultiplier, wave);
+            transform.localScale = baseScale * currentScaleLerp;
         }
-        else
+        else if (hasEnteredZone)
         {
-            spriteRenderer.color = originalColor; 
+            // If it falls completely past the zone, reset its scale
+            hasEnteredZone = false;
+            transform.localScale = baseScale;
+        }
+
+        // Apply visual colors
+        if (spriteRenderer != null)
+        {
+            if (isPressed)
+            {
+                spriteRenderer.color = Color.green;
+            }
+            else
+            {
+                // Snap to original color if in zone, otherwise stay gray
+                spriteRenderer.color = inZone ? originalColor : disabledColor; 
+            }
         }
     }
 
@@ -113,6 +157,7 @@ public class FallingLetter : MonoBehaviour
             {
                 ScoreAndStaminaManager.Instance.MissedLetter();
             }
+
             Destroy(gameObject);
         }
     }
@@ -122,23 +167,21 @@ public class FallingLetter : MonoBehaviour
         if (other.CompareTag("TargetZone"))
         {
             inZone = false;
-        }
-
-        if (!inZone)
-        {
             isPressed = false; 
-            if (spriteRenderer != null)
-            {
-                spriteRenderer.color = originalColor; 
-            }
         }
     }
     
     public void TriggerPopAndDestroy()
     {
-        // Prevent it from triggering twice if multiple frames overlap
         if (!isPopping) 
         {
+            // --- NEW: Play Pop Sound ---
+            if (popSound != null && AudioManager.Instance != null)
+            {
+                // Passing 'true' to randomize pitch for that juicy typewriter feel!
+                AudioManager.Instance.PlaySFX(popSound, true); 
+            }
+
             StartCoroutine(PopRoutine());
         }
     }
@@ -147,18 +190,17 @@ public class FallingLetter : MonoBehaviour
     {
         isPopping = true;
 
-        // 1. Freeze the movement so it pops exactly where the player typed it
         fallSpeed = 0f;
         swayAmount = 0f;
 
-        Vector3 startScale = transform.localScale;
-        Vector3 popScale = startScale * 1.3f; // The "swell" size before it disappears
+        // Use baseScale so it doesn't accidentally pop at a massive size if clicked during a heartbeat peak
+        Vector3 startScale = baseScale; 
+        Vector3 popScale = startScale * 1.3f; 
 
-        float popUpTime = 0.05f; // Super fast swell
-        float shrinkTime = 0.1f; // Fast shrink
+        float popUpTime = 0.05f; 
+        float shrinkTime = 0.1f; 
         float timer = 0f;
 
-        // Phase 1: Swell up
         while (timer < popUpTime)
         {
             transform.localScale = Vector3.Lerp(startScale, popScale, timer / popUpTime);
@@ -168,7 +210,6 @@ public class FallingLetter : MonoBehaviour
 
         timer = 0f;
 
-        // Phase 2: Shrink to zero
         while (timer < shrinkTime)
         {
             transform.localScale = Vector3.Lerp(popScale, Vector3.zero, timer / shrinkTime);
@@ -181,7 +222,6 @@ public class FallingLetter : MonoBehaviour
             Instantiate(explosionPrefab, transform.position, Quaternion.identity);
         }
 
-        // 3. Actually destroy the object now that the animation is finished
         Destroy(gameObject);
     }
 }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1802555169890935642}
   - component: {fileID: 6151138146483405677}
   - component: {fileID: 6866264109411719188}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7eaf39020e4cb4dfd9ea35746a695051, type: 2}
+  m_fontAsset: {fileID: 0}
   m_sharedMaterial: {fileID: -7739435358743704131, guid: 7eaf39020e4cb4dfd9ea35746a695051, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -194,7 +194,7 @@ GameObject:
   - component: {fileID: -6134959289244826397}
   - component: {fileID: 8028681552113169647}
   - component: {fileID: 2435898152325435386}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Temp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -361,6 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66fbdb69793ecb0468678e8aafb9e0dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FallingLetter
+  popSound: {fileID: 8300000, guid: 0878b78e48c3a4ed1ad0e1d85141983d, type: 3}
   letterKey: 0
   letterText: {fileID: 6866264109411719188}
   fallSpeed: 0.4
@@ -368,4 +369,7 @@ MonoBehaviour:
   swaySpeed: 0.6
   maxRockAngle: 15
   rockSpeed: 0.7
+  disabledColor: {r: 0.46569067, g: 0.7905993, b: 0.8584906, a: 1}
+  scaleMultiplier: 1.4
+  pulseSpeed: 6
   explosionPrefab: {fileID: 3568531759729945030, guid: d281e2fbdf28842f8ae463fd197b6cd2, type: 3}

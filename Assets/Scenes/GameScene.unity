@@ -1500,7 +1500,7 @@ MonoBehaviour:
   letterPadding: 0.2
   standardVerticalStagger: 1.5
   minClusterProbability: 0
-  maxClusterProbability: 0
+  maxClusterProbability: 0.6
   speedCurve:
     serializedVersion: 2
     m_Curve:

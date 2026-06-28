@@ -201,6 +201,7 @@ GameObject:
   - component: {fileID: 25766099}
   - component: {fileID: 25766098}
   - component: {fileID: 25766097}
+  - component: {fileID: 25766100}
   m_Layer: 5
   m_Name: EndGameSingleMultyplayerLayout
   m_TagString: Untagged
@@ -292,6 +293,20 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &25766100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 25766095}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e260c1465c644809ad9c9fefd652ead3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EndGameUIController
+  playAgainButton: {fileID: 907949927}
+  readyCountText: {fileID: 1053574678}
 --- !u!1 &78180313
 GameObject:
   m_ObjectHideFlags: 0

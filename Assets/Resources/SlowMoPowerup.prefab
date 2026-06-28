@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3577149887582458967}
   - component: {fileID: 4169767332613334679}
   - component: {fileID: 7310833276112777268}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4847,7 +4847,7 @@ GameObject:
   - component: {fileID: 5244794296590581439}
   - component: {fileID: 2204218073151607074}
   - component: {fileID: 4322878621582819765}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5031,7 +5031,7 @@ GameObject:
   - component: {fileID: 2956474542381959999}
   - component: {fileID: 8060468296852919911}
   - component: {fileID: 3000311931945735478}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: SlowMoPowerup
   m_TagString: Untagged
   m_Icon: {fileID: 0}

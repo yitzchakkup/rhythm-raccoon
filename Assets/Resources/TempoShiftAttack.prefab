@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5244794296590581439}
   - component: {fileID: 2204218073151607074}
   - component: {fileID: 4322878621582819765}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 2956474542381959999}
   - component: {fileID: 8060468296852919911}
   - component: {fileID: -6886789956387874479}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: TempoShiftAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -401,7 +401,7 @@ GameObject:
   - component: {fileID: 2104331281504914284}
   - component: {fileID: 467296825037075524}
   - component: {fileID: 3474534689739450148}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}

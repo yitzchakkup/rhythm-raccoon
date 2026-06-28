@@ -159,6 +159,15 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 03d96452b1187404e9342bdd27993680, type: 3}
   - {fileID: 21300000, guid: cc9e70895b4104a229a009a100bd1f71, type: 3}
   - {fileID: 21300000, guid: 7868a7fe3c043486eb8b0c4db66d92ed, type: 3}
+  tutorialSlides:
+  - {fileID: 21300000, guid: abd68f0e1c4ac4080b8d89a2264d6c10, type: 3}
+  - {fileID: 21300000, guid: 4e2b5a918b8cb41ffb7165f3f568f215, type: 3}
+  - {fileID: 21300000, guid: c62e15d18f310401f9b3599a146103b1, type: 3}
+  - {fileID: 21300000, guid: e2c505dfc47f240a98985ffe57311db5, type: 3}
+  - {fileID: 21300000, guid: bc50850563a2b4050a801557a67b2fce, type: 3}
+  - {fileID: 21300000, guid: 13add5082db2c4a59b213da874dd8780, type: 3}
+  - {fileID: 21300000, guid: 264fc39dbd4b447d7a15ebac228959d4, type: 3}
+  timePerSlide: 3
   idleScale: 2.5
   reactionScale: 8.4
   displayTime: 3

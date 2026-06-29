@@ -24,6 +24,9 @@ public class HangingSignButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     [Header("Events")]
     public UnityEvent onClick;
+    
+    [HideInInspector]
+    public bool interactable = true;
 
     // Internal state tracking
     private Vector3 originalScale;
@@ -77,6 +80,8 @@ public class HangingSignButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (!interactable) return;
+        
         isHovered = true;
         targetScale = originalScale * hoverScaleMultiplier;
         
@@ -100,6 +105,8 @@ public class HangingSignButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (!interactable) return;
+        
         if (eventData.button != PointerEventData.InputButton.Left) return;
         if (isFlipping || !gameObject.activeInHierarchy) return;
 

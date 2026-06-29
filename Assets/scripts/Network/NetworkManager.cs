@@ -13,8 +13,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     [Header("Waiting Room UI Elements")]
     public GameObject waitingRoomPanel;
-    public Button readyButton;
-    public Button backButton;
+    public HangingSignButton readyButton;
+    public HangingSignButton backButton;
     public TMP_Text waitingRoomText;
     public TMP_Text countdownText;
     public TMP_Text readyCountText;
@@ -291,7 +291,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     private void SetPlayerReadyState(bool ready)
     {
         isReady = ready;
-        readyButton.GetComponentInChildren<TMP_Text>().text = isReady ? "UNREADY" : "READY";
+        TMP_Text buttonText = readyButton.GetComponentInChildren<TMP_Text>();
+        if (buttonText != null) 
+        {
+            buttonText.text = isReady ? "UNREADY" : "READY";
+        }
 
         Hashtable props = new Hashtable() { { "IsReady", isReady } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);

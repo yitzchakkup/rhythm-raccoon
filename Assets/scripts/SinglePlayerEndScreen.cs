@@ -9,7 +9,7 @@ public class SinglePlayerEndScreen : MonoBehaviour
     
     [Header("Buttons")]
     public HangingSignButton retryButton; // The juicy custom sign
-    public Button mainMenuButton;         // The standard Unity button
+    public HangingSignButton mainMenuButton;         // The standard Unity button
 
     private void OnEnable()
     {

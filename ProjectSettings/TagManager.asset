@@ -48,6 +48,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Gameplay
+    uniqueID: 1399986091
+    locked: 0
+  - name: UI
+    uniqueID: 3842051379
+    locked: 0
   m_RenderingLayers:
   - Default
   m_MigratedRenderPipelines: []

@@ -19,42 +19,73 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    // --- UPDATED: Added finalScore parameter ---
+    // --- NEW: Listen for scene reloads to forcefully wipe the UI ---
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Debug.Log($"<color=cyan>[GameManager]</color> New Scene Loaded: {scene.name}. Attempting to force all End Screens OFF.");
+        
+        // 1. Force time back to normal just in case!
+        Time.timeScale = 1f;
+
+        // 2. Hide all the screens so we start fresh
+        if (SceneUIRefs.multiplayerEndLayout != null) SceneUIRefs.multiplayerEndLayout.SetActive(false);
+        if (SceneUIRefs.singlePlayerEndLayout != null) SceneUIRefs.singlePlayerEndLayout.SetActive(false);
+        if (SceneUIRefs.sharedEndGameLayout != null) SceneUIRefs.sharedEndGameLayout.SetActive(false);
+        if (SceneUIRefs.possumWinBackground != null) SceneUIRefs.possumWinBackground.SetActive(false);
+        if (SceneUIRefs.raccoonWinBackground != null) SceneUIRefs.raccoonWinBackground.SetActive(false);
+        if (SceneUIRefs.offlineLoseBackground != null) SceneUIRefs.offlineLoseBackground.SetActive(false);
+    }
+
     public void EndGame(int finalScore = 0)
     {
-        Debug.Log("Game Over!");
-        Time.timeScale = 0f;
+        Debug.Log("<color=red>[GameManager]</color> EndGame() was called! Freezing logic.");
+        
+        WordGenerator wg = FindAnyObjectByType<WordGenerator>();
+        if (wg != null) wg.enabled = false;
+
+        PowerupGenerator pg = FindAnyObjectByType<PowerupGenerator>();
+        if (pg != null) pg.enabled = false;
 
         if (MultiplayerMatchManager.Instance != null && MultiplayerMatchManager.Instance.IsMultiplayerGame())
         {
+            Debug.Log("<color=red>[GameManager]</color> Diverting to Multiplayer End Screen...");
             if (SceneUIRefs.multiplayerEndLayout != null) SceneUIRefs.multiplayerEndLayout.SetActive(true);
             if (SceneUIRefs.singlePlayerEndLayout != null) SceneUIRefs.singlePlayerEndLayout.SetActive(false);
         }
         else
         {
-            // SINGLE PLAYER LOGIC
+            Debug.Log("<color=red>[GameManager]</color> Opening Single Player End Screen...");
             if (SceneUIRefs.singlePlayerEndLayout != null) 
             {
                 SceneUIRefs.singlePlayerEndLayout.SetActive(true);
-                
-                // Talk to the custom script we built to set the score text!
                 SinglePlayerEndScreen endScreen = SceneUIRefs.singlePlayerEndLayout.GetComponent<SinglePlayerEndScreen>();
-                if (endScreen != null)
-                {
-                    endScreen.SetupScreen(finalScore);
-                }
+                if (endScreen != null) endScreen.SetupScreen(finalScore);
             }
 
-            // Turn on the offline background using your partner's UI reference!
             if (SceneUIRefs.offlineLoseBackground != null) SceneUIRefs.offlineLoseBackground.SetActive(true);
-            
             if (SceneUIRefs.multiplayerEndLayout != null) SceneUIRefs.multiplayerEndLayout.SetActive(false);
         }
     }
 
     public void EndGameMultiplayer()
     {
-        Time.timeScale = 0f;
+        Debug.Log("<color=red>[GameManager]</color> EndGameMultiplayer() was called! Freezing logic and calculating winner.");
+        
+        WordGenerator wg = FindAnyObjectByType<WordGenerator>();
+        if (wg != null) wg.enabled = false;
+
+        PowerupGenerator pg = FindAnyObjectByType<PowerupGenerator>();
+        if (pg != null) pg.enabled = false;
 
         if (PhotonNetwork.InRoom && PhotonNetwork.IsMasterClient)
         {
@@ -82,6 +113,7 @@ public class GameManager : MonoBehaviour
 
             if (SceneUIRefs.multiplayerEndLayout != null)
             {
+                Debug.Log("<color=magenta>[GameManager]</color> Turning ON the Multiplayer End Layout!");
                 SceneUIRefs.multiplayerEndLayout.SetActive(true);
             }
         }
@@ -94,26 +126,22 @@ public class GameManager : MonoBehaviour
 
     public void RequestMultiplayerReplay()
     {
-        Time.timeScale = 1f;
+        Debug.Log("<color=blue>[GameManager]</color> RequestMultiplayerReplay called! Initiating Soft Reset...");
+        Time.timeScale = 1f; 
 
-        if (MatchSyncManager.Instance != null)
+        if (PhotonNetwork.InRoom && PhotonNetwork.IsMasterClient)
         {
-            MatchSyncManager.Instance.LocalPlayerWantsToPlayAgain();
-            Debug.Log("Replay requested. Waiting for opponent...");
-        }
-        else
-        {
-            Debug.LogError("MatchSyncManager Instance not found! Cannot sync replay request.");
+            // INSTEAD of reloading the scene, we trigger a Soft Reset across the network!
+            if (MultiplayerMatchManager.Instance != null)
+            {
+                MultiplayerMatchManager.Instance.TriggerSoftReset();
+            }
         }
     }
 
-    // --- NEW: The method our Single Player Retry button is looking for! ---
     public void RestartCurrentLevel()
     {
-        // Unpause the game before reloading, otherwise the new scene starts frozen!
         Time.timeScale = 1f;
-        
-        // Reloads whatever scene you are currently in
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -135,23 +163,13 @@ public class GameManager : MonoBehaviour
         }
 
         PhotonNetwork.OfflineMode = false;
-
-        if (SceneUIRefs.possumWinBackground != null) SceneUIRefs.possumWinBackground.SetActive(false);
-        if (SceneUIRefs.raccoonWinBackground != null) SceneUIRefs.raccoonWinBackground.SetActive(false);
-        if (SceneUIRefs.offlineLoseBackground != null) SceneUIRefs.offlineLoseBackground.SetActive(false);
-        if (SceneUIRefs.sharedEndGameLayout != null) SceneUIRefs.sharedEndGameLayout.SetActive(false);
-        if (SceneUIRefs.singlePlayerEndLayout != null) SceneUIRefs.singlePlayerEndLayout.SetActive(false);
-        if (SceneUIRefs.multiplayerEndLayout != null) SceneUIRefs.multiplayerEndLayout.SetActive(false);
-
         isDisconnecting = false;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0); // Assuming 0 is the Main Menu
+        SceneManager.LoadScene(0); 
     }
 
     public void QuitGame()
     {
-        Debug.Log("Quitting game...");
         Application.Quit();
-
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #endif

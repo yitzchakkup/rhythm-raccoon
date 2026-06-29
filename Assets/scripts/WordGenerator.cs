@@ -14,13 +14,10 @@ public class WordGenerator : MonoBehaviour
 
     [Header("Difficulty: Limits")]
     public float timeToReachMaxDifficulty = 180f; 
-    
     public float initialSpawnDelay = 4f;
     public float minimumSpawnDelay = 1.5f; 
-
     public float initialFallSpeed = 2f;
     public float maxFallSpeed = 7f;
-
     public int minLettersPerWave = 1;
     public int maxLettersLimit = 5;
 
@@ -36,9 +33,7 @@ public class WordGenerator : MonoBehaviour
     public AnimationCurve speedCurve = AnimationCurve.Linear(0, 0, 1, 1);
     public AnimationCurve spawnDelayCurve = AnimationCurve.Linear(0, 0, 1, 1);
     public AnimationCurve clusterCurve = AnimationCurve.Linear(0, 0, 1, 1);
-    
-    [Tooltip("Controls how fast the game ramps up from minLetters to maxLetters")]
-    public AnimationCurve letterCountCurve = AnimationCurve.Linear(0, 0, 1, 1); // <-- NEW VARIABLE
+    public AnimationCurve letterCountCurve = AnimationCurve.Linear(0, 0, 1, 1); 
 
     [Header("Powerup States")]
     public float powerupSpeedMultiplier = 1f; 
@@ -50,8 +45,6 @@ public class WordGenerator : MonoBehaviour
     private float gameTimer;
 
     private List<List<FallingLetter>> activeWaves = new List<List<FallingLetter>>();
-
-    // Inside WordGenerator.cs
     
     void Start()
     {
@@ -63,25 +56,31 @@ public class WordGenerator : MonoBehaviour
     {
         SpawnWave();
     }
+    
+    private void OnEnable()
+    {
+        // Resets the difficulty timers every time the generator is flipped back on
+        gameTimer = 0f;
+        spawnTimer = 0f;
+        speedMultiplierTimer = 0f;
+        powerupSpeedMultiplier = 1f;
+        activeWaves.Clear(); 
+    }
 
     void Update()
     {
         if (spawnArea == null) return;
-
-        // 1. Check Powerup Timers
+        // NOTE: The GameManager.isGameActive check is GONE!
+        
         if (speedMultiplierTimer > 0)
         {
             speedMultiplierTimer -= Time.deltaTime;
-            if (speedMultiplierTimer <= 0) 
-            {
-                powerupSpeedMultiplier = 1f; // Revert to normal speed
-            }
+            if (speedMultiplierTimer <= 0) powerupSpeedMultiplier = 1f; 
         }
 
         gameTimer += Time.deltaTime;
         spawnTimer += Time.deltaTime;
 
-        // 2. Calculate Base Difficulty
         float progress = Mathf.Clamp01(gameTimer / timeToReachMaxDifficulty);
         float delayMultiplier = spawnDelayCurve.Evaluate(progress);
         float speedMultiplier = speedCurve.Evaluate(progress);
@@ -89,7 +88,6 @@ public class WordGenerator : MonoBehaviour
         float baseSpawnDelay = Mathf.Lerp(initialSpawnDelay, minimumSpawnDelay, delayMultiplier);
         float baseSpeed = Mathf.Lerp(initialFallSpeed, maxFallSpeed, speedMultiplier);
 
-        // 3. Apply Powerup Multiplier
         currentFallSpeed = baseSpeed * powerupSpeedMultiplier;
         
         if (powerupSpeedMultiplier > 0)
@@ -97,19 +95,14 @@ public class WordGenerator : MonoBehaviour
             currentSpawnDelay = baseSpawnDelay / powerupSpeedMultiplier;
         }
 
-        // 4. Apply speed to already falling letters
         foreach (List<FallingLetter> wave in activeWaves)
         {
             foreach (FallingLetter letter in wave)
             {
-                if (letter != null)
-                {
-                    letter.SetFallSpeed(currentFallSpeed);
-                }
+                if (letter != null) letter.SetFallSpeed(currentFallSpeed);
             }
         }
 
-        // 5. Check if it is time to spawn
         if (spawnTimer >= currentSpawnDelay)
         {
             SpawnWave();
@@ -130,7 +123,6 @@ public class WordGenerator : MonoBehaviour
         for (int i = activeWaves.Count - 1; i >= 0; i--)
         {
             List<FallingLetter> wave = activeWaves[i];
-
             bool missedLetter = false;
             foreach (FallingLetter letter in wave)
             {
@@ -162,10 +154,7 @@ public class WordGenerator : MonoBehaviour
 
                 foreach (FallingLetter letter in wave)
                 {
-                    if (letter.TryGetComponent<Powerup>(out Powerup powerup))
-                    {
-                        powerup.ApplyEffect();
-                    }
+                    if (letter.TryGetComponent<Powerup>(out Powerup powerup)) powerup.ApplyEffect();
                     letter.TriggerPopAndDestroy(); 
                 }
 
@@ -182,25 +171,19 @@ public class WordGenerator : MonoBehaviour
     private void FinalizeWaveGroup(List<FallingLetter> group)
     {
         if (group.Count == 0) return;
-        
         activeWaves.Add(group);
 
         if (group.Count > 1 && connectionCordPrefab != null)
         {
             GameObject cordObj = Instantiate(connectionCordPrefab, Vector3.zero, Quaternion.identity);
             LetterConnectionCord cordScript = cordObj.GetComponent<LetterConnectionCord>();
-            if (cordScript != null)
-            {
-                cordScript.Setup(group);
-            }
+            if (cordScript != null) cordScript.Setup(group);
         }
     }
 
     private void SpawnWave()
     {
         float progress = Mathf.Clamp01(gameTimer / timeToReachMaxDifficulty);
-        
-        // --- THE FIX: Evaluate the new curve to get the multiplier before Lerping ---
         float letterCountMultiplier = letterCountCurve.Evaluate(progress);
         int lettersToSpawn = Mathf.RoundToInt(Mathf.Lerp(minLettersPerWave, maxLettersLimit, letterCountMultiplier));
         
@@ -216,10 +199,7 @@ public class WordGenerator : MonoBehaviour
         float targetLetterWidth = columnWidth * (1f - letterPadding);
 
         List<float> availableColumns = new List<float>();
-        for (int i = 0; i < maxLettersLimit; i++)
-        {
-            availableColumns.Add(leftEdge + (columnWidth * 0.5f) + (columnWidth * i));
-        }
+        for (int i = 0; i < maxLettersLimit; i++) availableColumns.Add(leftEdge + (columnWidth * 0.5f) + (columnWidth * i));
 
         for (int i = 0; i < availableColumns.Count; i++)
         {
@@ -230,16 +210,10 @@ public class WordGenerator : MonoBehaviour
         }
 
         List<float> xPositions = new List<float>();
-        for (int i = 0; i < lettersToSpawn; i++)
-        {
-            xPositions.Add(availableColumns[i]);
-        }
+        for (int i = 0; i < lettersToSpawn; i++) xPositions.Add(availableColumns[i]);
 
         List<Key> availableKeys = new List<Key>();
-        for (int k = (int)Key.A; k <= (int)Key.Z; k++)
-        {
-            availableKeys.Add((Key)k);
-        }
+        for (int k = (int)Key.A; k <= (int)Key.Z; k++) availableKeys.Add((Key)k);
 
         List<FallingLetter> currentWorkingGroup = new List<FallingLetter>();
         float currentY = spawnY;
@@ -250,11 +224,7 @@ public class WordGenerator : MonoBehaviour
             
             if (i > 0) 
             {
-                if (Random.value < currentClusterChance)
-                {
-                    // Cluster
-                }
-                else
+                if (Random.value >= currentClusterChance)
                 {
                     currentY += standardVerticalStagger;
                     FinalizeWaveGroup(currentWorkingGroup);
@@ -280,7 +250,6 @@ public class WordGenerator : MonoBehaviour
             if (letterScript != null)
             {
                 letterScript.SetFallSpeed(currentFallSpeed);
-                
                 int randomKeyIndex = Random.Range(0, availableKeys.Count);
                 Key assignedKey = availableKeys[randomKeyIndex];
                 availableKeys.RemoveAt(randomKeyIndex); 
@@ -290,9 +259,6 @@ public class WordGenerator : MonoBehaviour
             }
         }
 
-        if (currentWorkingGroup.Count > 0)
-        {
-            FinalizeWaveGroup(currentWorkingGroup);
-        }
+        if (currentWorkingGroup.Count > 0) FinalizeWaveGroup(currentWorkingGroup);
     }
 }

@@ -155,4 +155,10 @@ public class TugOfWarUI : MonoBehaviour
         if (opponentFaceImage != null && opponentNormalSprite != null) 
             opponentFaceImage.sprite = opponentNormalSprite;
     }
+    
+    public void ResetTugOfWar()
+    {
+        isGameOver = false;
+        if (tugOfWarSlider != null) tugOfWarSlider.value = 0;
+    }
 }

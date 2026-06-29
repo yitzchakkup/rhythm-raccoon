@@ -49,6 +49,7 @@ MonoBehaviour:
   - TriggerSlideshow_RPC
   - RPC_RestartMultiplayerMatch
   - RPC_StartRematchCountdown
+  - ExecuteSoftReset_RPC
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 0

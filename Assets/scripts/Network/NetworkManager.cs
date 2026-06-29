@@ -60,24 +60,34 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = true;
     }
 
+    // --- FIX 1: Automatically add CanvasGroup if it's missing! ---
     private void EnsureCanvasGroup(GameObject panel)
     {
-        if (panel.TryGetComponent<CanvasGroup>(out CanvasGroup cg)) cg.alpha = 1f;
+        if (panel == null) return;
+        
+        if (!panel.TryGetComponent<CanvasGroup>(out CanvasGroup cg))
+        {
+            cg = panel.AddComponent<CanvasGroup>();
+        }
+        
+        cg.alpha = 1f;
         panel.transform.localScale = Vector3.one;
     }
 
     // --- PANEL TRANSITION LOGIC ---
 
-    private void SwitchPanel(GameObject fromPanel, GameObject toPanel)
+    // --- FIX 2: Pass the backgrounds into the SwitchPanel method ---
+    private void SwitchPanel(GameObject fromPanel, GameObject toPanel, GameObject fromBg, GameObject toBg)
     {
         if (currentTransition != null) StopCoroutine(currentTransition);
-        currentTransition = StartCoroutine(TransitionRoutine(fromPanel, toPanel));
+        currentTransition = StartCoroutine(TransitionRoutine(fromPanel, toPanel, fromBg, toBg));
     }
 
-    private IEnumerator TransitionRoutine(GameObject fromPanel, GameObject toPanel)
+    private IEnumerator TransitionRoutine(GameObject fromPanel, GameObject toPanel, GameObject fromBg, GameObject toBg)
     {
         float timer = 0f;
 
+        // 1. Fade OUT the old panel
         if (fromPanel != null && fromPanel.activeSelf)
         {
             CanvasGroup fromGroup = fromPanel.GetComponent<CanvasGroup>();
@@ -98,8 +108,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             fromPanel.SetActive(false);
         }
 
+        // --- FIX 3: Swap the backgrounds cleanly in the middle of the transition! ---
+        if (fromBg != null) fromBg.SetActive(false);
+        if (toBg != null) toBg.SetActive(true);
+
         timer = 0f;
 
+        // 2. Fade IN the new panel
         if (toPanel != null)
         {
             toPanel.SetActive(true);
@@ -133,14 +148,12 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private IEnumerator SinglePlayerStartRoutine()
     {
-        // Step 1: Kill any existing offline/online session
         if (PhotonNetwork.InRoom || PhotonNetwork.NetworkClientState == Photon.Realtime.ClientState.Joining)
         {
             PhotonNetwork.OfflineMode = false;
             yield return null;
         }
 
-        // Step 2: Disconnect if still connected in any way
         if (PhotonNetwork.IsConnected)
         {
             PhotonNetwork.Disconnect();
@@ -150,7 +163,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
         yield return null;
 
-        // Step 3: Start fresh offline session
         PhotonNetwork.OfflineMode = true;
 
         while (PhotonNetwork.NetworkClientState != Photon.Realtime.ClientState.ConnectedToMasterServer)
@@ -161,10 +173,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void OnMultiplayerClicked()
     {
-        SwitchPanel(startPanel, waitingRoomPanel);
-        startBackground.SetActive(false);
-        waitingRoomBackground.SetActive(true);
+        // --- FIX 4: Call the updated SwitchPanel and let it handle the backgrounds ---
         waitingRoomText.text = "Connecting to Server...";
+        SwitchPanel(startPanel, waitingRoomPanel, startBackground, waitingRoomBackground);
         PhotonNetwork.ConnectUsingSettings();
     }
 
@@ -179,9 +190,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             PhotonNetwork.Disconnect();
         }
 
-        SwitchPanel(waitingRoomPanel, startPanel);
-        waitingRoomBackground.SetActive(false);
-        startBackground.SetActive(true);
+        // --- FIX 5: Use the updated SwitchPanel for the back button too ---
+        SwitchPanel(waitingRoomPanel, startPanel, waitingRoomBackground, startBackground);
     }
 
     // --- PHOTON CALLBACKS ---
@@ -189,24 +199,19 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     public override void OnConnectedToMaster()
     {
         waitingRoomText.text = "Connected! Looking for a room...";
-
-        // Try to join any open room with an available slot.
-        // Passing expectedMaxPlayers = 2 ensures we only match into 2-player rooms.
         PhotonNetwork.JoinRandomRoom(null, 2, MatchmakingMode.FillRoom, null, null);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        // No open rooms found — create a fresh one with a unique name
-        // so multiple lobbies can coexist simultaneously.
         waitingRoomText.text = "No open rooms found. Creating one...";
 
         string roomName = "Room_" + Random.Range(1000, 9999);
         RoomOptions roomOptions = new RoomOptions()
         {
             MaxPlayers = 2,
-            IsVisible = true,   // visible to random matchmaking
-            IsOpen = true        // accepting players
+            IsVisible = true,
+            IsOpen = true
         };
 
         PhotonNetwork.CreateRoom(roomName, roomOptions);
@@ -214,7 +219,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
-        // Extremely rare: name collision. Retry with a different name.
         Debug.LogWarning($"CreateRoom failed ({returnCode}): {message}. Retrying...");
         string roomName = "Room_" + Random.Range(1000, 9999);
         RoomOptions roomOptions = new RoomOptions() { MaxPlayers = 2, IsVisible = true, IsOpen = true };
@@ -258,7 +262,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         UpdateWaitingRoomText();
         UpdateReadyCountUI();
 
-        // Close the room once it's full so it won't appear in matchmaking
         if (PhotonNetwork.IsMasterClient && PhotonNetwork.CurrentRoom.PlayerCount >= 2)
         {
             PhotonNetwork.CurrentRoom.IsOpen = false;
@@ -273,7 +276,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         UpdateReadyCountUI();
         countdownText.text = "Player left. Waiting...";
 
-        // Re-open the room so a new player can join to fill the slot
         if (PhotonNetwork.IsMasterClient)
         {
             PhotonNetwork.CurrentRoom.IsOpen = true;

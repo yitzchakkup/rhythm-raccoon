@@ -19,7 +19,8 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    public void EndGame()
+    // --- UPDATED: Added finalScore parameter ---
+    public void EndGame(int finalScore = 0)
     {
         Debug.Log("Game Over!");
         Time.timeScale = 0f;
@@ -31,7 +32,22 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if (SceneUIRefs.singlePlayerEndLayout != null) SceneUIRefs.singlePlayerEndLayout.SetActive(true);
+            // SINGLE PLAYER LOGIC
+            if (SceneUIRefs.singlePlayerEndLayout != null) 
+            {
+                SceneUIRefs.singlePlayerEndLayout.SetActive(true);
+                
+                // Talk to the custom script we built to set the score text!
+                SinglePlayerEndScreen endScreen = SceneUIRefs.singlePlayerEndLayout.GetComponent<SinglePlayerEndScreen>();
+                if (endScreen != null)
+                {
+                    endScreen.SetupScreen(finalScore);
+                }
+            }
+
+            // Turn on the offline background using your partner's UI reference!
+            if (SceneUIRefs.offlineLoseBackground != null) SceneUIRefs.offlineLoseBackground.SetActive(true);
+            
             if (SceneUIRefs.multiplayerEndLayout != null) SceneUIRefs.multiplayerEndLayout.SetActive(false);
         }
     }
@@ -76,15 +92,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // --- UPDATED: Communicates with MatchSyncManager to register the replay vote ---
     public void RequestMultiplayerReplay()
     {
-        // Unpause the local engine immediately so network syncing and scene loading can process smoothly
         Time.timeScale = 1f;
 
         if (MatchSyncManager.Instance != null)
         {
-            // Set local custom property to alert the Master Client we are ready
             MatchSyncManager.Instance.LocalPlayerWantsToPlayAgain();
             Debug.Log("Replay requested. Waiting for opponent...");
         }
@@ -92,6 +105,16 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogError("MatchSyncManager Instance not found! Cannot sync replay request.");
         }
+    }
+
+    // --- NEW: The method our Single Player Retry button is looking for! ---
+    public void RestartCurrentLevel()
+    {
+        // Unpause the game before reloading, otherwise the new scene starts frozen!
+        Time.timeScale = 1f;
+        
+        // Reloads whatever scene you are currently in
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void ReturnToMainMenu()
@@ -120,10 +143,8 @@ public class GameManager : MonoBehaviour
         if (SceneUIRefs.singlePlayerEndLayout != null) SceneUIRefs.singlePlayerEndLayout.SetActive(false);
         if (SceneUIRefs.multiplayerEndLayout != null) SceneUIRefs.multiplayerEndLayout.SetActive(false);
 
-
-
         isDisconnecting = false;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0); // Assuming 0 is the Main Menu
     }
 
     public void QuitGame()

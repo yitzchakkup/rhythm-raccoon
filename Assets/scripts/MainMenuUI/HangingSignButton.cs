@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Events; // --- NEW: Required for custom button events ---
+using UnityEngine.Events;
 using System.Collections;
 
 public class HangingSignButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
@@ -22,7 +22,6 @@ public class HangingSignButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public AudioClip hoverSound;
     public AudioClip clickSound;
 
-    // --- NEW: The event we will trigger after the flip ---
     [Header("Events")]
     public UnityEvent onClick;
 
@@ -32,9 +31,9 @@ public class HangingSignButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
     private Vector3 targetScale;
     private Quaternion targetRotation;
     
-    private bool isPressed = false;
     private bool isHovered = false;
     private bool isFlipping = false;
+    private bool isPressed = false;
     private float randomTimeOffset;
 
     private void Awake()
@@ -52,6 +51,7 @@ public class HangingSignButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
     {
         isFlipping = false;
         isHovered = false;
+        isPressed = false;
         transform.localScale = originalScale;
         transform.localRotation = originalRotation;
         targetScale = originalScale;
@@ -60,20 +60,20 @@ public class HangingSignButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     private void Update()
     {
-        transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.deltaTime * animationSpeed);
+        // --- CHANGED: Now using Time.unscaledDeltaTime to ignore time pauses ---
+        transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.unscaledDeltaTime * animationSpeed);
 
         if (isFlipping) return;
 
         if (!isHovered)
         {
-            float currentAngle = Mathf.Sin((Time.time + randomTimeOffset) * swingSpeed) * swingAngle;
+            // --- CHANGED: Now using Time.unscaledTime so it swings while paused ---
+            float currentAngle = Mathf.Sin((Time.unscaledTime + randomTimeOffset) * swingSpeed) * swingAngle;
             targetRotation = originalRotation * Quaternion.Euler(0, 0, currentAngle);
         }
 
-        transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRotation, Time.deltaTime * animationSpeed);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRotation, Time.unscaledDeltaTime * animationSpeed);
     }
-
-    // --- MOUSE INTERACTIONS ---
 
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -83,7 +83,6 @@ public class HangingSignButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
         float randomZ = Random.Range(-maxTiltAngle, maxTiltAngle);
         targetRotation = originalRotation * Quaternion.Euler(0, 0, randomZ);
 
-        // THE FIX: Only play the hover sound if we aren't actively clicking or flipping
         if (!isPressed && !isFlipping)
         {
             PlaySound(hoverSound);
@@ -92,7 +91,6 @@ public class HangingSignButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        // THE FIX: Do not reset the button if it only "exited" because it squished away from the mouse
         if (!isPressed)
         {
             isHovered = false;
@@ -105,9 +103,7 @@ public class HangingSignButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
         if (eventData.button != PointerEventData.InputButton.Left) return;
         if (isFlipping || !gameObject.activeInHierarchy) return;
 
-        // Lock the button into a pressed state
-        isPressed = true; 
-
+        isPressed = true;
         targetScale = originalScale * clickScaleMultiplier;
         PlaySound(clickSound);
         
@@ -116,7 +112,6 @@ public class HangingSignButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        // Release the pressed state
         isPressed = false; 
 
         if (isHovered)
@@ -124,36 +119,31 @@ public class HangingSignButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
             targetScale = originalScale * hoverScaleMultiplier;
         }
     }
+
     private IEnumerator FlipRoutine()
     {
         isFlipping = true;
         float elapsed = 0f;
 
-        // Grab the exact angles the sign is currently resting at
         Vector3 startAngles = transform.localRotation.eulerAngles;
 
         while (elapsed < flipDuration)
         {
-            elapsed += Time.deltaTime;
+            // --- CHANGED: Now using unscaledDeltaTime for the animation loop ---
+            elapsed += Time.unscaledDeltaTime;
             float t = elapsed / flipDuration;
             
-            // Smooth ease in/out math for a snappy physical flip
             float ease = t * t * (3f - 2f * t); 
-            
-            // Manually calculate the 0 to 360 spin
             float spinAmount = Mathf.Lerp(0f, 360f, ease);
             
-            // Apply the spin to the Y axis, while keeping the current X and Z tilts!
             transform.localRotation = Quaternion.Euler(startAngles.x, startAngles.y + spinAmount, startAngles.z);
             
             yield return null;
         }
 
-        // Lock it perfectly back to normal, then return control to the Update loop
         transform.localRotation = originalRotation;
         isFlipping = false;
 
-        // Trigger the screen transition NOW, after the animation is 100% done!
         onClick?.Invoke();
     }
 
@@ -161,6 +151,8 @@ public class HangingSignButton : MonoBehaviour, IPointerEnterHandler, IPointerEx
     {
         if (clip != null && AudioManager.Instance != null)
         {
+            // Note: If your AudioManager uses pitched sounds tied to time, 
+            // you might need to ensure its AudioSources ignore timeScale too!
             AudioManager.Instance.PlaySFX(clip, true);
         }
     }

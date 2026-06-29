@@ -158,7 +158,16 @@ public class GameManager : MonoBehaviour
     public void ReturnToMainMenu()
     {
         if (isDisconnecting) return;
-        StartCoroutine(ReturnToMainMenuRoutine());
+        if (NetworkManager.Instance != null)
+        {
+            // This will trigger the DisconnectAndReturnRoutine inside NetworkManager,
+            // which already has the robust "Wait until disconnected" logic.
+            NetworkManager.Instance.OnBackToMainMenuClicked();
+        }
+        else
+        {
+            StartCoroutine(ReturnToMainMenuRoutine());
+        }
     }
 
     private IEnumerator ReturnToMainMenuRoutine()

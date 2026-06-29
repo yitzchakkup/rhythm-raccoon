@@ -89,6 +89,23 @@ public class MultiplayerMatchManager : MonoBehaviourPun
         }
     }
 
+    public void ResetMatch()
+    {
+        if (ScoreAndStaminaManager.Instance != null)
+        {
+            ScoreAndStaminaManager.Instance.Initialize();
+        }
+
+        currentMyScore = 0f;
+        currentOpponentScore = 0f;
+
+        FallingLetter[] activeLetters = FindObjectsOfType<FallingLetter>();
+        foreach (FallingLetter letter in activeLetters)
+        {
+            Destroy(letter.gameObject);
+        }
+    }
+
     // --- Public Score Getters ---
     public float GetMyScore() => currentMyScore;
     public float GetOpponentScore() => currentOpponentScore;

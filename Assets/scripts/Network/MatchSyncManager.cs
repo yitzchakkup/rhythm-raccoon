@@ -19,6 +19,7 @@ public class MatchSyncManager : MonoBehaviourPunCallbacks
     private const string START_TIME_KEY = "MatchStartTime";
     private const string LOADED_KEY = "SceneLoaded"; 
     private const string TUT_DONE_KEY = "TutorialDone"; // Tracks when the slideshow finishes
+    private const string PLAY_AGAIN_KEY = "PlayAgain";   // Tracks play again votes
 
     private void Awake()
     {
@@ -35,11 +36,24 @@ public class MatchSyncManager : MonoBehaviourPunCallbacks
         }
         
         // Tell the network: "My scene has finished loading, and I am starting the tutorial!"
-        Hashtable props = new Hashtable { { LOADED_KEY, true }, { TUT_DONE_KEY, false } };
+        // Also explicitly reset the PlayAgain property to false for a clean loop state.
+        Hashtable props = new Hashtable 
+        { 
+            { LOADED_KEY, true }, 
+            { TUT_DONE_KEY, false },
+            { PLAY_AGAIN_KEY, false } 
+        };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
     }
 
-    // --- NEW: Called by the InstructorManager when the slideshow finishes ---
+    // --- Public function called by your UI / GameManager button ---
+    public void LocalPlayerWantsToPlayAgain()
+    {
+        Hashtable props = new Hashtable { { PLAY_AGAIN_KEY, true } };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+    }
+
+    // --- Called by the InstructorManager when the slideshow finishes ---
     public void LocalPlayerFinishedTutorial()
     {
         Hashtable props = new Hashtable { { TUT_DONE_KEY, true } };
@@ -48,6 +62,12 @@ public class MatchSyncManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, Hashtable changedProps)
     {
+        // Listen for the Play Again vote from either client
+        if (changedProps.ContainsKey(PLAY_AGAIN_KEY))
+        {
+            CheckIfAllPlayersWantToPlayAgain();
+        }
+
         // The Master Client listens for everyone's loading AND tutorial status
         if (!PhotonNetwork.IsMasterClient || matchStarted || exactStartTime != 0) return;
 
@@ -93,6 +113,20 @@ public class MatchSyncManager : MonoBehaviourPunCallbacks
         double futureTime = PhotonNetwork.Time + 0.5f;
         Hashtable roomProps = new Hashtable { { START_TIME_KEY, futureTime } };
         PhotonNetwork.CurrentRoom.SetCustomProperties(roomProps);
+    }
+
+    // --- Validates if everyone has voted to replay ---
+    private void CheckIfAllPlayersWantToPlayAgain()
+    {
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        foreach (Photon.Realtime.Player p in PhotonNetwork.PlayerList)
+        {
+            if (!p.CustomProperties.TryGetValue(PLAY_AGAIN_KEY, out object state) || !(bool)state) return;
+        }
+
+        // Synchronously reload the active scene across the network for a fresh start.
+        PhotonNetwork.LoadLevel(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
     }
 
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)

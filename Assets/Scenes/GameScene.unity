@@ -3253,6 +3253,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a9ca73aebae2594bb5da153098be3f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  singlePlayerEndSting: {fileID: 0}
+  singlePlayerEndMusic: {fileID: 8300000, guid: fcf45bcc38e28435582f7c9785c97a7b, type: 3}
 --- !u!114 &654381540
 MonoBehaviour:
   m_ObjectHideFlags: 0

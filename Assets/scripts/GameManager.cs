@@ -7,6 +7,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     private bool isDisconnecting = false;
+    
+    [Header("Single Player Audio")]
+    public AudioClip singlePlayerEndSting;
+    public AudioClip singlePlayerEndMusic;
 
     private void Awake()
     {
@@ -48,33 +52,37 @@ public class GameManager : MonoBehaviour
 
     public void EndGame(int finalScore = 0)
     {
-        Debug.Log("<color=red>[GameManager]</color> EndGame() was called! Freezing logic.");
-        
+        Debug.Log("<color=red>[GameManager]</color> EndGame() called!");
+    
+        // 1. Kill Switch
         WordGenerator wg = FindAnyObjectByType<WordGenerator>();
         if (wg != null) wg.enabled = false;
-
         PowerupGenerator pg = FindAnyObjectByType<PowerupGenerator>();
         if (pg != null) pg.enabled = false;
 
-        if (MultiplayerMatchManager.Instance != null && MultiplayerMatchManager.Instance.IsMultiplayerGame())
+        // 2. Play Single Player Audio
+        if (AudioManager.Instance != null)
         {
-            Debug.Log("<color=red>[GameManager]</color> Diverting to Multiplayer End Screen...");
-            if (SceneUIRefs.multiplayerEndLayout != null) SceneUIRefs.multiplayerEndLayout.SetActive(true);
-            if (SceneUIRefs.singlePlayerEndLayout != null) SceneUIRefs.singlePlayerEndLayout.SetActive(false);
+            AudioManager.Instance.PlayMusic(singlePlayerEndSting);
+            // Play the loop after the sting (assuming sting is ~2 seconds)
+            StartCoroutine(PlayLoopAfterSting(singlePlayerEndMusic, 2.0f));
         }
-        else
-        {
-            Debug.Log("<color=red>[GameManager]</color> Opening Single Player End Screen...");
-            if (SceneUIRefs.singlePlayerEndLayout != null) 
-            {
-                SceneUIRefs.singlePlayerEndLayout.SetActive(true);
-                SinglePlayerEndScreen endScreen = SceneUIRefs.singlePlayerEndLayout.GetComponent<SinglePlayerEndScreen>();
-                if (endScreen != null) endScreen.SetupScreen(finalScore);
-            }
 
-            if (SceneUIRefs.offlineLoseBackground != null) SceneUIRefs.offlineLoseBackground.SetActive(true);
-            if (SceneUIRefs.multiplayerEndLayout != null) SceneUIRefs.multiplayerEndLayout.SetActive(false);
+        // 3. UI Logic
+        if (SceneUIRefs.singlePlayerEndLayout != null) 
+        {
+            SceneUIRefs.singlePlayerEndLayout.SetActive(true);
+            SinglePlayerEndScreen endScreen = SceneUIRefs.singlePlayerEndLayout.GetComponent<SinglePlayerEndScreen>();
+            if (endScreen != null) endScreen.SetupScreen(finalScore);
         }
+    
+        if (SceneUIRefs.offlineLoseBackground != null) SceneUIRefs.offlineLoseBackground.SetActive(true);
+    }
+
+    private IEnumerator PlayLoopAfterSting(AudioClip loop, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        AudioManager.Instance.PlayMusic(loop);
     }
 
     public void EndGameMultiplayer()

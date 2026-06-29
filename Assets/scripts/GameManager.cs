@@ -105,10 +105,12 @@ public class GameManager : MonoBehaviour
             if (possumWon)
             {
                 if (SceneUIRefs.possumWinBackground != null) SceneUIRefs.possumWinBackground.SetActive(true);
+                MultiplayerMatchManager.Instance.PlayEndGameAudio(true);
             }
             else
             {
                 if (SceneUIRefs.raccoonWinBackground != null) SceneUIRefs.raccoonWinBackground.SetActive(true);
+                MultiplayerMatchManager.Instance.PlayEndGameAudio(false);
             }
 
             if (SceneUIRefs.multiplayerEndLayout != null)

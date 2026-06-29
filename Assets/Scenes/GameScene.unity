@@ -7286,6 +7286,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d79bd527a720944389125c13dee401e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MultiplayerMatchManager
+  winMusicSting: {fileID: 8300000, guid: 550e5291b63474ef4ab6aa94b10cb864, type: 3}
+  winPlaylist:
+  - {fileID: 8300000, guid: fcf45bcc38e28435582f7c9785c97a7b, type: 3}
+  loseMusicSting: {fileID: 8300000, guid: 1e31080f5510f49e786cccfa309b8dac, type: 3}
+  losePlaylist:
+  - {fileID: 8300000, guid: fcf45bcc38e28435582f7c9785c97a7b, type: 3}
+  gameLoopMusic: {fileID: 8300000, guid: 921b6745a7f2e4b08b9739a66539d0a0, type: 3}
 --- !u!114 &2031273310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7355,6 +7362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MatchSyncManager
   wordGenerator: {fileID: 415607408}
   backgroundMusic: {fileID: 8300000, guid: 921b6745a7f2e4b08b9739a66539d0a0, type: 3}
+  matchStarted: 0
 --- !u!1001 &1478831753744966112
 PrefabInstance:
   m_ObjectHideFlags: 0

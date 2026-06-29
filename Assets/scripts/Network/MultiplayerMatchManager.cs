@@ -7,6 +7,13 @@ using System.Collections.Generic;
 [RequireComponent(typeof(PhotonView))]
 public class MultiplayerMatchManager : MonoBehaviourPun
 {
+    [Header("End Screen Music")]
+    public AudioClip winMusicSting;
+    public AudioClip[] winPlaylist;
+    public AudioClip loseMusicSting;
+    public AudioClip[] losePlaylist;
+    public AudioClip gameLoopMusic; // Your original BossaBossa track
+    
     public static MultiplayerMatchManager Instance { get; private set; }
 
     private float currentMyScore = 0f;
@@ -172,6 +179,10 @@ public class MultiplayerMatchManager : MonoBehaviourPun
         // 6. Reset our Network "Ready" vote 
         ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable { { GameConstants.PLAY_AGAIN_KEY, false } };
         PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        if (AudioManager.Instance != null && gameLoopMusic != null)
+        {
+            AudioManager.Instance.PlayMusic(gameLoopMusic);
+        }
 
         // 7. Ensure the tutorial doesn't accidentally trigger again
         if (MatchSyncManager.Instance != null) MatchSyncManager.Instance.matchStarted = true;
@@ -197,6 +208,26 @@ public class MultiplayerMatchManager : MonoBehaviourPun
 
         FallingLetter[] activeLetters = FindObjectsByType<FallingLetter>(FindObjectsSortMode.None);
         foreach (FallingLetter letter in activeLetters) Destroy(letter.gameObject);
+    }
+    
+    public void PlayEndGameAudio(bool iWon)
+    {
+        if (AudioManager.Instance == null) return;
+
+        // Use a 0.8s fade for the "Sting" so it hits hard but isn't jarring
+        AudioManager.Instance.PlayMusic(iWon ? winMusicSting : loseMusicSting, 0.8f);
+
+        // Start the playlist routine shortly after
+        StartCoroutine(DelayedPlaylist(iWon ? winPlaylist : losePlaylist));
+    }
+
+    private IEnumerator DelayedPlaylist(AudioClip[] playlist)
+    {
+        // Give the sting 1.5 seconds to shine before looping the playlist
+        yield return new WaitForSeconds(1.5f); 
+        
+        // Pass the fade duration to the playlist so it knows how to overlap
+        AudioManager.Instance.PlayPlaylist(playlist, 1.2f);
     }
 
     public float GetMyScore() => currentMyScore;

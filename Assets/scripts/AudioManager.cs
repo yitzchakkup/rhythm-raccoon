@@ -120,4 +120,33 @@ public class AudioManager : MonoBehaviour
     {
         if (musicSource != null) musicSource.Stop();
     }
+    
+    // --- NEW: Playlist functionality ---
+    public void PlayPlaylist(AudioClip[] playlist, float fadeDuration = 1.0f)
+    {
+        if (playlist == null || playlist.Length == 0) return;
+        StartCoroutine(PlaylistRoutine(playlist, fadeDuration));
+    }
+
+    // Updated Playlist Routine for seamless transitions
+    private IEnumerator PlaylistRoutine(AudioClip[] playlist, float fadeDuration)
+    {
+        int i = 0;
+        while (true)
+        {
+            AudioClip nextClip = playlist[i % playlist.Length];
+            
+            // Only start the fade when the current song is nearing its end
+            // We subtract the fadeDuration so the songs overlap perfectly
+            float waitTime = nextClip.length - fadeDuration;
+            
+            // Trigger the fade
+            PlayMusic(nextClip, fadeDuration);
+            
+            // Wait for the duration of the song minus the overlap
+            yield return new WaitForSeconds(waitTime > 0 ? waitTime : 1f);
+            
+            i++;
+        }
+    }
 }

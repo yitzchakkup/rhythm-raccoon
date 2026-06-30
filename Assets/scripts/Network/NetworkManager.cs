@@ -9,7 +9,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class NetworkManager : MonoBehaviourPunCallbacks
 {
-    // Singleton Instance
+    // Local Instance - Removed DontDestroyOnLoad to fix Canvas UI breaking on scene reloads
     public static NetworkManager Instance { get; private set; }
 
     [Header("Start Menu UI")]
@@ -46,25 +46,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
-    }
-
-    private void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
-    private void OnDisable() => SceneManager.sceneLoaded -= OnSceneLoaded;
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        // Replace "MainMenu" with your actual Main Menu scene name
-        if (scene.name == "MainMenu") 
-        {
-            if (PhotonNetwork.IsConnected) PhotonNetwork.Disconnect();
-        }
     }
 
     void Start()
@@ -193,6 +175,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public void OnMultiplayerClicked()
     {
+        // 1. Force the App Version so both players are in the exact same matchmaking pool
+        PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion = "1.0.0";
+        
         dotsCoroutine = StartCoroutine(WaitingDotsRoutine());
         SwitchPanel(startPanel, waitingRoomPanel, startBackground, waitingRoomBackground);
         PhotonNetwork.ConnectUsingSettings();
@@ -211,10 +196,37 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         SwitchPanel(waitingRoomPanel, startPanel, waitingRoomBackground, startBackground);
     }
 
-    public override void OnConnectedToMaster() => PhotonNetwork.JoinRandomRoom(null, 2, MatchmakingMode.FillRoom, null, null);
+    // --- FIXED MATCHMAKING FLOW ---
+    public override void OnConnectedToMaster()
+    {
+        if (PhotonNetwork.OfflineMode)
+        {
+            Debug.Log("<color=green>[Network]</color> Offline mode connected. Skipping Lobby.");
+            return; 
+        }
+
+        Debug.Log("<color=green>[Network]</color> Connected to Master. Joining Lobby...");
+        PhotonNetwork.JoinLobby(); 
+    }
+
+    public override void OnJoinedLobby()
+    {
+        Debug.Log("<color=green>[Network]</color> Joined Lobby. Attempting to join random room...");
+        PhotonNetwork.JoinRandomRoom(null, 2, MatchmakingMode.FillRoom, null, null);
+    }
+    // ------------------------------
 
     public override void OnJoinedRoom()
     {
+        // --- THE FIX: Intercept Offline Mode and load the scene ---
+        if (PhotonNetwork.OfflineMode)
+        {
+            Debug.Log("<color=green>[Network]</color> Offline Room Joined! Loading GameScene...");
+            StartCoroutine(SinglePlayerFadeRoutine());
+            return;
+        }
+
+        // --- Standard Multiplayer UI Logic ---
         if (dotsCoroutine != null) StopCoroutine(dotsCoroutine);
         countdownText.text = "";
         SetPlayerReadyState(false);
@@ -222,6 +234,30 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if (readyButton != null) StartCoroutine(ShowButtonJuicy());
         UpdateWaitingRoomText();
         UpdateReadyCountUI();
+    }
+    
+    private IEnumerator SinglePlayerFadeRoutine()
+    {
+        // 1. Fade the screen to black
+        if (fadeBlock != null)
+        {
+            fadeBlock.blocksRaycasts = true;
+            float timer = 0f;
+            while (timer < sceneFadeSpeed)
+            {
+                fadeBlock.alpha = Mathf.Lerp(0f, 1f, timer / sceneFadeSpeed);
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            fadeBlock.alpha = 1f;
+        }
+
+        // 2. Actually load the scene! 
+        // (Make sure "GameScene" matches the exact spelling in your Build Settings)
+        if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel("GameScene");
+        }
     }
 
     public override void OnLeftRoom() { if (readyButton != null) readyButton.gameObject.SetActive(false); }
@@ -317,7 +353,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient) PhotonNetwork.LoadLevel("GameScene");
     }
     
-    // --- 1. Add this to track the state ---
     public override void OnDisconnected(DisconnectCause cause)
     {
         Debug.LogWarning($"<color=red>[Network]</color> Disconnected from Photon: {cause}");
@@ -325,40 +360,28 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         if (dotsCoroutine != null) StopCoroutine(dotsCoroutine);
     }
 
-    // --- 2. Add this to catch matchmaking errors ---
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
         Debug.Log($"<color=orange>[Network]</color> Random join failed: {message}. Creating room...");
-        // This is correct, but ensure we aren't getting a 'No rooms found' loop
         string roomName = "Room_" + Random.Range(1000, 9999);
         RoomOptions roomOptions = new RoomOptions() { MaxPlayers = 2, IsVisible = true, IsOpen = true };
         PhotonNetwork.CreateRoom(roomName, roomOptions);
     }
 
-    // --- 3. Add this to catch room creation errors ---
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
         Debug.LogWarning($"<color=red>[Network]</color> CreateRoom failed: {message}");
         waitingRoomText.text = "Error creating room! Retrying...";
-        // Sometimes simply retrying with a new name works
         string roomName = "Room_" + Random.Range(1000, 9999);
         PhotonNetwork.CreateRoom(roomName); 
     }
     
     void Update()
     {
-        // Check for the Space key using the new Input System
         if (UnityEngine.InputSystem.Keyboard.current != null && 
             UnityEngine.InputSystem.Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             Debug.Log($"<color=yellow>[Network State]</color> Current State: {PhotonNetwork.NetworkClientState}");
         }
-    }
-
-    // Add this new callback to handle the transition from Lobby to Room
-    public override void OnJoinedLobby()
-    {
-        Debug.Log("<color=green>[Network]</color> Joined Lobby. Attempting to join random room...");
-        PhotonNetwork.JoinRandomRoom(null, 2, MatchmakingMode.FillRoom, null, null);
     }
 }

@@ -158,16 +158,7 @@ public class GameManager : MonoBehaviour
     public void ReturnToMainMenu()
     {
         if (isDisconnecting) return;
-        if (NetworkManager.Instance != null)
-        {
-            // This will trigger the DisconnectAndReturnRoutine inside NetworkManager,
-            // which already has the robust "Wait until disconnected" logic.
-            NetworkManager.Instance.OnBackToMainMenuClicked();
-        }
-        else
-        {
-            StartCoroutine(ReturnToMainMenuRoutine());
-        }
+        StartCoroutine(ReturnToMainMenuRoutine());
     }
 
     private IEnumerator ReturnToMainMenuRoutine()
@@ -175,15 +166,30 @@ public class GameManager : MonoBehaviour
         isDisconnecting = true;
         Time.timeScale = 1f;
 
+        Debug.Log("<color=yellow>[GameManager]</color> Cleaning up network before returning to menu...");
+
+        // 1. Leave the room if we are in one
+        if (PhotonNetwork.InRoom)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+
+        // 2. Disconnect completely and wait for confirmation
         if (PhotonNetwork.IsConnected)
         {
             PhotonNetwork.Disconnect();
-            while (PhotonNetwork.IsConnected) { yield return null; }
+            while (PhotonNetwork.IsConnected) 
+            { 
+                yield return null; 
+            }
         }
 
+        // 3. Reset offline mode and load the menu
         PhotonNetwork.OfflineMode = false;
         isDisconnecting = false;
-        SceneManager.LoadScene(0); 
+        
+        Debug.Log("<color=green>[GameManager]</color> Disconnected cleanly. Loading Main Menu!");
+        SceneManager.LoadScene(0); // Ensure your Main Menu is index 0 in Build Settings
     }
 
     public void QuitGame()

@@ -45,6 +45,7 @@ public class WordGenerator : MonoBehaviour
     private float gameTimer;
 
     private List<List<FallingLetter>> activeWaves = new List<List<FallingLetter>>();
+    private List<int> previousWaveColumns = new List<int>(); // Tracks columns to prevent overlap
     
     void Start()
     {
@@ -59,18 +60,17 @@ public class WordGenerator : MonoBehaviour
     
     private void OnEnable()
     {
-        // Resets the difficulty timers every time the generator is flipped back on
         gameTimer = 0f;
         spawnTimer = 0f;
         speedMultiplierTimer = 0f;
         powerupSpeedMultiplier = 1f;
         activeWaves.Clear(); 
+        previousWaveColumns.Clear();
     }
 
     void Update()
     {
         if (spawnArea == null) return;
-        // NOTE: The GameManager.isGameActive check is GONE!
         
         if (speedMultiplierTimer > 0)
         {
@@ -198,41 +198,67 @@ public class WordGenerator : MonoBehaviour
         float columnWidth = zoneWidth / maxLettersLimit;
         float targetLetterWidth = columnWidth * (1f - letterPadding);
 
-        List<float> availableColumns = new List<float>();
-        for (int i = 0; i < maxLettersLimit; i++) availableColumns.Add(leftEdge + (columnWidth * 0.5f) + (columnWidth * i));
+        // --- ANTI-OVERLAP RULE 1: Prevent spawning directly on top of the last wave ---
+        List<int> availableColumns = new List<int>();
+        for (int i = 0; i < maxLettersLimit; i++) availableColumns.Add(i);
 
-        for (int i = 0; i < availableColumns.Count; i++)
+        List<int> safeColumns = new List<int>(availableColumns);
+        foreach (int lastCol in previousWaveColumns)
         {
-            float temp = availableColumns[i];
-            int randomIndex = Random.Range(i, availableColumns.Count);
-            availableColumns[i] = availableColumns[randomIndex];
-            availableColumns[randomIndex] = temp;
+            // Only remove if we still have enough columns to fulfill the spawn request
+            if (safeColumns.Count > lettersToSpawn)
+            {
+                safeColumns.Remove(lastCol);
+            }
         }
 
-        List<float> xPositions = new List<float>();
-        for (int i = 0; i < lettersToSpawn; i++) xPositions.Add(availableColumns[i]);
+        // Pick columns randomly from the safe pool
+        List<int> chosenColumns = new List<int>();
+        for (int i = 0; i < lettersToSpawn; i++)
+        {
+            int randomIndex = Random.Range(0, safeColumns.Count);
+            chosenColumns.Add(safeColumns[randomIndex]);
+            safeColumns.RemoveAt(randomIndex);
+        }
+
+        previousWaveColumns = new List<int>(chosenColumns); // Save for the next wave
+
+        Debug.Log($"<color=cyan>[WordGenerator]</color> Wave Spawned: {lettersToSpawn} letters (Cols: {string.Join(", ", chosenColumns)})");
 
         List<Key> availableKeys = new List<Key>();
         for (int k = (int)Key.A; k <= (int)Key.Z; k++) availableKeys.Add((Key)k);
 
         List<FallingLetter> currentWorkingGroup = new List<FallingLetter>();
         float currentY = spawnY;
+        int lastSpawnedColumn = -2; // Dummy value so the first check always passes
 
         for (int i = 0; i < lettersToSpawn; i++)
         {
+            int currentColumn = chosenColumns[i];
             GameObject prefab = spawnablePrefabs[Random.Range(0, spawnablePrefabs.Length)];
             
             if (i > 0) 
             {
-                if (Random.value >= currentClusterChance)
+                // --- ANTI-OVERLAP RULE 2: Prevent side-by-side letters in the same cluster ---
+                bool isAdjacentColumn = Mathf.Abs(currentColumn - lastSpawnedColumn) <= 1;
+                bool forceStagger = isAdjacentColumn;
+
+                if (forceStagger || Random.value >= currentClusterChance)
                 {
+                    if (forceStagger) 
+                    {
+                        Debug.Log($"<color=yellow>[WordGenerator]</color> Forced vertical stagger! Prevented columns {lastSpawnedColumn} and {currentColumn} from touching side-by-side.");
+                    }
+
                     currentY += standardVerticalStagger;
                     FinalizeWaveGroup(currentWorkingGroup);
                     currentWorkingGroup = new List<FallingLetter>();
                 }
             }
 
-            Vector3 position = new Vector3(xPositions[i], currentY, 0f);
+            float xPos = leftEdge + (columnWidth * 0.5f) + (columnWidth * currentColumn);
+            Vector3 position = new Vector3(xPos, currentY, 0f);
+
             GameObject spawnedObj = Instantiate(prefab, position, Quaternion.identity);
 
             Renderer objRenderer = spawnedObj.GetComponentInChildren<Renderer>();
@@ -257,6 +283,8 @@ public class WordGenerator : MonoBehaviour
                 letterScript.SetupRandomLetter(assignedKey);
                 currentWorkingGroup.Add(letterScript);
             }
+
+            lastSpawnedColumn = currentColumn;
         }
 
         if (currentWorkingGroup.Count > 0) FinalizeWaveGroup(currentWorkingGroup);

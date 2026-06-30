@@ -1779,8 +1779,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -1827,8 +1827,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
@@ -1849,8 +1849,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.00997665
-      value: 0.24555738
+      time: 0
+      value: 0
       inSlope: 2
       outSlope: 2
       tangentMode: 0
@@ -1858,23 +1858,32 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.13396364
-      value: 0.32453683
-      inSlope: 0.36168563
-      outSlope: 0.36168563
+      time: 0.047291663
+      value: 0.32248956
+      inSlope: 2.2501497
+      outSlope: 2.2501497
       tangentMode: 0
       weightedMode: 0
-      inWeight: 1
+      inWeight: 0.33333334
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.69671935
-      value: 0.5681169
-      inSlope: 0.87355006
-      outSlope: 0.87355006
+      time: 0.31515825
+      value: 0.5309918
+      inSlope: 0.063861
+      outSlope: 0.063861
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.12887627
-      outWeight: 0.120247535
+      inWeight: 0.2590063
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.6013586
+      value: 0.63140523
+      inSlope: 0.90805507
+      outSlope: 0.90805507
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 1
@@ -3270,7 +3279,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c98ddeeb4ea4b704088c2a4dd0c9e4b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScoreAndStaminaManager
-  staminaRewardAmount: 4
+  staminaRewardAmount: 7
   maxStamina: 100
   startingStamina: 100
   staminaDrainAmount: 0.03

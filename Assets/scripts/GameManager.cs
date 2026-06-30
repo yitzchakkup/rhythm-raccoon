@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     public AudioClip singlePlayerEndSting;
     public AudioClip singlePlayerEndMusic;
 
+    [Header("Juice Prefabs")]
+    public GameObject confettiPrefab;
+    
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -131,6 +134,20 @@ public class GameManager : MonoBehaviour
             if (SceneUIRefs.multiplayerEndLayout != null)
             {
                 SceneUIRefs.multiplayerEndLayout.SetActive(true);
+            }
+            
+            
+            if (iWonTheMatch && confettiPrefab != null)
+            {
+                // Left Fountain: Bottom-left corner, rotated 45 degrees to shoot toward the center
+                Vector3 leftPos = new Vector3(-8.5f, -4.5f, 0f);
+                Quaternion leftRot = Quaternion.Euler(-45f, 90f, -90f); // Adjust angles to point top-right
+                GameObject leftFountain = Instantiate(confettiPrefab, leftPos, leftRot);
+
+                // Right Fountain: Bottom-right corner, rotated to shoot toward the center
+                Vector3 rightPos = new Vector3(8.5f, -4.5f, 0f);
+                Quaternion rightRot = Quaternion.Euler(-135f, 90f, -90f); // Adjust angles to point top-left
+                GameObject rightFountain = Instantiate(confettiPrefab, rightPos, rightRot);
             }
         }
         else

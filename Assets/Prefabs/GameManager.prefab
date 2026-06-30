@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   singlePlayerEndSting: {fileID: 0}
   singlePlayerEndMusic: {fileID: 8300000, guid: fcf45bcc38e28435582f7c9785c97a7b, type: 3}
+  confettiPrefab: {fileID: 6916090569121161807, guid: 198934d369b30402286ef70c9b738e26, type: 3}
 --- !u!114 &1975651532865154198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,7 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c98ddeeb4ea4b704088c2a4dd0c9e4b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScoreAndStaminaManager
-  staminaRewardAmount: 7
+  staminaRewardAmount: 6
   maxStamina: 100
   startingStamina: 100
   staminaDrainAmount: 0.03

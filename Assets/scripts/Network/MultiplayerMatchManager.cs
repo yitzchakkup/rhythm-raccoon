@@ -211,6 +211,18 @@ public class MultiplayerMatchManager : MonoBehaviourPun
 
         currentMyScore = 0f;
         currentOpponentScore = 0f;
+        
+        // --- CLEAN UP THE CONFETTI ON RESET ---
+        // Find all active instances of the confetti prefab and destroy them cleanly
+        GameObject[] activeConfetti = GameObject.FindGameObjectsWithTag("Respawn"); // Or use a custom script reference
+        
+        // Alternative clean way using the Particle System type directly:
+        ParticleSystem[] activeFountains = FindObjectsByType<ParticleSystem>(FindObjectsSortMode.None);
+        foreach (ParticleSystem fountain in activeFountains) 
+        {
+            // Destroy the root object hosting the confetti particle system
+            Destroy(fountain.gameObject); 
+        }
 
         FallingLetter[] activeLetters = FindObjectsByType<FallingLetter>(FindObjectsSortMode.None);
         foreach (FallingLetter letter in activeLetters) Destroy(letter.gameObject);

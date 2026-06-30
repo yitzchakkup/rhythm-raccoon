@@ -1,6 +1,6 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI; // --- BROUGHT THIS BACK: Required for standard Unity Buttons ---
+using UnityEngine.UI; 
 
 public class SinglePlayerEndScreen : MonoBehaviour
 {
@@ -8,8 +8,8 @@ public class SinglePlayerEndScreen : MonoBehaviour
     public TMP_Text scoreText;
     
     [Header("Buttons")]
-    public HangingSignButton retryButton; // The juicy custom sign
-    public HangingSignButton mainMenuButton;         // The standard Unity button
+    public HangingSignButton retryButton; 
+    public HangingSignButton mainMenuButton;         
 
     private void OnEnable()
     {
@@ -24,14 +24,25 @@ public class SinglePlayerEndScreen : MonoBehaviour
 
     public void SetupScreen(int finalScore)
     {
+        // --- JUICY DEBUGGING ---
+        // This will print exactly what number the GameManager handed to the UI
+        Debug.Log($"<color=cyan>[SinglePlayer UI]</color> SetupScreen called! Received score: {finalScore}");
+
         if (scoreText != null)
         {
             scoreText.text = $"{finalScore}";
+        }
+        else 
+        {
+            Debug.LogWarning("<color=red>[SinglePlayer UI]</color> You forgot to drag the Score Text into the Inspector!");
         }
     }
 
     private void OnRetryClicked()
     {
+        // Disable instantly to prevent double-clicking the juice
+        if (retryButton != null) retryButton.interactable = false;
+
         if (GameManager.Instance != null)
         {
             GameManager.Instance.RestartCurrentLevel(); 

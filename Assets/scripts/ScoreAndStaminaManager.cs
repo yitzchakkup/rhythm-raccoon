@@ -33,6 +33,9 @@ public class ScoreAndStaminaManager : MonoBehaviour
     private Coroutine drainCoroutine;
     private float staminaHeadFullYPosition; // Starting Y position when stamina is full
 
+    // --- THE FIX: The Game Over Lock ---
+    private bool isGameOver = false;
+
     private TMP_Text scoreText;
     private Image staminaFill;
     private RectTransform staminaHead;
@@ -67,6 +70,9 @@ public class ScoreAndStaminaManager : MonoBehaviour
 
     public void Initialize()
     {
+        // Reset the lock when a new game starts!
+        isGameOver = false;
+
         Score = 0;
         scoreMultiplier = 1;
         scoreMultiplierTimer = 0f;
@@ -104,6 +110,9 @@ public class ScoreAndStaminaManager : MonoBehaviour
 
     void Update()
     {
+        // Stop calculating timers if the game is over
+        if (isGameOver) return;
+
         if (scoreMultiplierTimer > 0)
         {
             scoreMultiplierTimer -= Time.deltaTime;
@@ -124,6 +133,8 @@ public class ScoreAndStaminaManager : MonoBehaviour
 
     public void AddScoreAndStamina(float pointsToAdd)
     {
+        if (isGameOver) return; // Prevent ghost points after death
+
         float calculatedPoints = pointsToAdd * scoreMultiplier;
         Score += calculatedPoints;
         UpdateScoreUI();
@@ -144,6 +155,8 @@ public class ScoreAndStaminaManager : MonoBehaviour
 
     public void MissedLetter()
     {
+        if (isGameOver) return; // Stop processing misses if we are already dead
+
         bool isMultiplayer = MultiplayerMatchManager.Instance != null && MultiplayerMatchManager.Instance.IsMultiplayerGame();
 
         if (!isMultiplayer)
@@ -151,9 +164,14 @@ public class ScoreAndStaminaManager : MonoBehaviour
             float penalty = staminaRewardAmount * singlePlayerMissPenaltyMultiplier;
             currentStamina = Mathf.Max(0, currentStamina - penalty);
             UpdateStaminaUI();
-            if (currentStamina <= 0)
+            
+            if (currentStamina <= 0 && !isGameOver)
             {
-                GameManager.Instance.EndGame();
+                isGameOver = true; // Lock the door!
+                if (GameManager.Instance != null) 
+                {
+                    GameManager.Instance.EndGame((int)Score); // Fixed: Now passing the score!
+                }
             }
         }
         else
@@ -166,6 +184,8 @@ public class ScoreAndStaminaManager : MonoBehaviour
 
     public void AddStamina(float amount)
     {
+        if (isGameOver) return; 
+
         if (MultiplayerMatchManager.Instance != null && MultiplayerMatchManager.Instance.IsMultiplayerGame())
         {
             return;
@@ -179,12 +199,14 @@ public class ScoreAndStaminaManager : MonoBehaviour
 
     public void ActivateScoreMultiplier(float multiplier, float duration)
     {
+        if (isGameOver) return;
         scoreMultiplier = multiplier;
         scoreMultiplierTimer = duration; 
     }
 
     public void ActivateStaminaMultiplier(float multiplier, float duration)
     {
+        if (isGameOver) return;
         staminaMultiplier = multiplier;
         staminaMultiplierTimer = duration;
     }
@@ -197,19 +219,20 @@ public class ScoreAndStaminaManager : MonoBehaviour
             yield break;
         }
 
-        while (true)
+        while (!isGameOver) // Only loop while the game is actively running
         {
             float currentDrain = (gracePeriodTimer > 0) ? staminaDrainAmount * gracePeriodDrainMultiplier : staminaDrainAmount;
             currentStamina -= currentDrain;
             UpdateStaminaUI();
 
-            if (currentStamina <= 0)
+            if (currentStamina <= 0 && !isGameOver)
             {
+                isGameOver = true; // Lock the door!
                 currentStamina = 0;
                 UpdateStaminaUI();
 
-                if (GameManager.Instance != null) GameManager.Instance.EndGame();
-                yield break;
+                if (GameManager.Instance != null) GameManager.Instance.EndGame((int)Score);
+                yield break; // Kill the coroutine entirely
             }
 
             yield return new WaitForSeconds(staminaDrainTickRate);

@@ -106,24 +106,30 @@ public class GameManager : MonoBehaviour
             float myScore = MultiplayerMatchManager.Instance.GetMyScore();
             float opponentScore = MultiplayerMatchManager.Instance.GetOpponentScore();
 
-            bool iWon = myScore >= opponentScore;
-            bool iAmPossum = PhotonNetwork.IsMasterClient;
-            bool possumWon = (iAmPossum && iWon) || (!iAmPossum && !iWon);
+            // 1. Audio Logic (Self-Centered)
+            // If my score is higher (or equal), I won. Period. 
+            bool iWonTheMatch = myScore >= opponentScore;
+            MultiplayerMatchManager.Instance.PlayEndGameAudio(iWonTheMatch);
 
-            if (possumWon)
+            // 2. Visual Background Logic (Character-Centered)
+            // Host is ALWAYS Possum. Guest is ALWAYS Raccoon.
+            bool iAmHost = PhotonNetwork.IsMasterClient;
+            
+            // The Possum wins if: I am Host and I won, OR I am Guest and I lost.
+            bool possumIsTheWinner = (iAmHost && iWonTheMatch) || (!iAmHost && !iWonTheMatch);
+
+            if (possumIsTheWinner)
             {
                 if (SceneUIRefs.possumWinBackground != null) SceneUIRefs.possumWinBackground.SetActive(true);
-                MultiplayerMatchManager.Instance.PlayEndGameAudio(true);
             }
             else
             {
                 if (SceneUIRefs.raccoonWinBackground != null) SceneUIRefs.raccoonWinBackground.SetActive(true);
-                MultiplayerMatchManager.Instance.PlayEndGameAudio(false);
             }
 
+            // Turn on the final UI overlay
             if (SceneUIRefs.multiplayerEndLayout != null)
             {
-                Debug.Log("<color=magenta>[GameManager]</color> Turning ON the Multiplayer End Layout!");
                 SceneUIRefs.multiplayerEndLayout.SetActive(true);
             }
         }

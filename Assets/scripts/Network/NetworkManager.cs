@@ -211,10 +211,23 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        Debug.Log("<color=green>[Network]</color> Joined Lobby. Attempting to join random room...");
-        PhotonNetwork.JoinRandomRoom(null, 2, MatchmakingMode.FillRoom, null, null);
+        Debug.Log("<color=green>[Network]</color> Joined Lobby. Attempting to join or create a room atomically...");
+
+        RoomOptions roomOptions = new RoomOptions() 
+        { 
+            MaxPlayers = 2, 
+            IsVisible = true, 
+            IsOpen = true 
+        };
+
+        // Stripped down to the absolute essentials to avoid version conflicts!
+        PhotonNetwork.JoinRandomOrCreateRoom(
+            expectedCustomRoomProperties: null,
+            expectedMaxPlayers: 2,
+            roomName: "Room_" + Random.Range(10000, 99999),
+            roomOptions: roomOptions
+        );
     }
-    // ------------------------------
 
     public override void OnJoinedRoom()
     {
@@ -362,10 +375,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        Debug.Log($"<color=orange>[Network]</color> Random join failed: {message}. Creating room...");
-        string roomName = "Room_" + Random.Range(1000, 9999);
-        RoomOptions roomOptions = new RoomOptions() { MaxPlayers = 2, IsVisible = true, IsOpen = true };
-        PhotonNetwork.CreateRoom(roomName, roomOptions);
+        // We leave this here just to catch standard errors, but we DO NOT create a room here anymore!
+        Debug.Log($"<color=orange>[Network]</color> Random join failed: {message}");
     }
 
     public override void OnCreateRoomFailed(short returnCode, string message)

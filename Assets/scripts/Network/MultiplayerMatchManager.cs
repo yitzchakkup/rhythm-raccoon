@@ -13,6 +13,10 @@ public class MultiplayerMatchManager : MonoBehaviourPun
     public AudioClip loseMusicSting;
     public AudioClip[] losePlaylist;
     public AudioClip gameLoopMusic; // Your original BossaBossa track
+
+    [Header("Instructor Positions")]
+    [SerializeField] private Transform singlePlayerInstructorTransform;
+    [SerializeField] private Transform multiplayerInstructorTransform;
     
     public static MultiplayerMatchManager Instance { get; private set; }
 
@@ -46,10 +50,12 @@ public class MultiplayerMatchManager : MonoBehaviourPun
         if (!IsMultiplayerGame())
         {
             if (SceneUIRefs.tugOfWarUI != null) SceneUIRefs.tugOfWarUI.SetActive(false);
+            if (SceneUIRefs.instructorCharacter != null && singlePlayerInstructorTransform != null) SceneUIRefs.instructorCharacter.transform.position = singlePlayerInstructorTransform.position;
         }
         else
         {
             if (SceneUIRefs.staminaBar != null) SceneUIRefs.staminaBar.SetActive(false);
+            if (SceneUIRefs.instructorCharacter != null && multiplayerInstructorTransform != null) SceneUIRefs.instructorCharacter.transform.position = multiplayerInstructorTransform.position;
         }
     }
 

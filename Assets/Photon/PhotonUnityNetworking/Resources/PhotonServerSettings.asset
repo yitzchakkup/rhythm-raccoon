@@ -17,7 +17,7 @@ MonoBehaviour:
     AppIdFusion: 
     AppIdChat: 
     AppIdVoice: 
-    AppVersion: 
+    AppVersion: 1.0.0
     UseNameServer: 1
     FixedRegion: 
     Server: 
@@ -51,5 +51,5 @@ MonoBehaviour:
   - RPC_StartRematchCountdown
   - ExecuteSoftReset_RPC
   DisableAutoOpenWizard: 1
-  ShowSettings: 0
+  ShowSettings: 1
   DevRegionSetOnce: 0

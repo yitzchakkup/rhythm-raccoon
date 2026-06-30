@@ -195,7 +195,7 @@ public class GameManager : MonoBehaviour
         isDisconnecting = false;
         
         Debug.Log("<color=green>[GameManager]</color> Disconnected cleanly. Loading Main Menu!");
-        SceneManager.LoadScene(0); // Ensure your Main Menu is index 0 in Build Settings
+        SceneManager.LoadScene("LobbyScene");
     }
 
     public void QuitGame()

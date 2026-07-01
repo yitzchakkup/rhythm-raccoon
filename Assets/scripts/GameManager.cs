@@ -62,6 +62,29 @@ public class GameManager : MonoBehaviour
         if (wg != null) wg.enabled = false;
         PowerupGenerator pg = FindAnyObjectByType<PowerupGenerator>();
         if (pg != null) pg.enabled = false;
+        
+        // Find the camera script and shut it down cleanly
+        HeartbeatCamera heartbeatCam = FindAnyObjectByType<HeartbeatCamera>();
+        if (heartbeatCam != null) heartbeatCam.StopHeartbeatForEndScreen();
+        
+        // Find every letter currently in the scene and destroy it
+        FallingLetter[] activeLetters = FindObjectsByType<FallingLetter>(FindObjectsSortMode.None);
+        foreach (FallingLetter letter in activeLetters)
+        {
+            if (letter != null)
+            {
+                Destroy(letter.gameObject);
+            }
+        }
+
+        Powerup[] activePowerups = FindObjectsByType<Powerup>(FindObjectsSortMode.None);
+        foreach (Powerup powerup in activePowerups)
+        {
+            if (powerup != null)
+            {
+                Destroy(powerup.gameObject);
+            }
+        }
 
         // 2. Play Single Player Audio
         if (AudioManager.Instance != null)
@@ -97,6 +120,29 @@ public class GameManager : MonoBehaviour
 
         PowerupGenerator pg = FindAnyObjectByType<PowerupGenerator>();
         if (pg != null) pg.enabled = false;
+        
+        // Find the camera script and shut it down cleanly
+        HeartbeatCamera heartbeatCam = FindAnyObjectByType<HeartbeatCamera>();
+        if (heartbeatCam != null) heartbeatCam.StopHeartbeatForEndScreen();
+        
+        // Find every letter currently in the scene and destroy it
+        FallingLetter[] activeLetters = FindObjectsByType<FallingLetter>(FindObjectsSortMode.None);
+        foreach (FallingLetter letter in activeLetters)
+        {
+            if (letter != null)
+            {
+                Destroy(letter.gameObject);
+            }
+        }
+
+        Powerup[] activePowerups = FindObjectsByType<Powerup>(FindObjectsSortMode.None);
+        foreach (Powerup powerup in activePowerups)
+        {
+            if (powerup != null)
+            {
+                Destroy(powerup.gameObject);
+            }
+        }
 
         if (PhotonNetwork.InRoom && PhotonNetwork.IsMasterClient)
         {
